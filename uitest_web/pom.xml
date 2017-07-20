@@ -13,7 +13,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.beibei.test</groupId>
+			<groupId>com.quanql.test</groupId>
 			<artifactId>uitest_core</artifactId>
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>

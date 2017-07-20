@@ -9,11 +9,11 @@ import com.quanql.test.webui.page.DemoBaiduPage;
 public class DemoBaiduTest extends WebBaseTest {
 
 	@Test
-	public void testSearchBeibei() {
+	public void testSearchNetease() {
 		DemoBaiduPage.openBaidu();
-		DemoBaiduPage.typeInSearchEdt("贝贝网");
+		DemoBaiduPage.typeInSearchEdt("网易");
 		DemoBaiduPage.clickSearchBtn();
-		AssertUtil.assertTrue(DemoBaiduPage.isBeibeiExisted(), "贝贝网没有出现在结果第1位！");
+		AssertUtil.assertTrue(DemoBaiduPage.isNeteaseExisted(), "网易没有出现在结果第1位！");
 	}
 	
 }

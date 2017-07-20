@@ -8,7 +8,7 @@ import com.quanql.test.webui.base.WebBasePage;
 public class DemoBaiduPage extends WebBasePage {
 	private static String edtSearchId = "kw";
 	private static String btnSearchXpath = "//input[@value='百度一下']";
-	private static String txtBeibeiXpath = "//div[@id='content_left']/div//a[contains(.,'www.beibei.com')]";
+	private static String txtNeteaseXpath = "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
 	/**
 	 * 通过url打开登录页面
 	 */
@@ -34,8 +34,8 @@ public class DemoBaiduPage extends WebBasePage {
 		baseOpt.click(By.xpath(btnSearchXpath));
 	}
 	
-	public static boolean isBeibeiExisted() {
-		LogUtil.info("检查beibei官网是否存在");
-		return baseOpt.isElementDisplayed(By.xpath(txtBeibeiXpath));
+	public static boolean isNeteaseExisted() {
+		LogUtil.info("检查163官网是否存在");
+		return baseOpt.isElementDisplayed(By.xpath(txtNeteaseXpath));
 	}
 }

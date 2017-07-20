@@ -23,7 +23,7 @@ public final class Constant {
 	/**
 	 * 被测APP包名
 	 */
-	public static final String APP_PACKAGE_NAME = ConfigUtil.getInstance().getProperty("appPackage", "com.husor.beibei");
+	public static final String APP_PACKAGE_NAME = ConfigUtil.getInstance().getProperty("appPackage", "com.quanqinle.android");
 	
 	public static int SCREEN_WIDTH = 0; // 屏幕宽度
 	public static int SCREEN_HEIGHT = 0;
