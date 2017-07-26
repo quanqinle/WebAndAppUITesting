@@ -35,7 +35,7 @@ public class BaseOpt {
 	protected RemoteWebDriver driver;
 	protected WebDriverWait wait;
 	protected int DRIVER_WAIT_TIMEOUT_IN_SECOND = Integer.valueOf(ConfigUtil.getInstance().getProperty("waitTime")); // second
-	protected static String PROJ_PACKAGE_NAME = "com.quanql.test"; // 可配置。只有该包下文件可以截图
+	protected static String PROJ_PACKAGE_NAME = "com.quanql.test"; // 可配置
 
 	protected BaseOpt() {
 		driver = DriverFactory.getInstance().getDriver();
@@ -339,7 +339,11 @@ public class BaseOpt {
 		// for循环找到项目中最上层的类文件
 		for (int i = 0; i < stack.length; i++) {
 			StackTraceElement ste = stack[i];
-			if (ste.getClassName().contains(PROJ_PACKAGE_NAME)) { // 也可自定义。只能截图该目录下的类
+			/*
+			 * PROJ_PACKAGE_NAME可自定义。
+			 * 作用：调用栈中找到工程的包名，然后截图，即，避免使用底层类命名截图
+			 */
+			if (ste.getClassName().contains(PROJ_PACKAGE_NAME)) {
 				cn = ste.getFileName();
 				line = ste.getLineNumber();
 			}

@@ -9,8 +9,9 @@ import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.LogUtil;
 
 /**
- * 控件原始的基础类
- * 
+ * 控件原始的基础类<br>
+ * 注：组员提出要求简化控件定义和使用，没办法，增加一种元素定义和操作方式[无奈]
+ *
  * @author quanqinle
  *
  */

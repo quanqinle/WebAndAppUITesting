@@ -98,8 +98,7 @@ public class DriverFactory extends RemoteWebDriver {
 				String.join(File.separator, System.getProperty("user.dir"), property.getProperty("app")));
 		capabilities.setCapability("platformName", property.getProperty("platformName"));
 		capabilities.setCapability("platformVersion", property.getProperty("platformVersion"));
-		// On Android this capability is currently ignored, though it remains
-		// required.
+		// On Android this capability is currently ignored, though it remains required.
 		capabilities.setCapability("deviceName", property.getProperty("deviceName"));
 		capabilities.setCapability("appPackage", property.getProperty("appPackage"));
 		capabilities.setCapability("appActivity", property.getProperty("appActivity"));
