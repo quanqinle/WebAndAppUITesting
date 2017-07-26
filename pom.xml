@@ -13,6 +13,7 @@
 	<modules>
 		<module>uitest_core</module>
 		<module>uitest_web</module>
+		<module>uitest_iphone</module>
 	</modules>
 
 	<properties>
