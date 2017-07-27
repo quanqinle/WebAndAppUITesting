@@ -14,6 +14,7 @@
 		<module>uitest_core</module>
 		<module>uitest_web</module>
 		<module>uitest_iphone</module>
+		<module>uitest_android</module>
 	</modules>
 
 	<properties>
