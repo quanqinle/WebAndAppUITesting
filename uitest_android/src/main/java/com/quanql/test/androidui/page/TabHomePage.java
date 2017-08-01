@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 import com.quanql.test.core.element.Button;
 import com.quanql.test.core.utils.ConfigUtil;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.ShellUtils;
-import com.quanql.test.perfutils.task.FlowTask;
+import com.quanql.test.androidperfutils.ShellUtils;
+import com.quanql.test.androidperfutils.task.FlowTask;
 
 import io.appium.java_client.MobileElement;
 

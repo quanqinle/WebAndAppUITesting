@@ -1,11 +1,11 @@
-package com.quanql.test.perfutils.data;
+package com.quanql.test.androidperfutils.data;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.CommandResult;
-import com.quanql.test.perfutils.ShellUtils;
+import com.quanql.test.androidperfutils.CommandResult;
+import com.quanql.test.androidperfutils.ShellUtils;
+import com.quanql.test.androidperfutils.AndroidConstant;
 
 /**
  * APP信息/运行时进程信息
@@ -14,7 +14,7 @@ import com.quanql.test.perfutils.ShellUtils;
  * @since 2016-7-23
  */
 public class AppInfo {
-	private static String appPackageName = Constant.APP_PACKAGE_NAME;
+	private static String appPackageName = AndroidConstant.APP_PACKAGE_NAME;
 	private static String version;
 	// USER PID PPID VSIZE RSS WCHAN PC NAME
 	// u0_a99 19548 383 1705304 129988 ffffffff 00000000 S com.quanql.demo
@@ -35,8 +35,7 @@ public class AppInfo {
 	}
 
 	public AppInfo() {
-		
-		this(Constant.APP_PACKAGE_NAME);
+		this(AndroidConstant.APP_PACKAGE_NAME);
 	}
 
 	public AppInfo(String appPackageName) {
@@ -48,7 +47,7 @@ public class AppInfo {
 		CommandResult cr = ShellUtils.execCommand("adb shell ps |grep " + appPackageName);
 		for (String str : cr.getSuccessMsgArray()) {
 			if (str.endsWith(appPackageName)) {
-				String[] array = str.split(Constant.BLANK_SPLIT);
+				String[] array = str.split(AndroidConstant.BLANK_SPLIT);
 				if (array.length >= 9) {
 					user = array[0];
 					pid = array[1];

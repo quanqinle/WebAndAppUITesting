@@ -1,4 +1,4 @@
-package com.quanql.test.perfutils;
+package com.quanql.test.androidperfutils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.CommandResult;
 
 /**
  * 在本地执行命令行<br>

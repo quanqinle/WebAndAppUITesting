@@ -1,11 +1,11 @@
-package com.quanql.test.perfutils.data;
+package com.quanql.test.androidperfutils.data;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.CommandResult;
-import com.quanql.test.perfutils.ShellUtils;
+import com.quanql.test.androidperfutils.CommandResult;
+import com.quanql.test.androidperfutils.ShellUtils;
 
 /**
  * 

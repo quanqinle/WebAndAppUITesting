@@ -1,9 +1,9 @@
-package com.quanql.test.perfutils.data;
+package com.quanql.test.androidperfutils.data;
 
-import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.CommandResult;
-import com.quanql.test.perfutils.ShellUtils;
+import com.quanql.test.androidperfutils.CommandResult;
+import com.quanql.test.androidperfutils.ShellUtils;
+import com.quanql.test.androidperfutils.AndroidConstant;
 
 /**
  * CPU信息
@@ -23,7 +23,7 @@ public class CpuInfo {
 	}
 
 	public CpuInfo() {
-		this(Constant.APP_PACKAGE_NAME);
+		this(AndroidConstant.APP_PACKAGE_NAME);
 	}
 
 	public CpuInfo(String appPackageName) {
@@ -64,7 +64,7 @@ public class CpuInfo {
 		CommandResult cr = ShellUtils.execCommand(cpucmd);
 		for (String str : cr.getSuccessMsgArray()) {
 			if (str.contains(appname)) {
-				array = str.trim().split(Constant.BLANK_SPLIT);
+				array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 				this.CPU = array[0]; // TODO 解析其他字段
 
 				break;
@@ -101,7 +101,7 @@ public class CpuInfo {
 		CommandResult cr = ShellUtils.execCommand(cpucmd);
 		for (String str : cr.getSuccessMsgArray()) {
 			if (str.endsWith(appname)) { // 结尾
-				array = str.trim().split(Constant.BLANK_SPLIT);
+				array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 
 				// 为了方便后续数据分析，记录结果时去除百分号
 				this.CPU = array[2].substring(0, array[2].length() - 1);

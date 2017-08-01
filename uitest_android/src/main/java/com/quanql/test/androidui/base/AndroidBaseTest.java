@@ -10,13 +10,13 @@ import com.quanql.test.androidui.page.TabHomePage;
 import com.quanql.test.core.base.BaseTest;
 import com.quanql.test.core.base.DriverFactory;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.PerfMonitor;
-import com.quanql.test.perfutils.PerfMonitor.PoolType;
-import com.quanql.test.perfutils.ShellUtils;
-import com.quanql.test.perfutils.data.AppInfo;
-import com.quanql.test.perfutils.task.CpuTask;
-import com.quanql.test.perfutils.task.FrameTask;
-import com.quanql.test.perfutils.task.MemTask;
+import com.quanql.test.androidperfutils.PerfMonitor;
+import com.quanql.test.androidperfutils.PerfMonitor.PoolType;
+import com.quanql.test.androidperfutils.ShellUtils;
+import com.quanql.test.androidperfutils.data.AppInfo;
+import com.quanql.test.androidperfutils.task.CpuTask;
+import com.quanql.test.androidperfutils.task.FrameTask;
+import com.quanql.test.androidperfutils.task.MemTask;
 
 /**
  * testcase基类<br>

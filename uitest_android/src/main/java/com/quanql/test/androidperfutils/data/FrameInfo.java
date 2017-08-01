@@ -1,11 +1,11 @@
-package com.quanql.test.perfutils.data;
+package com.quanql.test.androidperfutils.data;
 
 import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.DoubleUtil;
 import com.quanql.test.core.utils.LogUtil;
 import com.quanql.test.core.utils.StringUtil;
-import com.quanql.test.perfutils.CommandResult;
-import com.quanql.test.perfutils.ShellUtils;
+import com.quanql.test.androidperfutils.CommandResult;
+import com.quanql.test.androidperfutils.ShellUtils;
 
 /**
  * 图像帧数据

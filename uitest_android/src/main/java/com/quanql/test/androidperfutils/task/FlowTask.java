@@ -1,4 +1,4 @@
-package com.quanql.test.perfutils.task;
+package com.quanql.test.androidperfutils.task;
 
 import java.util.concurrent.Callable;
 
@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import com.quanql.test.core.utils.FileUtil;
 import com.quanql.test.core.utils.LogUtil;
 import com.quanql.test.core.utils.TimeUtil;
-import com.quanql.test.perfutils.data.AppInfo;
-import com.quanql.test.perfutils.data.FlowInfo;
+import com.quanql.test.androidperfutils.data.AppInfo;
+import com.quanql.test.androidperfutils.data.FlowInfo;
 
 /**
  * 流量测试线程任务

@@ -1,4 +1,4 @@
-package com.quanql.test.perfutils.task;
+package com.quanql.test.androidperfutils.task;
 
 import java.util.concurrent.Callable;
 
@@ -6,81 +6,91 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.quanql.test.core.utils.FileUtil;
 import com.quanql.test.core.utils.LogUtil;
+import com.quanql.test.core.utils.StringUtil;
 import com.quanql.test.core.utils.TimeUtil;
-import com.quanql.test.perfutils.data.AppInfo;
-import com.quanql.test.perfutils.data.CpuInfo;
+import com.quanql.test.androidperfutils.data.AppInfo;
+import com.quanql.test.androidperfutils.data.FrameInfo;
 
 /**
- * CPU测试线程任务
+ * 帧率测试线程任务
  * 
  * @author 权芹乐
  *
  */
-public class CpuTask implements Callable<String>, Runnable {
-	private CpuInfo cpuInfo = null;
+public class FrameTask implements Callable<String>, Runnable {
+	private FrameInfo frameInfo = null;
+
 	private String sDataLine = null;
 	private boolean bWriteFile = false;
-	private String file = "-" + AppInfo.getAppVersion() + "-cpu";
+	private String file = "-" + AppInfo.getAppVersion() + "-frame";
+
 	private static String eventName = "";
 
-	public CpuTask() {
+	public static void main(String[] args) {
+	}
+
+	public FrameTask() {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(true, getFile());
 	}
 
-	public CpuTask(String eventName) {
+	public FrameTask(String eventName) {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(true, getFile());
-		CpuTask.eventName = eventName;
+		FrameTask.eventName = eventName;
 	}
 
-	public CpuTask(boolean bWriteFile) {
+	public FrameTask(boolean bWriteFile) {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(bWriteFile, getFile());
 	}
 
-	public CpuTask(boolean bWriteFile, String filename) {
+	public FrameTask(boolean bWriteFile, String filename) {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(bWriteFile, filename);
 	}
 
 	private void initFields(boolean bWriteFile, String filename) {
-		this.cpuInfo = new CpuInfo();
+		this.frameInfo = new FrameInfo();
 		this.bWriteFile = bWriteFile;
 		setFile(filename);
 		if (bWriteFile) {
-			FileUtil.write2Csv(getFile(), String.join(",", "SamplingTime", CpuInfo.getPrintTitle(), "EventName\n"));
+			if (!StringUtil.isEmptyOrWhitespaceOnly(FrameInfo.getPrintTitle())) {
+				FileUtil.write2Csv(getFile(),
+						String.join(",", "SamplingTime", FrameInfo.getPrintTitle(), "EventName\n"));
+			}
 		}
 	}
 
 	@Override
 	public String call() throws Exception {
-		return getCpuData();
+		return getFrameData();
 	}
 
 	@Override
 	public void run() {
-		getCpuData();
+		getFrameData();
 	}
 
-	private String getCpuData() {
-		LogUtil.info(Thread.currentThread().getName() + " cpu");
-		cpuInfo.getCurrentCpuData();
-		sDataLine = cpuInfo.getPrintLine();
+	private String getFrameData() {
+		LogUtil.info(Thread.currentThread().getName() + " frame");
+		frameInfo.getCurrentFrameData();
+		sDataLine = frameInfo.getPrintLine();
 		if (bWriteFile) {
-			FileUtil.write2Csv(getFile(),
-					String.join(",", TimeUtil.getCurrentDateTime(4), sDataLine, eventName) + "\n");
+			if (!StringUtil.isEmptyOrWhitespaceOnly(sDataLine)) {
+				FileUtil.write2Csv(getFile(),
+						String.join(",", TimeUtil.getCurrentDateTime(4), sDataLine, eventName) + "\n");
+			}
 		}
 
 		return sDataLine;
 	}
 
 	public String getFile() {
-
 		return file;
 	}
 
@@ -104,5 +114,4 @@ public class CpuTask implements Callable<String>, Runnable {
 
 		return null;
 	}
-
 }

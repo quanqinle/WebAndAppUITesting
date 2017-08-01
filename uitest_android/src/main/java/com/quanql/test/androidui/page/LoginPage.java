@@ -102,37 +102,4 @@ public class LoginPage extends AndroidBasePage {
 
 	}
 
-	/**
-	 * 必须登录，如果已经登陆，则退出重新登录
-	 */
-	public static void mustLogin() {
-
-		logout();
-		ConfigUtil property = ConfigUtil.getInstance();
-
-		TabMyPage.LoginNowBtn.click();
-		TabHomePage.wait(2000);
-		typeUsername(property.getProperty("name"));
-		typePassword(property.getProperty("passwd"));
-		clickLogin();
-
-	}
-
-	/**
-	 * 退出登陆
-	 */
-	public static void logout() {
-
-		TabHomePage.TabMine.click();
-		TabHomePage.wait(5000);
-
-		if (!TabMyPage.isNeedLogin()) {
-
-			SetPage.setting.click();
-			SetPage.ExitBtn.click();
-			SetPage.sureLogout.click();
-		}
-
-	}
-
 }

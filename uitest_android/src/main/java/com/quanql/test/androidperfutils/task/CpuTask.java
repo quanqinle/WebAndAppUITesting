@@ -1,4 +1,4 @@
-package com.quanql.test.perfutils.task;
+package com.quanql.test.androidperfutils.task;
 
 import java.util.concurrent.Callable;
 
@@ -7,70 +7,70 @@ import org.apache.commons.lang3.StringUtils;
 import com.quanql.test.core.utils.FileUtil;
 import com.quanql.test.core.utils.LogUtil;
 import com.quanql.test.core.utils.TimeUtil;
-import com.quanql.test.perfutils.data.AppInfo;
-import com.quanql.test.perfutils.data.MemoryInfo;
+import com.quanql.test.androidperfutils.data.AppInfo;
+import com.quanql.test.androidperfutils.data.CpuInfo;
 
 /**
- * 内存测试线程任务
+ * CPU测试线程任务
  * 
  * @author 权芹乐
  *
  */
-public class MemTask implements Callable<String>, Runnable {
-	private MemoryInfo memInfo = null;
+public class CpuTask implements Callable<String>, Runnable {
+	private CpuInfo cpuInfo = null;
 	private String sDataLine = null;
 	private boolean bWriteFile = false;
-	private String file = "-" + AppInfo.getAppVersion() + "-mem";
+	private String file = "-" + AppInfo.getAppVersion() + "-cpu";
 	private static String eventName = "";
 
-	public MemTask() {
+	public CpuTask() {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(true, getFile());
 	}
 
-	public MemTask(String eventName) {
+	public CpuTask(String eventName) {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(true, getFile());
-		MemTask.eventName = eventName;
+		CpuTask.eventName = eventName;
 	}
 
-	public MemTask(boolean bWriteFile) {
+	public CpuTask(boolean bWriteFile) {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(bWriteFile, getFile());
 	}
 
-	public MemTask(boolean bWriteFile, String filename) {
+	public CpuTask(boolean bWriteFile, String filename) {
 
 		file = StringUtils.stripEnd(getfileName(), ".java") + file;
 		initFields(bWriteFile, filename);
 	}
 
 	private void initFields(boolean bWriteFile, String filename) {
-		this.memInfo = new MemoryInfo();
+		this.cpuInfo = new CpuInfo();
 		this.bWriteFile = bWriteFile;
 		setFile(filename);
 		if (bWriteFile) {
-			FileUtil.write2Csv(getFile(), String.join(",", "SamplingTime", MemoryInfo.getPrintTitle(), "EventName\n"));
+			FileUtil.write2Csv(getFile(), String.join(",", "SamplingTime", CpuInfo.getPrintTitle(), "EventName\n"));
 		}
 	}
 
 	@Override
 	public String call() throws Exception {
-		return getMemData();
+		return getCpuData();
 	}
 
 	@Override
 	public void run() {
-		getMemData();
+		getCpuData();
 	}
 
-	private String getMemData() {
-		LogUtil.info(Thread.currentThread().getName() + " mem");
-		memInfo.getCurrentMemData();
-		sDataLine = memInfo.getPrintLine();
+	private String getCpuData() {
+		LogUtil.info(Thread.currentThread().getName() + " cpu");
+		cpuInfo.getCurrentCpuData();
+		sDataLine = cpuInfo.getPrintLine();
 		if (bWriteFile) {
 			FileUtil.write2Csv(getFile(),
 					String.join(",", TimeUtil.getCurrentDateTime(4), sDataLine, eventName) + "\n");
@@ -80,6 +80,7 @@ public class MemTask implements Callable<String>, Runnable {
 	}
 
 	public String getFile() {
+
 		return file;
 	}
 
@@ -103,4 +104,5 @@ public class MemTask implements Callable<String>, Runnable {
 
 		return null;
 	}
+
 }

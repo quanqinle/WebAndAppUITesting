@@ -1,4 +1,4 @@
-package com.quanql.test.perfutils;
+package com.quanql.test.androidperfutils;
 
 /**
  * result of command

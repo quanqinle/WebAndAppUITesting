@@ -1,14 +1,14 @@
-package com.quanql.test.perfutils.data;
+package com.quanql.test.androidperfutils.data;
 
 import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.DoubleUtil;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.CommandResult;
-import com.quanql.test.perfutils.ShellUtils;
+import com.quanql.test.androidperfutils.CommandResult;
+import com.quanql.test.androidperfutils.ShellUtils;
+import com.quanql.test.androidperfutils.AndroidConstant;
 
 /**
  * 流量信息
@@ -25,7 +25,7 @@ public class FlowInfo {
 	private long lTransmit_Wlan0_Bytes = 0l;
 
 	public FlowInfo() {
-		this(Constant.APP_PACKAGE_NAME);
+		this(AndroidConstant.APP_PACKAGE_NAME);
 	}
 
 	public FlowInfo(String appPackageName) {
@@ -48,14 +48,14 @@ public class FlowInfo {
 	public void getCurrentFlowData(String appPkgName) {
 		String[] array;
 
-		AppInfo appInfo = new AppInfo(Constant.APP_PACKAGE_NAME);
+		AppInfo appInfo = new AppInfo(AndroidConstant.APP_PACKAGE_NAME);
 		String pid = appInfo.getPid();
 		String cmdline = "adb shell cat /proc/" + pid + "/net/dev";
 		CommandResult cr = ShellUtils.execCommand(cmdline);
 		for (String str : cr.getSuccessMsgArray()) {
 			if (str.contains("wlan0")) {
 				LogUtil.debug(str);
-				array = str.trim().split(Constant.BLANK_SPLIT);
+				array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 				lReceive_Wlan0_Bytes = Long.parseLong(array[1]);
 				lTransmit_Wlan0_Bytes = Long.parseLong(array[9]);
 

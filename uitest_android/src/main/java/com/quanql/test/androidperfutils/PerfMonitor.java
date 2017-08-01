@@ -1,4 +1,4 @@
-package com.quanql.test.perfutils;
+package com.quanql.test.androidperfutils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 import com.quanql.test.core.utils.LogUtil;
 import com.quanql.test.core.utils.ConfigUtil;
 import com.quanql.test.core.utils.TimeUtil;
-import com.quanql.test.perfutils.task.CpuTask;
-import com.quanql.test.perfutils.task.FlowTask;
-import com.quanql.test.perfutils.task.FrameTask;
-import com.quanql.test.perfutils.task.MemTask;
+import com.quanql.test.androidperfutils.task.CpuTask;
+import com.quanql.test.androidperfutils.task.FlowTask;
+import com.quanql.test.androidperfutils.task.FrameTask;
+import com.quanql.test.androidperfutils.task.MemTask;
 
 /**
  * 性能监控

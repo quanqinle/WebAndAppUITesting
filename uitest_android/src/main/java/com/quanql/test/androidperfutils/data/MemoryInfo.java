@@ -1,12 +1,12 @@
-package com.quanql.test.perfutils.data;
+package com.quanql.test.androidperfutils.data;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.DoubleUtil;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.perfutils.CommandResult;
-import com.quanql.test.perfutils.ShellUtils;
+import com.quanql.test.androidperfutils.CommandResult;
+import com.quanql.test.androidperfutils.ShellUtils;
+import com.quanql.test.androidperfutils.AndroidConstant;
 
 /**
  * 内存信息
@@ -25,7 +25,7 @@ public class MemoryInfo {
 	private long lPssTOTAL_kB = 0l;
 
 	public MemoryInfo() {
-		this(Constant.APP_PACKAGE_NAME);
+		this(AndroidConstant.APP_PACKAGE_NAME);
 	}
 
 	public MemoryInfo(String appPackageName) {
@@ -64,16 +64,16 @@ public class MemoryInfo {
 			}
 			if (isInTable) {
 				if (str.contains("Native Heap")) {
-					array = str.trim().split(Constant.BLANK_SPLIT);
+					array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 					lNativeHeap_kB = Long.parseLong(array[2]);
 
 				}
 				if (str.contains("Dalvik Heap")) {
-					array = str.trim().split(Constant.BLANK_SPLIT);
+					array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 					lDalvikHeap_kB = Long.parseLong(array[2]);
 				}
 				if (str.contains("TOTAL")) {
-					array = str.trim().split(Constant.BLANK_SPLIT);
+					array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 					lPssTOTAL_kB = Long.parseLong(array[1]);
 				}
 			}
