@@ -5,7 +5,10 @@
 + 这是一个适用于Web/Android/iOS的UI自动化项目，以及支持Android性能测试。项目底层使用了Selenium/Appium。  
 + 项目用maven进行工程管理，通过testng进行用例管理。
 + 对常用的selenium api进行了封装，如click()、type()等，在其中增加了元素可用性判断、log记录、失败截图。
-
++ WebUI、AndroidUI、iOSUI分别单独成module，根据os特性可以编写专用的基类方法，并且module根目录下配置文件config.properties互不影响
++ 同一个testcase支持可配置的读取线上环境、线下环境2份测试驱动数据
++ 封装了日志LogUtil、断言AssertUtil，方便以后替换或扩展其他功能
++ Android：如提供资源混淆文件mapping.txt，框架可以自行将原始元素id替换成混淆后的id，然后实现正常的定位元素
 
 环境准备
 ---
@@ -82,6 +85,47 @@
             │                  └─testcase
             └─resources 存放chromedriver
 ```
+
+架构图
+---
+![proj frame](/docs/images/project-frame.png)
+
+
+使用方法
+---
+## iPhone UI
+
+#### 编译被测应用
+1. 前提：保证xcode已经可以编译通过被测app，且在模拟器上验证基本功能正常
+2. 更新代码
+3. 编译app  
+> cd 工程目录  
+> xcodebuild -workspace BeiBeiAPP.xcworkspace -scheme beibei -configuration Debug -sdk iphonesimulator -arch x86_64  
+
+4. 生成压缩包，其中**beibei.zip就是被测包**
+> ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/beibei.zip  
+
+
+#### 元素识别
+1. 进入appium server的iOS settings界面，设置App Path=上一步生成的zip，设置Force Device和Platform Version
+2. 点击launch
+3. 点击inspector，后续元素识别操作同Android
+4. 建议使用相对路径的xpath定位元素，例如：`Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']")`
+
+#### 编写用例
++ 页面demo：uitest_iphone下LoginPage.java
++ 用例demo：uitest_iphone下DemoLoginTest.java
+
+#### 运行用例
+1. 配置config.properties  
+    + remote.address=appium server的地址  
+    + app=appium server机器上的绝对路径
+2. appium client，及UI工程代码  
+    + 可以在Mac上，即，和appium   server在同一台机器上  
+    + 也可以在PC上，执行指令会被发送到远端的appium server，执行时在appium server上
+
+
+
 我是广告
 ---
 推荐个最近在用的云服务提供商，质优价廉。好\*梯\*子，每月2.5刀，500G流量，网速够快。  
