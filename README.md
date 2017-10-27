@@ -49,7 +49,7 @@
 │      └─main
 │          └─java
 │              └─com
-│                  └─beibei
+│                  └─quanql
 │                      └─test
 │                          ├─androidui
 │                          │   ├─base Android专用的基础类，集成自uitest_core的base
@@ -61,7 +61,7 @@
 │      └─main
 │          ├─java
 │          │  └─com
-│          │      └─beibei
+│          │      └─quanql
 │          │          └─test
 │          │              └─core
 │          │                 ├─base 
@@ -77,7 +77,7 @@
         └─main
             ├─java
             │  └─com
-            │      └─beibei
+            │      └─quanql
             │          └─test
             │              └─webui
             │                  ├─base web专用的基础类，集成自uitest_core的base
@@ -100,10 +100,10 @@
 2. 更新代码
 3. 编译app  
 > cd 工程目录  
-> xcodebuild -workspace BeiBeiAPP.xcworkspace -scheme beibei -configuration Debug -sdk iphonesimulator -arch x86_64  
+> xcodebuild -workspace quanqlAPP.xcworkspace -scheme quanql -configuration Debug -sdk iphonesimulator -arch x86_64  
 
-4. 生成压缩包，其中**beibei.zip就是被测包**
-> ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/beibei.zip  
+4. 生成压缩包，其中**quanql.zip就是被测包**
+> ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/quanql.zip  
 
 
 #### 元素识别
