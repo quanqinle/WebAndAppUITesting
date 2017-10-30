@@ -6,7 +6,7 @@ import com.quanql.test.core.utils.AssertUtil;
 import com.quanql.test.webui.base.WebBaseTest;
 import com.quanql.test.webui.page.DemoBaiduPage;
 
-public class DemoBaiduTest extends WebBaseTest {
+public class Demo163Test extends WebBaseTest {
 
 	@Test
 	public void testSearchNetease() {
