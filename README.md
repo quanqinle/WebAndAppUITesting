@@ -134,7 +134,8 @@
 
 ### 方式一
 
-例如，`./uitest_iphone/src/main/java/com/quanql/test/iphoneui/page/LoginPage.java`和`./uitest_android/src/main/java/com/quanql/test/androidui/testcase/DemoLoginTest.java`
+例如，`./uitest_iphone/src/main/java/com/quanql/test/iphoneui/page/LoginPage.java`和  
+`./uitest_android/src/main/java/com/quanql/test/androidui/testcase/DemoLoginTest.java`
 
 封装登录page
 ```java
