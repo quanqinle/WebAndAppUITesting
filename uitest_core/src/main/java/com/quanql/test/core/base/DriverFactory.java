@@ -14,6 +14,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.quanql.test.core.utils.AssertUtil;
@@ -48,7 +50,7 @@ public class DriverFactory extends RemoteWebDriver {
 		LogUtil.info(System.getProperty("java.class.path"));
 	}
 
-	public DriverFactory() {
+	protected DriverFactory() {
 		LogUtil.info("BaseTest-DriverFactory-start 3");
 
 		property = ConfigUtil.getInstance();
@@ -73,7 +75,9 @@ public class DriverFactory extends RemoteWebDriver {
 		} else if (driverType.equalsIgnoreCase("iossafari")) {
 			createIOSSafariDriver(cap_noReset);
 		} else if (driverType.equalsIgnoreCase("chrome")) {
-			createChromeDriver();
+			createChromeDriver(false);
+		} else if (driverType.equalsIgnoreCase("H5")) {
+			createChromeDriver(true);
 		} else if (driverType.equalsIgnoreCase("firefox")) {
 			createFirefoxDriver();
 		} else {
@@ -190,19 +194,33 @@ public class DriverFactory extends RemoteWebDriver {
 		driver = new FirefoxDriver();
 	}
 
-	private void createChromeDriver() {
+	/**
+	 * chrome driver
+	 *
+	 * @param isMobileChrome 是否模拟手机浏览器
+	 */
+	private void createChromeDriver(boolean isMobileChrome) {
 		// local本地, remote远程
 		String runningType = property.getProperty("running.type");
 
 		capabilities = DesiredCapabilities.chrome();
-		capabilities.setBrowserName(property.getProperty("driver.type"));
+		capabilities.setBrowserName(driverType);
 		// note: getRescource start with /
 		System.setProperty("webdriver.chrome.driver", getClass().getResource("/chromedriver.exe").getPath());
 		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--start-maximized");
 		// options.addExtensions(new File("/path/to/extension.crx"));
 		// options.setBinary(new File("/path/to/chrome"));
-		// driver = new ChromeDriver(options);
-		options.addArguments("test-type");
+
+		// 模拟手机浏览器
+		if (isMobileChrome) {
+			// 有两种方式：1使用预设的配置（如下）2自定义配置
+			// https://sites.google.com/a/chromium.org/chromedriver/mobile-emulation
+			Map<String, String> mobileEmulation = new HashMap<>();
+			mobileEmulation.put("deviceName", "Nexus 6"); // 可以修改
+			options.setExperimentalOption("mobileEmulation", mobileEmulation);
+		}
+
 		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		try {
 			if (runningType.equalsIgnoreCase("local")) {
@@ -217,7 +235,7 @@ public class DriverFactory extends RemoteWebDriver {
 		try {
 			driver.manage().window().maximize();
 		} catch (Exception e) {
-			LogUtil.info(driver.manage().logs() + "全屏浏览器失败~");
+			LogUtil.info(driver.manage().logs() + "全屏浏览器失败");
 		}
 
 	}

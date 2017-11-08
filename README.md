@@ -2,7 +2,7 @@
 
 简述
 ---
-+ 这是一个适用于Web/Android/iOS的UI自动化项目，以及支持Android性能测试。项目底层使用了Selenium/Appium。  
++ 这是一个适用于Web/Android/iOS/H5的UI自动化项目，以及支持Android性能测试。项目底层使用了Selenium/Appium。  
 + 项目用maven进行工程管理，通过testng进行用例管理。
 + 对常用的selenium api进行了封装，如click()、type()等，在其中增加了元素可用性判断、log记录、失败截图。
 + WebUI、AndroidUI、iOSUI分别单独成module，根据os特性可以编写专用的基类方法，并且module根目录下配置文件config.properties互不影响
