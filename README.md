@@ -248,8 +248,7 @@ public class Demo163Test extends WebBaseTest {
 ```
 
 
-我是广告
+其他
 ---
-推荐个最近在用的云服务提供商，质优价廉。好\*梯\*子，每月2.5刀，500G流量，网速够快。  
-[点我！vultr](https://www.vultr.com/?ref=7159348)  
-[![vultr](https://www.vultr.com/media/banner_1.png)](https://www.vultr.com/?ref=7159348)
++ [chrome driver下载地址](https://sites.google.com/a/chromium.org/chromedriver/downloads)
+
