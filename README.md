@@ -1,7 +1,9 @@
-# Web And App UI Testing
+Web And App UI Testing
 
-简述
----
+[TOC]
+
+# 简述
+
 + 这是一个适用于Web/Android/iOS/H5的UI自动化项目，以及支持Android性能测试。项目底层使用了Selenium/Appium。  
 + 项目用maven进行工程管理，通过testng进行用例管理。
 + 对常用的selenium api进行了封装，如click()、type()等，在其中增加了元素可用性判断、log记录、失败截图。
@@ -10,21 +12,21 @@
 + 封装了日志LogUtil、断言AssertUtil，方便以后替换或扩展其他功能
 + Android：如提供资源混淆文件mapping.txt，框架可以自行将原始元素id替换成混淆后的id，然后实现正常的定位元素
 
-环境准备
----
-### 公共
+# 环境准备
+
+## 公共
 1. jdk>=1.8 
 2. maven>=3
 3. IDE(eclipse或其他，以下以eclipse为例) + testng插件 + maven插件
 
-### Android
+## Android
 1. 安装Android SDK  
 1.1 配置环境变量  
 1.2 控制台下验证`adb`运行正常  
 1.3 如果使用模拟器运行用例，需要先用`AVD Manager`创建模拟器
 2. 安装Appium服务端程序，参见[http://appium.io/](http://appium.io/)。避免踩坑，建议使用现成的安装包，界面操作更省心
 
-### iPhone
+## iPhone
 1. **Mac OS X是必须的！**   
 1.1 Appium Server运行、元素识别、脚本执行都需要用到Mac  
 1.2 安装Xcode，验证安装，直至被测app可以编译成功，并在模拟器中打开  
@@ -32,8 +34,8 @@
 3. 安装Appium服务端程序，安装后会发现它比Windows版多了对iOS测试的支持
 ![Appium Server Mac](/docs/images/appium-server-mac.png)
 
-工程结构
----
+
+# 工程结构
 
 ```
 ├─perftest_android  <--Android性能测试工程
@@ -86,16 +88,18 @@
             └─resources 存放chromedriver
 ```
 
-架构图
----
+# 架构图
+
 ![proj frame](/docs/images/project-frame.png)
 
 
-用例编写步骤
----
-### 1、iPhone UI
+# 用例编写步骤
 
-#### 编译被测应用
+## 1. Web UI
+
+## 2. iPhone UI
+
+### 编译被测应用
 1. 前提：保证xcode已经可以编译通过被测app，且在模拟器上验证基本功能正常
 2. 更新代码
 3. 编译app  
@@ -106,17 +110,17 @@
 > ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/quanql.zip  
 
 
-#### 元素识别
+### 元素识别
 1. 进入appium server的iOS settings界面，设置App Path=上一步生成的zip，设置Force Device和Platform Version
 2. 点击launch
 3. 点击inspector，后续元素识别操作同Android
 4. 建议使用相对路径的xpath定位元素，例如：`Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']")`
 
-#### 编写用例
+### 编写用例
 + 页面demo：uitest_iphone下LoginPage.java
 + 用例demo：uitest_iphone下DemoLoginTest.java
 
-#### 运行用例
+### 运行用例
 1. 配置config.properties  
     + remote.address=appium server的地址  
     + app=appium server机器上的绝对路径
@@ -124,15 +128,19 @@
     + 可以在Mac上，即，和appium   server在同一台机器上  
     + 也可以在PC上，执行指令会被发送到远端的appium server，执行时在appium server上
 
-两种用例编写方式
----
+## 3. Android UI
+
+## 4. H5
+
+# 两种用例编写方式
+
 我将参与UI自动化用例编写的人员分为两类，（当然，也可能有的团队不会分的这么细，一个人齐活）
 1. 第一类：编写底层/基础功能的人员，他们可能负责编写base中公共方法、识别和封装元素，这类人可以不了解业务，但对编程技能要求高；
 2. 第二类：业务用例编写人员，将页面、组件按照一定的业务要求进行整合，使之符合一定的story，完成业务测试向自动化的转化，这类人要求熟悉业务，对编程技能要求不高。而他们使用的页面和元素就是第一类人员提供的。
 
 工程中提供两了种用例编写的方式，第一种对用例编写人员更友好、技术要求不高、代码可读性强。而我个人更习惯第二种，因为它对复杂控件和场景支持更好。
 
-### 方式一
+## 方式一
 
 例如，`./uitest_iphone/src/main/java/com/quanql/test/iphoneui/page/LoginPage.java`和  
 `./uitest_android/src/main/java/com/quanql/test/androidui/testcase/DemoLoginTest.java`
@@ -182,7 +190,7 @@ public class DemoLoginTest extends IphoneBaseTest {
 }
 ```
 
-### 方式二
+## 方式二
 
 例如，`./uitest_web/src/main/java/com/quanql/test/webui/testcase/Demo163Test.java`
 
@@ -248,7 +256,9 @@ public class Demo163Test extends WebBaseTest {
 ```
 
 
-其他
----
+# 其他
+
+## driver下载地址
 + [chrome driver下载地址](https://sites.google.com/a/chromium.org/chromedriver/downloads)
 
+# 广告
