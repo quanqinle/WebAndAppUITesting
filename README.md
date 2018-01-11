@@ -256,9 +256,16 @@ public class Demo163Test extends WebBaseTest {
 ```
 
 
+# 广告
+
+各位路过的朋友，走过路过不要错过啊~~ 这是本人录制的 **《Web UI自动化测试：Selenium入门》视频课程** ，并放在网上
+[腾讯课堂](https://ke.qq.com/course/270174)。欢迎需要的朋友查看。如果你觉得课程还不错，或者当前的项目对你有帮助，烦请顺手点个赞/收藏，或者介绍给其他需要的朋友。[谢过]
+
+另有《Web UI自动化测试：Selenium进阶》课程正在筹备中，敬请期待...
+
+以后有精力也有可能准备其他的课程，如接口测试、单元测试、持续集成。
+
 # 其他
 
 ## driver下载地址
 + [chrome driver下载地址](https://sites.google.com/a/chromium.org/chromedriver/downloads)
-
-# 广告
