@@ -103,8 +103,9 @@ Web And App UI Testing
 1. 前提：保证xcode已经可以编译通过被测app，且在模拟器上验证基本功能正常
 2. 更新代码
 3. 编译app  
-> cd 工程目录  
-> xcodebuild -workspace quanqlAPP.xcworkspace -scheme quanql -configuration Debug -sdk iphonesimulator -arch x86_64  
+    > cd  APP_PATH  
+    > 
+	> xcodebuild -workspace quanqlAPP.xcworkspace -scheme quanql -configuration Debug -sdk iphonesimulator -arch x86_64  
 
 4. 生成压缩包，其中**quanql.zip就是被测包**
 > ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/quanql.zip  
@@ -117,8 +118,8 @@ Web And App UI Testing
 4. 建议使用相对路径的xpath定位元素，例如：`Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']")`
 
 ### 编写用例
-+ 页面demo：uitest_iphone下LoginPage.java
-+ 用例demo：uitest_iphone下DemoLoginTest.java
++ 页面demo：uitest_iphone下的LoginPage.java
++ 用例demo：uitest_iphone下的DemoLoginTest.java
 
 ### 运行用例
 1. 配置config.properties  
@@ -138,7 +139,7 @@ Web And App UI Testing
 1. 第一类：编写底层/基础功能的人员，他们可能负责编写base中公共方法、识别和封装元素，这类人可以不了解业务，但对编程技能要求高；
 2. 第二类：业务用例编写人员，将页面、组件按照一定的业务要求进行整合，使之符合一定的story，完成业务测试向自动化的转化，这类人要求熟悉业务，对编程技能要求不高。而他们使用的页面和元素就是第一类人员提供的。
 
-工程中提供两了种用例编写的方式，第一种对用例编写人员更友好、技术要求不高、代码可读性强。而我个人更习惯第二种，因为它对复杂控件和场景支持更好。
+下面介绍工程中提供的两了种用例编写方式，第一种对业务用例编写人员更友好、技术要求不高、代码可读性强。而我个人更习惯第二种，因为它对复杂控件和场景支持更好。
 
 ## 方式一
 
@@ -254,6 +255,77 @@ public class Demo163Test extends WebBaseTest {
 	
 }
 ```
+
+# 数据驱动
+
+先看例子再解释
+
+## 数据驱动实例
+
+### 测试用例 NewUserRegisterTest.java
+```Java
+/**
+ * 新人注册
+ */
+public class NewUserRegisterTest extends AndroidBaseTest { 
+    @Test(dataProvider = "providerMethod")
+    public void testNewUserRegiser(String telephone,String codenum,String passwd){
+        //点击我的Icon
+        TabHomePage.TabMine.click();
+        //点击新人注册
+        TabMyPage.MyRegister.click();
+        //注册页面输入手机号码
+        RegisterPage.TelePhoneNum.sendkeys(telephone);
+        //获取验证码
+    	RegisterPage.GetCodeBtn.click();
+    	//输入短信验证码
+    	RegisterPage.CodeNum.sendkeys(codenum);
+    	//设置新密码
+    	RegisterPage.SetPassWord.sendkeys(passwd);
+    	//点击立即注册
+    	RegisterPage.NowRegisterBtn.click();
+    	//如果存在注册成功的字段则注册成功，否则注册失败
+    	AssertUtil.assertTrue(RegisterPage.RegisterSucess.isDisplayed(), "注册失败");
+    }
+}
+```
+
+### 配置文件 config.properties
+```
+##测试用例运行环境: online, test
+##决定了读取哪份数据驱动，同时，参数名也是数据的存放目录
+running.env=test
+```
+
+### 测试数据 NewPersonRegiser.csv
+
++ testdata目录和src同级
++ 测试数据，当前只支持csv格式
+```
+├─uitest_android
+   ├─src 
+   └─testdata  
+      ├─online 线上数据
+      │  └─ NewPersonRegiser.csv   
+      └─test   线下数据
+         └─ NewPersonRegiser.csv
+```
+
+NewPersonRegiser.csv文件内容示意，以下是文本编辑器打开，你也可以用excel打开：
+```
+telephone,codenum,passwd
+18888888888,8888,quan123
+```
+
+## 数据驱动解释
+
+1. config.properties中参数running.env决定数据读取目录
+2. @Test的函数名（上例中的testNewUserRegiser）决定了数据驱动的文件名NewPersonRegiser.csv
+    - ==测试用例函数名“必须test开头，可以没有_==”，形如testHelloWorld_01()
+    - 结合1.中的路径，本例读取的文件是 ==submodule名称/testdata/test/NewPersonRegiser.csv==
+3. java测试用例
+    - @Test后面加(dataProvider = "providerMethod")
+    - testNewUserRegiser()的==函数参数个数+排序与csv文件中的数据一致==，但是不强制要求参数名称与csv第一行的表头一致
 
 
 # 广告
