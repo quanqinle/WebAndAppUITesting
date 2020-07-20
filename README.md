@@ -24,7 +24,7 @@
 3. Selenium
 4. Appium
 5. testng
-6. IDE (eclipse or others, the following takes eclipse as an example) + testng plugin + maven plugin
+6. IDE (eclipse or others, this tutorial takes eclipse as an example) + testng plugin + maven plugin
 
 ## Android
 1. Install `Android SDK`  
@@ -103,6 +103,7 @@
 # Write test cases step by step
 
 ## 1. Web UI
+// TODO to be added later
 
 ## 2. iPhone UI
 
@@ -143,6 +144,7 @@
 // TODO to be added later
 
 ## 4. H5
+// TODO to be added later
 
 # Two ways to write test cases
 
@@ -161,7 +163,7 @@ The Log in page
 
 ```java
 /**
- * Notice there're nothing in this class except elements location.
+ * Note that there're nothing in this class except elements location.
  *
  * This's the FIRST difference from the other way.
  */
@@ -209,7 +211,7 @@ Log in page
 
 ```java
 /**
- * Notice that not only elements location but also elements operation in this class.
+ * Note that not only elements location but also elements operation are in this class.
  */
 public class DemoBaiduPage extends WebBasePage {
   private static String edtSearchId = "kw";
