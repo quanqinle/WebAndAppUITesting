@@ -1,4 +1,4 @@
-# Web And App UI Testing
+# UI Automated Testing Framework for Web and App
 
 [简体中文](./README.cn.md) | English
 
@@ -8,13 +8,13 @@
 
 # Project Brief
 
-+ This is a UI automation project for Web/Android/iOS/H5, and supports Android performance testing. The core of the project uses Selenium/Appium.
++ This is a **UI test automation framework for Web/Android/iOS/H5**, and supports Android performance testing. The core of the project uses Selenium/Appium.
 + The project uses maven for project management and testng for test case management.
 + The common Selenium APIs are encapsulated, such as `click()`, `type()`, etc. And they are added element availability verification, log recording, and taking screenshot for failed tests.
 + WebUI, AndroidUI and iOSUI are separate modules. According to OS features, special base class methods have be written, and the configuration file `config.properties` under the module root directory will not affect each other.
 + A testcase can test online or offline enviroment at the same time by different tests data driven.
-+ Log and assert have been encapsulated into LogUtil and AssertUtil, which is easy to replace or extend in the future.
-+ Android: If `mapping.txt` the resource obfuscation file is provided, the framework can replace the original element id with the obfuscated id, and then the positioning elements are normal.
++ Log and assertion have been encapsulated into LogUtil and AssertUtil, which is easy to replace or extend in the future.
++ Android: If `mapping.txt` the resource obfuscation file is provided, the framework can automatically replace the original element id with the obfuscated id, and then the positioning elements work fine.
 
 # Environmental preparation
 
@@ -30,13 +30,13 @@
 1. Install `Android SDK`  
   1.1 Configure environment variables  
   1.2 Verify `adb` in the console whether it run ok or not  
-  1.3 If you are about to use the emulator to run the test case, you need to create the emulator using `AVD Manager`
+  1.3 If you are about to run the test cases on emulators, you need to create emulators using `AVD Manager`
 2. Install the Appium server program, see [http:/ /appium.io/] (http://appium.io/). Recommend to inatll it in the way of `Appium Desktop`.
 
 ## iPhone
 1. **Mac OS X is required!**  
   1.1 Appium Server's operation, element recognition, and script execution all require the Mac  
-  1.2. Install Xcode, verify the installation, until the tested app can be compiled successfully and can be run in a simulator
+  1.2 Install Xcode, verify the installation until the tested app can be compiled successfully and can be run in a simulator
 2. If you want to run test case on a device, follow the manual [Deploying an iOS app to a real device](http://appium.io/slate/en/master/)
 3. Install the Appium server program, after installation, you will find that it has more support for iOS testing than the Windows version
 ![Appium Server Mac](/docs/images/appium-server-mac.png)
@@ -117,13 +117,13 @@
 
 > xcodebuild -workspace quanqlAPP.xcworkspace -scheme quanql -configuration Debug -sdk iphonesimulator -arch x86_64  
 ```
-4. Generate compressed package, where **quanql.zip is the package under test**
+4. Generate compressed package, where **quanql.zip is the app under test**
 ```
 > ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/quanql.zip  
 ```
 
 ### Find Element
-1. On the `iOS settings` page of appium server, set `App Path` to the zip generated in the previous step, then set `Force Device` and `Platform Version`
+1. On the `iOS settings` page of appium server, set `App Path` to the directory of the zip generated in the previous step, then set `Force Device` and `Platform Version`
 2. Click `launch`
 3. Click `inspector`. The operation of finding element is simililar with Android
 4. Relative XPath expression is recommended, such as, `Button("xpath=//UIAAlert[@name='prompt']//UIAButton[@name='OK']")`
