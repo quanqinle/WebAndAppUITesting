@@ -31,7 +31,7 @@
   1.1 Configure environment variables  
   1.2 Verify `adb` in the console whether it run ok or not  
   1.3 If you are about to run the test cases on emulators, you need to create emulators using `AVD Manager`
-2. Install the Appium server program, see [http:/ /appium.io/] (http://appium.io/). Recommend to inatll it in the way of `Appium Desktop`.
+2. Install the Appium server program, see [http://appium.io/](http://appium.io/). Recommend to inatll it in the way of `Appium Desktop`.
 
 ## iPhone
 1. **Mac OS X is required!**  
@@ -341,5 +341,5 @@ I have a video courses series on how to use Selenium for Automation testing. if 
 
 # Others
 
-## download chrome driver
-+ [chrome driver](https://sites.google.com/a/chromium.org/chromedriver/downloads)
+## Download chrome driver
++ [Chrome driver](https://sites.google.com/a/chromium.org/chromedriver/downloads)
