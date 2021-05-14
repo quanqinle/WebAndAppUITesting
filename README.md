@@ -21,9 +21,9 @@
 ## Requirements
 1. jdk >= 1.8 
 2. maven >= 3
-3. Selenium
-4. Appium
-5. testng
+3. Selenium 3
+4. Appium 3
+5. testng 6
 6. IDE (eclipse or others, this tutorial takes eclipse as an example) + testng plugin + maven plugin
 
 ## Android
