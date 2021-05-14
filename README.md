@@ -2,7 +2,7 @@
 
 [简体中文](./README.cn.md) | English
 
-[TOC]
+> Selenium 4 is coming soon. I will modify this project to fix with it. If you use the old Selenium, go to the branch `backup-Selenium3`.
 
 ---
 
@@ -48,7 +48,7 @@
 ├─perftest_android <-- Android performance test module
 │  ├─perfreport    <-- Performance test result
 │  └─src           <-- test case
-├─uitest_android   <--Android ui test module
+├─uitest_android   <-- Android ui test module
 │  ├─app           <-- Store tested `apk` and `mapping` files
 │  ├─testdata      <-- test data，csv format
 │  │  ├─online     <-- test data for online
@@ -57,41 +57,35 @@
 │  └─src
 │      └─main
 │          └─java
-│              └─com
-│                  └─quanql
-│                      └─test
-│                          ├─androidui
-│                          │   ├─base     <-- Android-specific base class, extend from the base of uitest_core
-│                          │   ├─page     <-- page object
-│                          │   └─testcase <-- test case
-│                          └─perfutils    <-- Android performance test util
+│              └─com.quanql.test
+│                  ├─androidui
+│                  │   ├─base     <-- Android-specific base class, extend from the base of uitest_core
+│                  │   ├─page     <-- page object
+│                  │   └─testcase <-- test case
+│                  └─perfutils    <-- Android performance test util
 ├─uitest_core
 │  └─src
 │      └─main
 │          ├─java
-│          │  └─com
-│          │      └─quanql
-│          │          └─test
-│          │              └─core
-│          │                 ├─base 
-│          │                 │   ├─BaseOpt.java       <-- base class. such as click, type, findelement,screenShot etc.
-│          │                 │   ├─BasePage.java      <-- page object base class
-│          │                 │   ├─BaseTest.java      <-- test case base class. manage testng life cycle
-│          │                 │   └─DriverFactory.java <-- driver factory, web and android and other drivers are here
-│          │                 ├─listener 
-│          │                 └─utils
+│          │  └─com.quanql.test
+│          │      └─core
+│          │         ├─base 
+│          │         │   ├─BaseOpt.java       <-- base class. such as click, type, findelement,screenShot etc.
+│          │         │   ├─BasePage.java      <-- page object base class
+│          │         │   ├─BaseTest.java      <-- test case base class. manage testng life cycle
+│          │         │   └─DriverFactory.java <-- driver factory, web and android and other drivers are here
+│          │         ├─listener 
+│          │         └─utils
 │          └─resources  <-- log4j config file is here
 └─uitest_web
     └─src
         └─main
             ├─java
-            │  └─com
-            │      └─quanql
-            │          └─test
-            │              └─webui
-            │                  ├─base     <-- web-specific base class, extend from the base of uitest_core
-            │                  ├─page
-            │                  └─testcase
+            │  └─com.quanql.test
+            │      └─webui
+            │          ├─base     <-- web-specific base class, extend from the base of uitest_core
+            │          ├─page
+            │          └─testcase
             └─resources   <-- chromedriver is here
 ```
 
@@ -103,7 +97,8 @@
 # Write test cases step by step
 
 ## 1. Web UI
-// TODO to be added later
+
+// TODO: to add a demo later
 
 ## 2. iPhone UI
 
@@ -141,10 +136,12 @@
     + OR, on PC, the client will send commands to the remote appium server, and then the cases are still run on appium server
 
 ## 3. Android UI
-// TODO to be added later
+
+// TODO: to add a demo later
 
 ## 4. H5
-// TODO to be added later
+
+// TODO: to add a demo later
 
 # Two ways to write test cases
 
@@ -337,7 +334,7 @@ telephone,passwd
 # Advertising
 I have a video courses series on how to use Selenium for Automation testing. if you're interested, click here [网易云课堂](http://study.163.com/course/introduction/1004926010.htm).
 
-> Remind: the course is in Mandarin only.
+> Reminder: the course is in Mandarin only.
 
 # Others
 
