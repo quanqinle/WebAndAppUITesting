@@ -11,8 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +35,7 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 打开url页面
    *
-   * @param url
+   * @param url -
    */
   public void open(String url) {
     try {
@@ -52,7 +52,7 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 获取窗口数目
    *
-   * @return
+   * @return -
    */
   public int getWindowCount() {
     return driver.getWindowHandles().size();
@@ -66,10 +66,8 @@ public class WebBaseOpt extends BaseOpt {
   public void changeWindow(int i) {
     baseOpt.wait(50); // TODO 等待新窗口出现。以后可以优化
     Set<String> wh = driver.getWindowHandles();
-    List<String> w = new ArrayList<String>();
-    for (Iterator<String> it = wh.iterator(); it.hasNext(); ) {
-      w.add(it.next());
-    }
+    List<String> w = new ArrayList<>();
+    w.addAll(wh);
     try {
       driver.switchTo().window(w.get(i));
     } catch (Exception e) {
@@ -81,10 +79,8 @@ public class WebBaseOpt extends BaseOpt {
 
   public void changeNewWindow() {
     Set<String> wh = driver.getWindowHandles();
-    List<String> w = new ArrayList<String>();
-    for (Iterator<String> it = wh.iterator(); it.hasNext(); ) {
-      w.add(it.next());
-    }
+    List<String> w = new ArrayList<>();
+    w.addAll(wh);
     try {
       driver.switchTo().window(w.get(w.size() - 1));
     } catch (Exception e) {
@@ -97,7 +93,7 @@ public class WebBaseOpt extends BaseOpt {
 
   /** 切换到alter，并点击确认框 */
   public void clickAlert(String msg) {
-    WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+    WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
     Alert alert;
     baseOpt.wait(20);
     // Alert alert = driver.switchTo().alert();
@@ -108,7 +104,7 @@ public class WebBaseOpt extends BaseOpt {
     } catch (Exception e) {
       this.screenShot();
       LogUtil.info(driver.manage().logs() + "==>alert等待超时!");
-      alert = driver.switchTo().alert(); // 与waituntil功能重复，但until经常失败，为了增强健壮性才如此写
+      alert = driver.switchTo().alert(); // 与 waituntil 功能重复，但until经常失败，为了增强健壮性才如此写
     }
 
     if (msg != null) {
@@ -123,8 +119,8 @@ public class WebBaseOpt extends BaseOpt {
    * 比较url与预期值。当然url包含期望url
    *
    * @param loop 次数。每秒重试一次
-   * @param url
-   * @return
+   * @param url -
+   * @return -
    */
   public boolean compareUrl(String url, int loop) {
     boolean thesame = false;
@@ -138,7 +134,7 @@ public class WebBaseOpt extends BaseOpt {
         wait(10);
       }
     }
-    if (thesame == false) {
+    if (!thesame) {
       this.screenShot();
       LogUtil.error(
           driver.manage().logs() + "==>" + "url(" + currentUrl + ")与基准值(" + url + ")不一致！");
@@ -156,10 +152,11 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 等待frame可以用，切换到指定的frame
    *
-   * @param by
+   * @param frameby -
    */
   public void switchTo(By frameby) {
-    WebDriverWait webDriverWait = new WebDriverWait(driver, DRIVER_WAIT_TIMEOUT_IN_SECOND);
+    WebDriverWait webDriverWait =
+        new WebDriverWait(driver, Duration.ofSeconds(DRIVER_WAIT_TIMEOUT_IN_SECOND));
     try {
       // wait and switchTo, Otherwise, throws a TimeoutException
       webDriverWait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameby));
@@ -175,8 +172,8 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 点击frame中的元素
    *
-   * @param frameby
-   * @param by
+   * @param frameby -
+   * @param by -
    */
   public void clickInFrame(By frameby, By by) {
     this.switchTo(frameby);
@@ -189,9 +186,9 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 在frame中的输入框输入
    *
-   * @param frameby
-   * @param by
-   * @param text
+   * @param frameby -
+   * @param by -
+   * @param text -
    */
   public void typeInFrame(By frameby, By by, String text) {
     this.switchTo(frameby);
@@ -202,9 +199,8 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 在frame中查找元素
    *
-   * @param frameby
-   * @param by
-   * @param text
+   * @param frameby -
+   * @param by -
    */
   public void findElementInFrame(By frameby, By by) {
     this.switchTo(frameby);
@@ -215,7 +211,7 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * Scroll the page to the specific element via xpath.
    *
-   * @param By
+   * @param by -
    */
   public void scrollToElement(By by) {
     WebElement target = driver.findElement(by);

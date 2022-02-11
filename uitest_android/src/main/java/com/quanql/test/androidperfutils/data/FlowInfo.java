@@ -19,8 +19,8 @@ public class FlowInfo {
   private static String printTitle = "ReceiveWlan0(mb),TransmitWlan0(mb),Wlan0Total(mb)";
   private String printLine = "";
 
-  private long lReceive_Wlan0_Bytes = 0l;
-  private long lTransmit_Wlan0_Bytes = 0l;
+  private long lReceive_Wlan0_Bytes = 0L;
+  private long lTransmit_Wlan0_Bytes = 0L;
 
   public FlowInfo() {
     this(AndroidConstant.APP_PACKAGE_NAME);

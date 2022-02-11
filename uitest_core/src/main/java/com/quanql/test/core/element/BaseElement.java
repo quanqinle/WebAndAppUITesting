@@ -79,17 +79,17 @@ public class BaseElement {
    */
   private By parseElement(String byType, String byValue) {
     String lowerByType = byType.toLowerCase();
-    if (lowerByType.equals("id")) {
-      if (Constant.DRIVER_TYPE.equalsIgnoreCase("android")) {
+    if ("id".equals(lowerByType)) {
+      if ("android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
         this.by = By.id(AndroidIDUtil.getObfuscatedID(byValue));
       } else {
         this.by = By.id(byValue);
       }
-    } else if (lowerByType.equals("rawid")) {
+    } else if ("rawid".equals(lowerByType)) {
       this.by = By.id(byValue);
-    } else if (lowerByType.equals("name")) {
+    } else if ("name".equals(lowerByType)) {
       this.by = By.name(byValue);
-    } else if (lowerByType.equals("xpath")) {
+    } else if ("xpath".equals(lowerByType)) {
       this.by = By.xpath(byValue);
     } else {
       this.by = By.id(byValue);

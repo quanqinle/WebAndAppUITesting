@@ -190,6 +190,7 @@ public class FrameInfo { // FIXME 改成针对帧集合，而不是单个帧
     this.isJunk = isJunk;
   }
 
+  @Override
   public String toString() {
     return dDraw + "," + dPrepare + "," + dProcess + "," + dExecute + "," + dTotal;
   }

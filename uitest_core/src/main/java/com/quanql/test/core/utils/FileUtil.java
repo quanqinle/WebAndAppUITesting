@@ -129,9 +129,15 @@ public class FileUtil {
   /** close all opened stream. */
   public static void closeOpenedStream() {
     try {
-      if (bw != null) bw.close();
-      if (osw != null) osw.close();
-      if (out != null) out.close();
+      if (bw != null) {
+        bw.close();
+      }
+      if (osw != null) {
+        osw.close();
+      }
+      if (out != null) {
+        out.close();
+      }
     } catch (Exception e) {
       LogUtil.error(e.getMessage());
     }
@@ -179,7 +185,7 @@ public class FileUtil {
           boolean de = file.delete();
           LogUtil.debug("filename=" + file.getName() + " " + de);
         } else if (file.isDirectory()) { // 否则如果它是一个目录
-          File files[] = file.listFiles(); // 声明目录下所有的文件 files[];
+          File[] files = file.listFiles(); // 声明目录下所有的文件 files[];
           for (int i = 0; i < files.length; i++) { // 遍历目录下所有的文件
             this.deleteFile(files[i]); // 把每个文件 用这个方法进行迭代
           }

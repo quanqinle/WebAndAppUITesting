@@ -18,6 +18,8 @@ public class PhoneInfo {
   @SuppressWarnings("unused")
   private String manufacturer;
 
+  private static final Pattern p = Pattern.compile("\\:\\s\\[(.*)]$");
+
   public static void main(String[] args) {
     PhoneInfo phoneInfo = new PhoneInfo();
     LogUtil.info(phoneInfo.getAbi());
@@ -81,10 +83,10 @@ public class PhoneInfo {
   }
 
   private String parseGetpropLine(String line) {
-    Pattern p = Pattern.compile("\\:\\s\\[(.*)]$");
+
     // p = Pattern.compile("\\:\\s\\[");
     // strs = p.split(line);
-    // LogUtil.info(strs);
+
     Matcher m = p.matcher(line);
     if (m.find()) {
       return m.group(1).trim();

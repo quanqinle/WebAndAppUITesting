@@ -31,7 +31,7 @@ public class AndroidConstant {
       TEST_SUITE_INDEX /* = DRIVER_TYPE.equals("android")?"":TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion()*/;
 
   {
-    if ((com.quanql.test.core.utils.Constant.DRIVER_TYPE).equals("android")) {
+    if ("android".equals(Constant.DRIVER_TYPE)) {
       TEST_SUITE_INDEX = TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion();
     }
   }
@@ -63,7 +63,7 @@ public class AndroidConstant {
   public static final int CPU_PERSENT_INDEX = 0;
   public static final int CPU_JIFFIES_INDEX = 1;
 
-  public static final String CPU_ITEM_TITLES[] = {"CPU%", "Jiffies"};
+  public static final String[] CPU_ITEM_TITLES = {"CPU%", "Jiffies"};
 
   /** CPU百分比获取的两种方式 */
   public static final int CPU_TESTMETHOD_NUMBER = 2;
@@ -100,7 +100,7 @@ public class AndroidConstant {
   public static final int HEAPALLOC_DALVIK_INDEX = 7;
   public static final int HEAPALLOC_TOTAL_INDEX = 8;
 
-  public static final String MEM_ITEM_TITLES[] = {
+  public static final String[] MEM_ITEM_TITLES = {
     "PrivNative",
     "PrivDalvik",
     "PrivTotal",
@@ -135,5 +135,5 @@ public class AndroidConstant {
 
   public static final int CPU_INDEX = 0;
   public static final int MEM_INDEX = 1;
-  public static final String TEXT_ITEM_TITLES[] = {"CPU", "Memory"};
+  public static final String[] TEXT_ITEM_TITLES = {"CPU", "Memory"};
 }

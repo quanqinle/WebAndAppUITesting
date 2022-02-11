@@ -184,7 +184,7 @@ public class PowerEmailableReporter implements IReporter {
           setMethods.add(methodName);
           methods.put(methodName, 0);
         }
-        String parameterString = "";
+        StringBuilder parameterString = new StringBuilder();
         int count = 0;
 
         ITestResult result = null;
@@ -193,24 +193,27 @@ public class PowerEmailableReporter implements IReporter {
           int testId = getId(result);
 
           for (Integer id : allRunTestIds) {
-            if (id.intValue() == testId) count++;
+            if (id.intValue() == testId) {
+              count++;
+            }
           }
           Object[] parameters = result.getParameters();
 
           boolean hasParameters = parameters != null && parameters.length > 0;
           if (hasParameters) {
             for (Object p : parameters) {
-              parameterString = parameterString + Utils.escapeHtml(p.toString()) + " ";
+              parameterString.append(Utils.escapeHtml(p.toString())).append(" ");
             }
           }
         }
 
         int methodId = method.getTestClass().getName().hashCode();
         methodId = methodId + method.getMethodName().hashCode();
-        if (result != null)
+        if (result != null) {
           methodId =
               methodId
                   + (result.getParameters() != null ? Arrays.hashCode(result.getParameters()) : 0);
+        }
 
         buff.append(
             "<td><a href=\"#m"

@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 /** DEMO：手机号登录 */
 public class DemoLoginTest extends AndroidBaseTest {
 
+  @Override
   @BeforeMethod
   public void aBeforeMethod() {
     // 重构父类方法，先设置全局变量值 cap_noReset值为false，该启动app

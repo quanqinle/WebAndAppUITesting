@@ -28,7 +28,10 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** */
 public class StringUtil {
+
+  private static final Pattern p = Pattern.compile("[^?!@#$%\\^&*(),<>;:]+");
 
   public static boolean isEmptyOrWhitespaceOnly(String str) {
     if (str.isEmpty()) {
@@ -86,6 +89,8 @@ public class StringUtil {
   /**
    * 判断是否是数字，支持负数
    *
+   * <p>FIXME do not write this kind of function by myself
+   *
    * @param s
    * @return
    */
@@ -100,7 +105,9 @@ public class StringUtil {
 
     for (int i = s.length(); --i >= numStartPos; ) {
       int chr = s.charAt(i);
-      if ((chr < 48 || chr > 57) && chr != '.') return false;
+      if ((chr < 48 || chr > 57) && chr != '.') {
+        return false;
+      }
     }
     return true;
   }
@@ -112,7 +119,6 @@ public class StringUtil {
    * @return 如没有特殊字符，返回true
    */
   public static boolean isLetter(String s) {
-    Pattern p = Pattern.compile("[^?!@#$%\\^&*(),<>;:]+");
     Matcher m = p.matcher(s);
     return m.matches();
   }

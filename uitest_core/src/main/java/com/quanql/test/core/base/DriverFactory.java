@@ -39,7 +39,7 @@ public class DriverFactory extends RemoteWebDriver {
   private static boolean QUIT = false;
   private static boolean CLOSEDAPP = false;
 
-  // for debug
+  /** for debug */
   public static void main(String[] args) {
     LogUtil.info(System.getProperty("user.dir"));
     LogUtil.info(System.getProperty("user.home"));
@@ -65,17 +65,17 @@ public class DriverFactory extends RemoteWebDriver {
 
   protected void createDriver() {
 
-    if (driverType.equalsIgnoreCase("android")) {
+    if ("android".equalsIgnoreCase(driverType)) {
       createAndroidDriver(cap_noReset);
-    } else if (driverType.equalsIgnoreCase("ios")) {
+    } else if ("ios".equalsIgnoreCase(driverType)) {
       createIOSDriver(cap_noReset);
-    } else if (driverType.equalsIgnoreCase("iossafari")) {
+    } else if ("iossafari".equalsIgnoreCase(driverType)) {
       createIOSSafariDriver(cap_noReset);
-    } else if (driverType.equalsIgnoreCase("chrome")) {
+    } else if ("chrome".equalsIgnoreCase(driverType)) {
       createChromeDriver(false);
-    } else if (driverType.equalsIgnoreCase("H5")) {
+    } else if ("H5".equalsIgnoreCase(driverType)) {
       createChromeDriver(true);
-    } else if (driverType.equalsIgnoreCase("firefox")) {
+    } else if ("firefox".equalsIgnoreCase(driverType)) {
       createFirefoxDriver();
     } else {
       AssertUtil.fail("unknown driverType = " + driverType);
@@ -234,7 +234,7 @@ public class DriverFactory extends RemoteWebDriver {
 
     capabilities.setCapability(ChromeOptions.CAPABILITY, options);
     try {
-      if (runningType.equalsIgnoreCase("local")) {
+      if ("local".equalsIgnoreCase(runningType)) {
         driver = new ChromeDriver(capabilities);
       } else {
         // For use with RemoteWebDriver
@@ -263,6 +263,7 @@ public class DriverFactory extends RemoteWebDriver {
   }
 
   /** driver.close() */
+  @Override
   public void close() {
     CLOSED = true;
     driver.close();
@@ -273,6 +274,7 @@ public class DriverFactory extends RemoteWebDriver {
   }
 
   /** driver.quit() */
+  @Override
   public void quit() {
     QUIT = true;
     driver.quit();

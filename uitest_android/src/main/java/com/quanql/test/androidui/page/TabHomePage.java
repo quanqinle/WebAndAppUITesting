@@ -180,8 +180,7 @@ public class TabHomePage extends MainFramePage {
     LogUtil.info("判断是否需要版本更新，存在则取消更新");
     ConfigUtil property = ConfigUtil.getInstance();
     String version = property.getProperty("updateVersion");
-    if (version.equals("true")) {
-
+    if ("true".equals(version)) {
       baseOpt.click(By.id(getObfuscatedID("update_btn_cancel")));
     }
   }

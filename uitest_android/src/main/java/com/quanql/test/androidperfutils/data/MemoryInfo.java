@@ -18,9 +18,9 @@ public class MemoryInfo {
   private static String printTitle = "Native Heap(mb),Dalvik Heap(mb),PSS TOTAL(mb)";
   private String printLine = "";
 
-  private long lNativeHeap_kB = 0l;
-  private long lDalvikHeap_kB = 0l;
-  private long lPssTOTAL_kB = 0l;
+  private long lNativeHeap_kB = 0L;
+  private long lDalvikHeap_kB = 0L;
+  private long lPssTOTAL_kB = 0L;
 
   public MemoryInfo() {
     this(AndroidConstant.APP_PACKAGE_NAME);

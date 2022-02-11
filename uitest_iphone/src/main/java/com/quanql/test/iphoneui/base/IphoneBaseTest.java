@@ -16,14 +16,17 @@ import org.testng.annotations.BeforeMethod;
  */
 public class IphoneBaseTest extends BaseTest {
 
+  @Override
   @BeforeClass
   public void aBeforeClass() {
     LogUtil.info("iOSBaseTest-beforeClass-start");
   }
 
+  @Override
   @AfterClass
   public void aAfterClass() {}
 
+  @Override
   @AfterMethod
   public void aAfterMethod() {
     LogUtil.info("iOSBaseTest-AfterMethod-start");

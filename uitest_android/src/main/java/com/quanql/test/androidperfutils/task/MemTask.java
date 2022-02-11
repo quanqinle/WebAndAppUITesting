@@ -95,7 +95,7 @@ public class MemTask implements Callable<String>, Runnable {
 
     StackTraceElement[] temp = Thread.currentThread().getStackTrace();
     for (int i = 3; i < temp.length; i++) {
-      if (!temp[i].getFileName().equals("AndroidBaseTest.java")) {
+      if (!"AndroidBaseTest.java".equals(temp[i].getFileName())) {
         return temp[i].getFileName();
       }
     }

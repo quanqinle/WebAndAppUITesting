@@ -27,23 +27,23 @@ public class AndroidBaseTest extends BaseTest {
   // 性能
   public AppInfo appInfo;
 
+  @Override
   @BeforeClass
   public void aBeforeClass() {
-
     LogUtil.info("AndroidBaseTest-beforeClass-start");
 
     appInfo = new AppInfo();
   }
 
+  @Override
   @AfterClass
   public void aAfterClass() {
-
     // uninstallApp4OPPO();
   }
 
+  @Override
   @AfterMethod
   public void aAfterMethod() {
-
     LogUtil.info("AndroidBaseTest-AfterMethod-start");
 
     // 关闭app并关闭driver
