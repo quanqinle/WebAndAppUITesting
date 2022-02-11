@@ -19,7 +19,8 @@
 # 环境准备
 
 ## 公共
-1. jdk >= 1.8 
+
+1. jdk >= 1.8
 2. maven >= 3
 3. Selenium 3
 4. Appium 3
@@ -27,20 +28,21 @@
 6. IDE(eclipse或其他，以下以eclipse为例) + testng插件 + maven插件
 
 ## Android
+
 1. 安装Android SDK  
-1.1 配置环境变量  
-1.2 控制台下验证`adb`运行正常  
-1.3 如果使用模拟器运行用例，需要先用`AVD Manager`创建模拟器
+   1.1 配置环境变量  
+   1.2 控制台下验证`adb`运行正常  
+   1.3 如果使用模拟器运行用例，需要先用`AVD Manager`创建模拟器
 2. 安装Appium服务端程序，参见[http://appium.io/](http://appium.io/)。避免踩坑，建议使用现成的安装包，界面操作更省心
 
 ## iPhone
+
 1. **Mac OS X是必须的！**   
-1.1 Appium Server运行、元素识别、脚本执行都需要用到Mac  
-1.2 安装Xcode，验证安装，直至被测app可以编译成功，并在模拟器中打开  
+   1.1 Appium Server运行、元素识别、脚本执行都需要用到Mac  
+   1.2 安装Xcode，验证安装，直至被测app可以编译成功，并在模拟器中打开
 2. 在真机上测试，按手册操作[Deploying an iOS app to a real device](http://appium.io/slate/en/master/)
 3. 安装Appium服务端程序，安装后会发现它比Windows版多了对iOS测试的支持
-![Appium Server Mac](/docs/images/appium-server-mac.png)
-
+   ![Appium Server Mac](/docs/images/appium-server-mac.png)
 
 # 工程结构
 
@@ -93,7 +95,6 @@
 
 ![proj frame](/docs/images/project-frame.png)
 
-
 # 用例编写步骤
 
 ## 1. Web UI
@@ -107,27 +108,33 @@
 1. 前提：保证xcode已经可以编译通过被测app，且在模拟器上验证基本功能正常
 2. 更新代码
 3. 编译app
+
 ```
 > cd $APP_PATH
 
 > xcodebuild -workspace quanqlAPP.xcworkspace -scheme quanql -configuration Debug -sdk iphonesimulator -arch x86_64  
 ```
+
 4. 生成压缩包，其中**quanql.zip就是被测包**
+
 ```
 > ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/quanql.zip  
 ```
 
 ### 元素识别
+
 1. 进入appium server的iOS settings界面，设置App Path=上一步生成的zip，设置Force Device和Platform Version
 2. 点击launch
 3. 点击inspector，后续元素识别操作同Android
 4. 建议使用相对路径的xpath定位元素，例如：`Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']")`
 
 ### 编写用例
+
 + 页面demo：uitest_iphone下的LoginPage.java
 + 用例demo：uitest_iphone下的DemoLoginTest.java
 
 ### 运行用例
+
 1. 配置config.properties
     + remote.address=appium server的地址
     + app=appium server机器上的绝对路径
@@ -136,6 +143,7 @@
     + 也可以在PC上，执行指令会被发送到远端的appium server，执行时在appium server上
 
 ## 3. Android UI
+
 // TODO 稍后补充
 
 ## 4. H5
@@ -143,6 +151,7 @@
 # 两种用例编写方式
 
 我将参与UI自动化用例编写的人员分为两类，（当然，也可能有的团队不会分的这么细，一个人齐活）
+
 1. 第一类：编写底层/基础功能的人员，他们可能负责编写base中公共方法、识别和封装元素，这类人可以不了解业务，但对编程技能要求高；
 2. 第二类：业务用例编写人员，将页面、组件按照一定的业务要求进行整合，使之符合一定的story，完成业务测试向自动化的转化，这类人要求熟悉业务，对编程技能要求不高。而他们使用的页面和元素就是第一类人员提供的。
 
@@ -150,7 +159,7 @@
 
 ## 方式一
 
-例如，`./uitest_iphone/src/main/java/com/quanql/test/iphoneui/page/LoginPage.java` 和 
+例如，`./uitest_iphone/src/main/java/com/quanql/test/iphoneui/page/LoginPage.java` 和
 `./uitest_android/src/main/java/com/quanql/test/androidui/testcase/DemoLoginTest.java`
 
 封装登录page
@@ -294,6 +303,7 @@ public class NewUserRegisterTest extends AndroidBaseTest {
 ```
 
 ### 配置文件 config.properties
+
 ```
 ##测试用例运行环境: online, test
 ##决定了读取哪份数据驱动，同时，参数名也是数据的存放目录
@@ -304,6 +314,7 @@ running.env=test
 
 + testdata目录和src同级
 + 测试数据，当前只支持csv格式
+
 ```
 ├─uitest_android
    ├─src 
@@ -315,6 +326,7 @@ running.env=test
 ```
 
 NewPersonRegiser.csv文件内容示意，以下是文本编辑器打开，你也可以用excel打开：
+
 ```
 telephone,passwd
 18888888888,pwd123
@@ -330,10 +342,10 @@ telephone,passwd
     - @Test后面加(dataProvider = "providerMethod")
     - testNewUserRegiser()的==函数参数个数+排序与csv文件中的数据一致==，但是不强制要求参数名称与csv第一行的表头一致
 
-
 # 广告
 
-各位路过的朋友，走过路过不要错过啊~~ 这是本人录制的 **《Web UI自动化测试：Selenium入门》视频课程** ，并放在网上“[网易云课堂](http://study.163.com/course/introduction/1004926010.htm)”、“
+各位路过的朋友，走过路过不要错过啊~~ 这是本人录制的 **《Web UI自动化测试：Selenium入门》视频课程**
+，并放在网上“[网易云课堂](http://study.163.com/course/introduction/1004926010.htm)”、“
 [腾讯课堂](https://ke.qq.com/course/270174)”。欢迎需要的朋友查看。如果你觉得课程还不错，或者当前的项目对你有帮助，烦请顺手点个赞/收藏，或者介绍给其他需要的朋友。[谢过]
 
 另有《Web UI自动化测试：Selenium进阶》课程正在筹备中，敬请期待...
@@ -343,4 +355,5 @@ telephone,passwd
 # 其他
 
 ## driver下载地址
+
 + [chrome driver下载地址](https://sites.google.com/a/chromium.org/chromedriver/downloads)

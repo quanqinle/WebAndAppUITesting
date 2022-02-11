@@ -1,14 +1,14 @@
 <suite name="Suite" preserve-order="true" parallel="false"
-	thread-count="5" annotations="javadoc" skipfailedinvocationcounts="true">
+       thread-count="5" annotations="javadoc" skipfailedinvocationcounts="true">
 
-	<test name="PerfTest" verbose="2" preserve-order="true" parallel="false"
-		thread-count="5" annotations="javadoc" group-by-instances="false"
-		skipfailedinvocationcounts="true">
-		<classes>
-			<class name="com.quanql.test.iphoneui.testcase.DemoLoginTest" />
-		</classes>
-	</test>
-	<listeners>
+    <test name="PerfTest" verbose="2" preserve-order="true" parallel="false"
+          thread-count="5" annotations="javadoc" group-by-instances="false"
+          skipfailedinvocationcounts="true">
+        <classes>
+            <class name="com.quanql.test.iphoneui.testcase.DemoLoginTest"/>
+        </classes>
+    </test>
+    <listeners>
 
-	</listeners>
+    </listeners>
 </suite>

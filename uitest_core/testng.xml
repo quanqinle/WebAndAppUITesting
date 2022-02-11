@@ -2,17 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Suite" preserve-order="true" parallel="false"
-	thread-count="5" annotations="javadoc" skipfailedinvocationcounts="true">
+       thread-count="5" annotations="javadoc" skipfailedinvocationcounts="true">
 
-	<test name="PerfTest" verbose="2" preserve-order="true" parallel="false"
-		thread-count="5" annotations="javadoc" group-by-instances="false"
-		skipfailedinvocationcounts="true">
-		<classes>
-			
-		</classes>
+    <test name="PerfTest" verbose="2" preserve-order="true" parallel="false"
+          thread-count="5" annotations="javadoc" group-by-instances="false"
+          skipfailedinvocationcounts="true">
+        <classes>
 
-	</test>
-	<listeners>
-		
-	</listeners>
+        </classes>
+
+    </test>
+    <listeners>
+
+    </listeners>
 </suite> 

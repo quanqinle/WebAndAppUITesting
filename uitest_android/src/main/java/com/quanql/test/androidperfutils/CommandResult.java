@@ -2,87 +2,89 @@ package com.quanql.test.androidperfutils;
 
 /**
  * result of command
- * 
- * {@link CommandResult#returnCode} means result of command, 0 means normal,
- * else means error, same to excute in linux shell
- * 
- * {@link CommandResult#successMsg} means success message of command result
- * 
- * {@link CommandResult#errorMsg} means error message of command result
- * 
+ *
+ * <p>{@link CommandResult#returnCode} means result of command, 0 means normal, else means error,
+ * same to excute in linux shell
+ *
+ * <p>{@link CommandResult#successMsg} means success message of command result
+ *
+ * <p>{@link CommandResult#errorMsg} means error message of command result
+ *
  * @author 权芹乐 2016-7-15
  */
 public class CommandResult {
 
-	private String delimiter = "\n";
-	/** result of command **/
-	private int returnCode;
-	/** success message of command result **/
-	private String[] successMsgArray;
-	private String successMsg;
-	/** error message of command result **/
-	private String[] errorMsgArray;
-	private String errorMsg;
+  private String delimiter = "\n";
+  /** result of command * */
+  private int returnCode;
+  /** success message of command result * */
+  private String[] successMsgArray;
 
-	public int getResult() {
-		return returnCode;
-	}
+  private String successMsg;
+  /** error message of command result * */
+  private String[] errorMsgArray;
 
-	public void setResult(int result) {
-		this.returnCode = result;
-	}
+  private String errorMsg;
 
-	/**
-	 * 获取String数组形式的成功结果
-	 * 
-	 * @return
-	 */
-	public String[] getSuccessMsgArray() {
-		return successMsgArray;
-	}
+  public int getResult() {
+    return returnCode;
+  }
 
-	public void setSuccessMsgArray(String[] successMsgArray) {
-		this.successMsgArray = successMsgArray;
-	}
+  public void setResult(int result) {
+    this.returnCode = result;
+  }
 
-	/**
-	 * 获取String形式的成功结果
-	 * 
-	 * @return
-	 */
-	public String getSuccessMsg() {
-		return successMsg;
-	}
+  /**
+   * 获取String数组形式的成功结果
+   *
+   * @return
+   */
+  public String[] getSuccessMsgArray() {
+    return successMsgArray;
+  }
 
-	public void setSuccessMsg(String successMsg) {
-		this.successMsg = successMsg;
-	}
+  public void setSuccessMsgArray(String[] successMsgArray) {
+    this.successMsgArray = successMsgArray;
+  }
 
-	public String[] getErrorMsgArray() {
-		return errorMsgArray;
-	}
+  /**
+   * 获取String形式的成功结果
+   *
+   * @return
+   */
+  public String getSuccessMsg() {
+    return successMsg;
+  }
 
-	public void setErrorMsgArray(String[] errorMsgArray) {
-		this.errorMsgArray = errorMsgArray;
-	}
+  public void setSuccessMsg(String successMsg) {
+    this.successMsg = successMsg;
+  }
 
-	public String getErrorMsg() {
-		return errorMsg;
-	}
+  public String[] getErrorMsgArray() {
+    return errorMsgArray;
+  }
 
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
+  public void setErrorMsgArray(String[] errorMsgArray) {
+    this.errorMsgArray = errorMsgArray;
+  }
 
-	public CommandResult(int result) {
-		this.returnCode = result;
-	}
+  public String getErrorMsg() {
+    return errorMsg;
+  }
 
-	public CommandResult(int result, String[] successMsgArray, String[] errorMsgArray) {
-		this.returnCode = result;
-		this.successMsgArray = successMsgArray;
-		this.errorMsgArray = errorMsgArray;
-		this.successMsg = successMsgArray == null ? null : String.join(delimiter, successMsgArray);
-		this.errorMsg = errorMsgArray == null ? null : String.join(delimiter, errorMsgArray);
-	}
+  public void setErrorMsg(String errorMsg) {
+    this.errorMsg = errorMsg;
+  }
+
+  public CommandResult(int result) {
+    this.returnCode = result;
+  }
+
+  public CommandResult(int result, String[] successMsgArray, String[] errorMsgArray) {
+    this.returnCode = result;
+    this.successMsgArray = successMsgArray;
+    this.errorMsgArray = errorMsgArray;
+    this.successMsg = successMsgArray == null ? null : String.join(delimiter, successMsgArray);
+    this.errorMsg = errorMsgArray == null ? null : String.join(delimiter, errorMsgArray);
+  }
 }

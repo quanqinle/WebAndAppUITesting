@@ -1,15 +1,15 @@
 <suite name="Suite" preserve-order="true" parallel="false"
-	thread-count="5" annotations="javadoc" skipfailedinvocationcounts="true">
+       thread-count="5" annotations="javadoc" skipfailedinvocationcounts="true">
 
-	<test name="PerfTest" verbose="2" preserve-order="true" parallel="false"
-		thread-count="5" annotations="javadoc" group-by-instances="false"
-		skipfailedinvocationcounts="true">
-		<classes>
+    <test name="PerfTest" verbose="2" preserve-order="true" parallel="false"
+          thread-count="5" annotations="javadoc" group-by-instances="false"
+          skipfailedinvocationcounts="true">
+        <classes>
 
-		</classes>
+        </classes>
 
-	</test>
-	<listeners>
+    </test>
+    <listeners>
 
-	</listeners>
+    </listeners>
 </suite>
