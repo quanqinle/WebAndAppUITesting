@@ -5,14 +5,14 @@ import com.quanql.test.androidperfutils.ShellUtils;
 import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.DoubleUtil;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.core.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * 图像帧数据
+ * 图像帧数据 FIXME 改成针对帧集合，而不是单个帧
  *
  * @author 权芹乐
  */
-public class FrameInfo { // FIXME 改成针对帧集合，而不是单个帧
+public class FrameInfo {
 
   private static String printTitle =
       "DrawAvg,PrepareAvg,ProcessAvg,ExecuteAvg,TotalAvg,TotalFrameCnt,DropFrameCnt,DropFrameRate";
@@ -81,7 +81,7 @@ public class FrameInfo { // FIXME 改成针对帧集合，而不是单个帧
         //					isPrintLog = false;
         //					break;
         //				} else
-        if (array.length >= 3 && StringUtil.isNumeric(array[0].trim())) {
+        if (array.length >= 3 && StringUtils.isNumeric(array[0].trim())) {
           dDraw = Double.parseDouble(array[0].trim());
           if (4 == columnCount) {
             dPrepare = Double.parseDouble(array[1].trim());

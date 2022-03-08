@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 日志输出代理类。 TODO: replace log4f with slf4j, or remove this file and use slf4f directly
+ * 日志输出代理类。 TODO: replace log4f with slf4j, or remove this file and use slf4j directly
  *
  * <p>主要完成业务代码和日志工具间的解耦，使切换日志工具更加方便。
  *

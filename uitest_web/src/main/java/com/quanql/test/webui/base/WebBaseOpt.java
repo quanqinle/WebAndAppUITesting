@@ -64,7 +64,8 @@ public class WebBaseOpt extends BaseOpt {
    * @param i 从0开始
    */
   public void changeWindow(int i) {
-    baseOpt.wait(50); // TODO 等待新窗口出现。以后可以优化
+    // TODO 等待新窗口出现。以后可以优化
+    baseOpt.wait(50);
     Set<String> wh = driver.getWindowHandles();
     List<String> w = new ArrayList<>();
     w.addAll(wh);

@@ -20,17 +20,22 @@ import java.util.concurrent.TimeUnit;
  */
 public class PerfMonitor {
 
-  public ExecutorService executor = null; // 暂时不hide，方便灵活使用
+  /**
+   * 暂时不hide，方便灵活使用
+   */
+  public ExecutorService executor = null;
   private int poolSize = 3;
+  /**
+   * ms.采样频率
+   */
   private int period =
-      Integer.parseInt(ConfigUtil.getInstance().getProperty("sample.rate")); // ms.采样频率
+      Integer.parseInt(ConfigUtil.getInstance().getProperty("sample.rate"));
 
   public enum PoolType {
     SCHEDULED,
     FIXED;
   }
 
-  // for debug
   public static void main(String[] args) {
     LogUtil.info("开始性能监控...");
 
@@ -60,11 +65,11 @@ public class PerfMonitor {
    * 创建线程池
    *
    * @param poolType 线程池类型 0-scheduled 1-fixed
-   * @param poolSize
+   * @param poolSize -
    */
-  public PerfMonitor(PoolType style, int poolSize) {
+  public PerfMonitor(PoolType poolType, int poolSize) {
     this.poolSize = poolSize;
-    switch (style) {
+    switch (poolType) {
       case SCHEDULED:
         this.initScheduledThreadPool(this.poolSize);
         break;

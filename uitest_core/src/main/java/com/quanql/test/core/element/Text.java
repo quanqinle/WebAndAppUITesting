@@ -11,11 +11,9 @@ public class Text extends BaseElement {
 
   public Text(By by) {
     super(by);
-    // TODO Auto-generated constructor stub
   }
 
   public Text(String strElement) {
     super(strElement);
-    // TODO Auto-generated constructor stub
   }
 }

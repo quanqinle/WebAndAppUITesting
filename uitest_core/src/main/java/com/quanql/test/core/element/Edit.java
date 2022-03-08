@@ -12,12 +12,10 @@ public class Edit extends BaseElement {
 
   public Edit(By by) {
     super(by);
-    // TODO Auto-generated constructor stub
   }
 
   public Edit(String strElement) {
     super(strElement);
-    // TODO Auto-generated constructor stub
   }
 
   public void sendkeys(String text) {

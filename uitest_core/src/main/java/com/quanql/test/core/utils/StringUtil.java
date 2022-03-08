@@ -87,32 +87,6 @@ public class StringUtil {
   }
 
   /**
-   * 判断是否是数字，支持负数
-   *
-   * <p>FIXME do not write this kind of function by myself
-   *
-   * @param s
-   * @return
-   */
-  public static boolean isNumeric(String s) {
-    if (s == null || s.length() == 0) {
-      return false;
-    }
-    int numStartPos = 0;
-    if (s.charAt(0) == '-') {
-      numStartPos = 1;
-    }
-
-    for (int i = s.length(); --i >= numStartPos; ) {
-      int chr = s.charAt(i);
-      if ((chr < 48 || chr > 57) && chr != '.') {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
    * 判断是否有特殊字符
    *
    * @param s

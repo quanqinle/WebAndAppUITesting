@@ -81,12 +81,11 @@ public class DriverFactory extends RemoteWebDriver {
       AssertUtil.fail("unknown driverType = " + driverType);
     }
 
-    driver
-        .manage()
-        .timeouts()
-        .implicitlyWait(
-            Duration.ofSeconds(
-                Integer.parseInt(property.getProperty("implicitly.wait.in.second", "10"))));
+    long waitTimeInSecond = Integer.parseInt(property.getProperty("implicitly.wait.in.second", "10"));
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitTimeInSecond));
+    driver.manage().timeouts().scriptTimeout(Duration.ofMinutes(1));
+    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+
   }
 
   /**
@@ -154,7 +153,8 @@ public class DriverFactory extends RemoteWebDriver {
         "autoAcceptAlerts", property.getProperty("autoAcceptAlerts", "True"));
 
     if (appiumServerVersion.startsWith("1.6")) {
-      capabilities.setCapability("automationName", "XCUITest"); // 适用于appium 1.6.0
+      // 适用于 appium 1.6.0
+      capabilities.setCapability("automationName", "XCUITest");
     }
 
     try {
@@ -184,7 +184,8 @@ public class DriverFactory extends RemoteWebDriver {
         "autoAcceptAlerts", property.getProperty("autoAcceptAlerts", "True"));
     // debug时，等待时间调大点！！
     capabilities.setCapability("newCommandTimeout", property.getProperty("newCommandTimeout"));
-    capabilities.setCapability("noReset", noReset); // 不卸载、不重装
+    // 不卸载、不重装
+    capabilities.setCapability("noReset", noReset);
     capabilities.setCapability("noSign", "true");
     // 重置输入法，并且设置可以中文输入
     capabilities.setCapability("unicodeKeyboard", "True");
@@ -213,11 +214,10 @@ public class DriverFactory extends RemoteWebDriver {
     // local本地, remote远程
     String runningType = property.getProperty("running.type");
 
-    capabilities = DesiredCapabilities.chrome();
-    capabilities.setBrowserName(driverType);
-    // note: getRescource start with /
+    // note: getRescource start with `/`
     System.setProperty(
         "webdriver.chrome.driver", getClass().getResource("/chromedriver.exe").getPath());
+
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--start-maximized");
     // options.addExtensions(new File("/path/to/extension.crx"));
@@ -228,17 +228,17 @@ public class DriverFactory extends RemoteWebDriver {
       // 有两种方式：1使用预设的配置（如下），2自定义配置（见链接
       // https://sites.google.com/a/chromium.org/chromedriver/mobile-emulation
       Map<String, String> mobileEmulation = new HashMap<>();
-      mobileEmulation.put("deviceName", "Nexus 6"); // 可以修改
+      // 可以修改
+      mobileEmulation.put("deviceName", "Nexus 6");
       options.setExperimentalOption("mobileEmulation", mobileEmulation);
     }
 
-    capabilities.setCapability(ChromeOptions.CAPABILITY, options);
     try {
       if ("local".equalsIgnoreCase(runningType)) {
-        driver = new ChromeDriver(capabilities);
+        driver = new ChromeDriver(options);
       } else {
         // For use with RemoteWebDriver
-        driver = new RemoteWebDriver(new URL(property.getProperty("remote.address")), capabilities);
+        driver = new RemoteWebDriver(new URL(property.getProperty("remote.address")), options);
       }
     } catch (MalformedURLException e) {
       AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
