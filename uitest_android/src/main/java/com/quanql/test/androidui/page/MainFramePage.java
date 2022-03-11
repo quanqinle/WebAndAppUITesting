@@ -5,8 +5,8 @@ import com.quanql.test.core.element.Button;
 import com.quanql.test.core.element.Text;
 import com.quanql.test.core.utils.AndroidIDUtil;
 import com.quanql.test.core.utils.LogUtil;
-import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * APP内主框架<br>
@@ -41,7 +41,7 @@ public class MainFramePage extends AndroidBasePage {
     LogUtil.info("点击 顶部TAB:" + barname);
     By parentBy = By.xpath("//android.widget.HorizontalScrollView");
     By findBy = By.name(barname);
-    MobileElement element = baseOpt.scrollToView(parentBy, findBy, 2, 5);
+    WebElement element = baseOpt.scrollToView(parentBy, findBy, 2, 5);
     element.click();
   }
 }

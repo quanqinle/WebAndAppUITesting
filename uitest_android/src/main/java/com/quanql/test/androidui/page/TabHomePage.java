@@ -5,7 +5,6 @@ import com.quanql.test.androidperfutils.task.FlowTask;
 import com.quanql.test.core.element.Button;
 import com.quanql.test.core.utils.ConfigUtil;
 import com.quanql.test.core.utils.LogUtil;
-import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -130,8 +129,8 @@ public class TabHomePage extends MainFramePage {
     baseOpt.waitForElementClickable(By.id(viMainContentId));
 
     LogUtil.info("查找品牌");
-    MobileElement element =
-        baseOpt.scrollToView(By.id(viMainContentId), By.id(tvBrandtitleId), 0, 8); // 滚动10屏
+    // 滚动10屏
+    WebElement element = baseOpt.scrollToView(By.id(viMainContentId), By.id(tvBrandtitleId), 0, 8);
     LogUtil.info("点击品牌，进入品牌特卖页");
     if (flowTask != null) {
       flowTask.getfirstFlow();
@@ -148,7 +147,7 @@ public class TabHomePage extends MainFramePage {
 
     baseOpt.waitForElementClickable(By.id(rlDiscountId));
 
-    if (baseOpt.isCover(By.id(rlDiscountId), By.id(homeBottom))) {
+    if (baseOpt.isCovered(By.id(rlDiscountId), By.id(homeBottom))) {
 
       TabHomePage.scrollToUp(2, 500);
     }
@@ -164,7 +163,7 @@ public class TabHomePage extends MainFramePage {
 
     baseOpt.waitForElementClickable(By.id(rlClearId));
 
-    if (baseOpt.isCover(By.id(rlClearId), By.id(homeBottom))) {
+    if (baseOpt.isCovered(By.id(rlClearId), By.id(homeBottom))) {
 
       TabHomePage.scrollToUp(1, 500);
     }

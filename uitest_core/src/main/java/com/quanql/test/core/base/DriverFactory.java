@@ -4,7 +4,6 @@ import com.quanql.test.core.utils.AssertUtil;
 import com.quanql.test.core.utils.ConfigUtil;
 import com.quanql.test.core.utils.LogUtil;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -81,11 +80,11 @@ public class DriverFactory extends RemoteWebDriver {
       AssertUtil.fail("unknown driverType = " + driverType);
     }
 
-    long waitTimeInSecond = Integer.parseInt(property.getProperty("implicitly.wait.in.second", "10"));
+    long waitTimeInSecond =
+        Integer.parseInt(property.getProperty("implicitly.wait.in.second", "10"));
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitTimeInSecond));
     driver.manage().timeouts().scriptTimeout(Duration.ofMinutes(1));
     driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
-
   }
 
   /**
@@ -111,16 +110,15 @@ public class DriverFactory extends RemoteWebDriver {
     capabilities.setCapability("udid", property.getProperty("udid"));
     // debug时，等待时间调大点！！
     capabilities.setCapability("newCommandTimeout", property.getProperty("newCommandTimeout"));
-    capabilities.setCapability("noReset", noReset); // 不卸载、不重装
+    // 不卸载、不重装
+    capabilities.setCapability("noReset", noReset);
     capabilities.setCapability("noSign", "true");
     // 重置输入法，并且设置可以中文输入
     capabilities.setCapability("unicodeKeyboard", "True");
     capabilities.setCapability("resetKeyboard", "True");
 
     try {
-      driver =
-          new AndroidDriver<MobileElement>(
-              new URL(property.getProperty("remote.address")), capabilities);
+      driver = new AndroidDriver(new URL(property.getProperty("remote.address")), capabilities);
     } catch (Exception e) {
       e.printStackTrace();
       AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
@@ -128,7 +126,7 @@ public class DriverFactory extends RemoteWebDriver {
   }
 
   /**
-   * ios上启动app
+   * iOS上启动app
    *
    * @param noReset
    */
@@ -137,7 +135,7 @@ public class DriverFactory extends RemoteWebDriver {
 
     capabilities = new DesiredCapabilities();
 
-    capabilities.setCapability("app", property.getProperty("app")); // ios被测app路径是server上的路径
+    capabilities.setCapability("app", property.getProperty("app")); // iOS被测app路径是server上的路径
     capabilities.setCapability("platformName", property.getProperty("platformName"));
     capabilities.setCapability("platformVersion", property.getProperty("platformVersion"));
     capabilities.setCapability("deviceName", property.getProperty("deviceName"));
@@ -158,9 +156,7 @@ public class DriverFactory extends RemoteWebDriver {
     }
 
     try {
-      driver =
-          new IOSDriver<MobileElement>(
-              new URL(property.getProperty("remote.address")), capabilities);
+      driver = new IOSDriver(new URL(property.getProperty("remote.address")), capabilities);
     } catch (Exception e) {
       e.printStackTrace();
       AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
@@ -168,7 +164,7 @@ public class DriverFactory extends RemoteWebDriver {
   }
 
   /**
-   * 启动ios的safari浏览器
+   * 启动iOS的safari浏览器
    *
    * @param noReset
    */
@@ -192,9 +188,7 @@ public class DriverFactory extends RemoteWebDriver {
     capabilities.setCapability("resetKeyboard", "True");
 
     try {
-      driver =
-          new IOSDriver<MobileElement>(
-              new URL(property.getProperty("remote.address")), capabilities);
+      driver = new IOSDriver(new URL(property.getProperty("remote.address")), capabilities);
     } catch (Exception e) {
       e.printStackTrace();
       AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
@@ -291,8 +285,9 @@ public class DriverFactory extends RemoteWebDriver {
   public void closeApp() {
     CLOSEDAPP = true;
     @SuppressWarnings("unchecked")
-    AppiumDriver<MobileElement> appiumDriver = (AppiumDriver<MobileElement>) driver;
-    appiumDriver.closeApp();
+    AppiumDriver appiumDriver = (AppiumDriver) driver;
+    appiumDriver.close();
+    //    appiumDriver.closeApp();
   }
 
   public static boolean isCloseApp() {

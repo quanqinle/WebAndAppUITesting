@@ -4,14 +4,13 @@ import com.quanql.test.core.base.BaseOpt;
 import com.quanql.test.core.base.DriverFactory;
 import com.quanql.test.core.utils.AssertUtil;
 import com.quanql.test.core.utils.LogUtil;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.TouchShortcuts;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidKeyCode;
+import io.appium.java_client.touch.LongPressOptions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 
 /**
  * 常用事件封装
@@ -21,12 +20,11 @@ import org.openqa.selenium.Point;
 public class AndroidBaseOpt extends BaseOpt {
 
   private static AndroidBaseOpt baseOpt = null;
-  protected AndroidDriver<MobileElement> driver;
+  protected AndroidDriver driver;
   protected TouchAction touchAction;
 
-  @SuppressWarnings("unchecked")
   private AndroidBaseOpt() {
-    driver = (AndroidDriver<MobileElement>) DriverFactory.getInstance().getDriver();
+    driver = (AndroidDriver) DriverFactory.getInstance().getDriver();
     touchAction = new TouchAction(driver);
   }
 
@@ -41,9 +39,9 @@ public class AndroidBaseOpt extends BaseOpt {
   /** 兼容循环执行时 不会重新加载构造方法的问题 */
   @Override
   @SuppressWarnings("unchecked")
-  public AndroidDriver<MobileElement> getDriver() {
+  public AndroidDriver getDriver() {
     if (driver == null || driver.getSessionId() == null) {
-      driver = (AndroidDriver<MobileElement>) DriverFactory.getInstance().getDriver();
+      driver = (AndroidDriver) DriverFactory.getInstance().getDriver();
       touchAction = new TouchAction(driver);
     }
 
@@ -77,7 +75,7 @@ public class AndroidBaseOpt extends BaseOpt {
       // 兼容循环执行时 不会重新加载构造方法导致driver为空的问题
       driver = getDriver();
       touchAction = new TouchAction(driver);
-      touchAction.longPress(findElement(by)).perform();
+      touchAction.longPress((LongPressOptions) findElement(by)).perform();
       LogUtil.debug(getDriver().manage().logs() + "==>长按" + by.toString() + "成功！");
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>长按" + by.toString() + "失败！" + e);
@@ -86,14 +84,11 @@ public class AndroidBaseOpt extends BaseOpt {
     }
   }
 
-  /**
-   * 滑动
-   *
-   * @see TouchShortcuts#swipe(int, int, int, int, int)
-   */
+  /** 滑动 */
   public void swipe(int startx, int starty, int endx, int endy, int duration) {
     try {
-      getDriver().swipe(startx, starty, endx, endy, duration);
+      // fixme
+      //      getDriver().swipe(startx, starty, endx, endy, duration);
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>滚屏失败！" + e);
       screenShot();
@@ -104,7 +99,7 @@ public class AndroidBaseOpt extends BaseOpt {
   /** 点击物理返回键 */
   public void clickBack() {
     try {
-      getDriver().pressKeyCode(AndroidKeyCode.BACK);
+      //      getDriver().pressKeyCode(AndroidKeyCode.BACK); fixme
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>点击返回失败！" + e);
       screenShot();
@@ -122,13 +117,13 @@ public class AndroidBaseOpt extends BaseOpt {
    * @param steps 控件最大滚动次数
    * @return 找到findBy，则返回元素；否则，断言失败
    */
-  public MobileElement scrollToView(By parentBy, By findBy, int direction, int steps) {
+  public WebElement scrollToView(By parentBy, By findBy, int direction, int steps) {
     /*
      * duration:amount of time in milliseconds for the entire swipe action
      * to take
      */
     int duration = 500;
-    MobileElement parentElement = getDriver().findElement(parentBy);
+    WebElement parentElement = getDriver().findElement(parentBy);
 
     // 获取控件开始位置的坐标轴
     Point start = parentElement.getLocation();
@@ -147,14 +142,14 @@ public class AndroidBaseOpt extends BaseOpt {
     int centreX = (endX + startX) / 2;
     int centreY = (endY + startY) / 2;
 
-    MobileElement findElement;
+    WebElement findElement;
     for (int i = 0; i < steps; i++) {
       // parentElement.findElement(findBy); //在父元素中查找。只xpath适用
-      findElement = (MobileElement) waitForElementClickable(findBy, 3);
+      findElement = (WebElement) waitForElementClickable(findBy, 3);
       if (findElement != null) {
         return findElement;
       }
-
+      /*fixme
       switch (direction) {
           // 向上滑动
         case 0:
@@ -176,6 +171,7 @@ public class AndroidBaseOpt extends BaseOpt {
           LogUtil.error("unknown direction:" + direction);
           break;
       }
+      */
     } // end for
 
     LogUtil.error(getDriver().manage().logs() + "==>" + findBy.toString() + " 未找到！");
@@ -191,10 +187,10 @@ public class AndroidBaseOpt extends BaseOpt {
    * @param coverBy
    * @return
    */
-  public boolean isCover(By clickBy, By coverBy) {
+  public boolean isCovered(By clickBy, By coverBy) {
 
-    MobileElement clickElement = getDriver().findElement(clickBy);
-    MobileElement coverElement = getDriver().findElement(coverBy);
+    WebElement clickElement = getDriver().findElement(clickBy);
+    WebElement coverElement = getDriver().findElement(coverBy);
 
     // 获取控件开始位置高度
     Point clickstart = clickElement.getLocation();
