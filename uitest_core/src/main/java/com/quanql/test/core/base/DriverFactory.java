@@ -6,6 +6,7 @@ import com.quanql.test.core.utils.LogUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -209,8 +210,8 @@ public class DriverFactory extends RemoteWebDriver {
     String runningType = property.getProperty("running.type");
 
     // note: getRescource start with `/`
-    System.setProperty(
-        "webdriver.chrome.driver", getClass().getResource("/chromedriver.exe").getPath());
+    //    System.setProperty("webdriver.chrome.driver",
+    // getClass().getResource("/chromedriver.exe").getPath());
 
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--start-maximized");
@@ -229,6 +230,9 @@ public class DriverFactory extends RemoteWebDriver {
 
     try {
       if ("local".equalsIgnoreCase(runningType)) {
+
+        WebDriverManager.chromedriver().setup();
+
         driver = new ChromeDriver(options);
       } else {
         // For use with RemoteWebDriver
@@ -237,6 +241,7 @@ public class DriverFactory extends RemoteWebDriver {
     } catch (MalformedURLException e) {
       AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
     }
+
     try {
       driver.manage().window().maximize();
     } catch (Exception e) {

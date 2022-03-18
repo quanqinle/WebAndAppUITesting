@@ -9,6 +9,7 @@ public class DemoBaiduPage extends WebBasePage {
   private static String btnSearchXpath = "//input[@value='百度一下']";
   private static String txtNeteaseXpath =
       "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
+
   /** 通过url打开登录页面 */
   public static void openBaidu() {
     LogUtil.info("通过url打开百度首页");
