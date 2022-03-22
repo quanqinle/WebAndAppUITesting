@@ -8,13 +8,14 @@
 
 # 简述
 
-+ 这是一个适用于Web/Android/iOS/H5的UI自动化项目，以及支持Android性能测试。项目底层使用了Selenium/Appium。
-+ 项目用maven进行工程管理，通过testng进行用例管理。
-+ 对常用的selenium api进行了封装，如click()、type()等，在其中增加了元素可用性判断、log记录、失败截图。
-+ WebUI、AndroidUI、iOSUI分别单独成module，根据OS特性可以编写专用的基类方法，并且module根目录下配置文件config.properties互不影响
-+ 同一个testcase支持可配置的读取线上环境、线下环境2份测试驱动数据
++ 这是一个适用于 Web/Android/iOS/H5 的UI自动化项目，以及支持 Android 性能测试。项目底层使用了 Selenium/Appium。
++ 项目用 maven 进行工程管理，通过testng进行用例管理。
++ 对常用的 selenium api 进行了封装，如click()、type()等，在其中增加了元素可用性判断、log记录、失败截图。
++ WebUI、AndroidUI、iOSUI 分别单独成 module，根据 OS 特性可以编写专用的基类方法，并且 module 根目录下配置文件 config.properties 互不影响
++ 同一个 testcase 支持可配置的读取线上环境、线下环境 2 份测试驱动数据
 + 封装了日志LogUtil、断言AssertUtil，方便以后替换或扩展其他功能
-+ Android：如提供资源混淆文件mapping.txt，框架可以自行将原始元素id替换成混淆后的id，然后实现正常的定位元素
++ 借助 WebDriverManager 全自动的管理 WebDriver，如下载、配置等.
++ Android：如提供资源混淆文件 mapping.txt，框架可以自行将原始元素 id 替换成混淆后的 id，然后实现正常的定位元素
 
 # 环境准备
 
@@ -173,11 +174,11 @@
  */
 public class LoginPage extends IphoneBasePage {
 
-  public static Edit UserName = new Edit("xpath=//UIATextField[contains(@value,'请输入手机号码')]");
-  public static Edit PassWord = new Edit("xpath=//UIASecureTextField");
-  public static Button LoginBtn = new Button("xpath=//UIAButton[@name='立即登录']");
-  public static Text LoginFailAlert = new Text("xpath=//UIAAlert[@name='提示']//UIAStaticText[@name='用户名或密码错误']");
-  public static Button AlertOKBtn = new Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']");
+    public static Edit UserName = new Edit("xpath=//UIATextField[contains(@value,'请输入手机号码')]");
+    public static Edit PassWord = new Edit("xpath=//UIASecureTextField");
+    public static Button LoginBtn = new Button("xpath=//UIAButton[@name='立即登录']");
+    public static Text LoginFailAlert = new Text("xpath=//UIAAlert[@name='提示']//UIAStaticText[@name='用户名或密码错误']");
+    public static Button AlertOKBtn = new Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']");
 
 }
 ```
@@ -195,17 +196,17 @@ public class LoginPage extends IphoneBasePage {
  * 这是和另一个方式的第二处区别。
  */
 public class DemoLoginTest extends IphoneBaseTest {
-  
-  @Test
-  public void testLogin() {
-    TabHomePage.wait(20000);
-    TabHomePage.TabMine.click();
-    TabMyPage.LoginNowBtn.click();
-    LoginPage.UserName.sendkeys("111111");
-    LoginPage.PassWord.sendkeys("2222");
-    LoginPage.LoginBtn.click();
-    AssertUtil.assertTrue(LoginPage.LoginFailAlert.isDisplayed(), "期望登录失败提示框出现");
-  }
+
+    @Test
+    public void testLogin() {
+        TabHomePage.wait(20000);
+        TabHomePage.TabMine.click();
+        TabMyPage.LoginNowBtn.click();
+        LoginPage.UserName.sendkeys("111111");
+        LoginPage.PassWord.sendkeys("2222");
+        LoginPage.LoginBtn.click();
+        AssertUtil.assertTrue(LoginPage.LoginFailAlert.isDisplayed(), "期望登录失败提示框出现");
+    }
 }
 ```
 
@@ -221,38 +222,39 @@ public class DemoLoginTest extends IphoneBaseTest {
  * 注意这里不仅需要识别页面元素，还需要完成元素的事件封装，比如点击按钮。
  */
 public class DemoBaiduPage extends WebBasePage {
-  private static String edtSearchId = "kw";
-  private static String btnSearchXpath = "//input[@value='百度一下']";
-  private static String txtNeteaseXpath = "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
-  /**
-   * 通过url打开登录页面
-   */
-  public static void openBaidu() {
-    LogUtil.info("通过url打开百度首页");
-    baseOpt.open("https://www.baidu.com");
-  }
-  
-  /**
-   * 搜索框输入内容
-   * @param name
-   */
-  public static void typeInSearchEdt(String name) {
-    LogUtil.info("输入搜索内容:" + name);
-    baseOpt.sendkeys(By.id(edtSearchId), name);
-  }
-  
-  /**
-   * 点击搜索按钮
-   */
-  public static void clickSearchBtn() {
-    LogUtil.info("点击搜索按钮");
-    baseOpt.click(By.xpath(btnSearchXpath));
-  }
-  
-  public static boolean isNeteaseExisted() {
-    LogUtil.info("检查163官网是否存在");
-    return baseOpt.isElementDisplayed(By.xpath(txtNeteaseXpath));
-  }
+    private static String edtSearchId = "kw";
+    private static String btnSearchXpath = "//input[@value='百度一下']";
+    private static String txtNetEaseXpath = "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
+
+    /**
+     * 通过url打开登录页面
+     */
+    public static void openBaidu() {
+        LogUtil.info("通过url打开百度首页");
+        baseOpt.open("https://www.baidu.com");
+    }
+
+    /**
+     * 搜索框输入内容
+     * @param name
+     */
+    public static void typeInSearchEdt(String name) {
+        LogUtil.info("输入搜索内容：" + name);
+        baseOpt.sendkeys(By.id(edtSearchId), name);
+    }
+
+    /**
+     * 点击搜索按钮
+     */
+    public static void clickSearchBtn() {
+        LogUtil.info("点击搜索按钮");
+        baseOpt.click(By.xpath(btnSearchXpath));
+    }
+
+    public static boolean isNetEaseExisted() {
+        LogUtil.info("检查163官网是否存在");
+        return baseOpt.isElementDisplayed(By.xpath(txtNetEaseXpath));
+    }
 }
 ```
 
@@ -265,14 +267,14 @@ public class DemoBaiduPage extends WebBasePage {
  */
 public class Demo163Test extends WebBaseTest {
 
-  @Test
-  public void testSearchNetease() {
-    DemoBaiduPage.openBaidu();
-    DemoBaiduPage.typeInSearchEdt("网易");
-    DemoBaiduPage.clickSearchBtn();
-    AssertUtil.assertTrue(DemoBaiduPage.isNeteaseExisted(), "网易没有出现在结果第1位！");
-  }
-  
+    @Test
+    public void testSearchNetEase() {
+        DemoBaiduPage.openBaidu();
+        DemoBaiduPage.typeInSearchEdt("网易");
+        DemoBaiduPage.clickSearchBtn();
+        AssertUtil.assertTrue(DemoBaiduPage.isNetEaseExisted(), "网易没有出现在结果第1位！");
+    }
+
 }
 ```
 
@@ -290,15 +292,15 @@ public class Demo163Test extends WebBaseTest {
  */
 public class NewUserRegisterTest extends AndroidBaseTest {
 
-  @Test(dataProvider = "providerMethod")
-  public void testNewUserRegiser(String telephone, String passwd){
-    TabHomePage.TabMine.click();
-    TabMyPage.MyRegister.click();
-    RegisterPage.TelePhoneNum.sendkeys(telephone);
-    RegisterPage.SetPassWord.sendkeys(passwd);
-    RegisterPage.NowRegisterBtn.click();
-    AssertUtil.assertTrue(RegisterPage.RegisterSucess.isDisplayed(), "注册失败");
-  }
+    @Test(dataProvider = "providerMethod")
+    public void testNewUserRegister(String telephone, String passwd) {
+        TabHomePage.TabMine.click();
+        TabMyPage.MyRegister.click();
+        RegisterPage.TelePhoneNum.sendkeys(telephone);
+        RegisterPage.SetPassWord.sendkeys(passwd);
+        RegisterPage.NowRegisterBtn.click();
+        AssertUtil.assertTrue(RegisterPage.RegisterSucess.isDisplayed(), "注册失败");
+    }
 }
 ```
 
@@ -310,7 +312,7 @@ public class NewUserRegisterTest extends AndroidBaseTest {
 running.env=test
 ```
 
-### 测试数据 NewPersonRegiser.csv
+### 测试数据 NewPersonRegister.csv
 
 + testdata目录和src同级
 + 测试数据，当前只支持csv格式
@@ -320,12 +322,12 @@ running.env=test
    ├─src 
    └─testdata  
       ├─online 线上数据
-      │  └─ NewPersonRegiser.csv   
+      │  └─ NewPersonRegister.csv   
       └─test   线下数据
-         └─ NewPersonRegiser.csv
+         └─ NewPersonRegister.csv
 ```
 
-NewPersonRegiser.csv文件内容示意，以下是文本编辑器打开，你也可以用excel打开：
+NewPersonRegister.csv 文件内容示意，以下是文本编辑器打开，你也可以用 Excel 打开：
 
 ```
 telephone,passwd
@@ -335,12 +337,12 @@ telephone,passwd
 ## 数据驱动解释
 
 1. config.properties中参数running.env决定数据读取目录
-2. @Test的函数名（上例中的testNewUserRegiser）决定了数据驱动的文件名NewPersonRegiser.csv
+2. @Test的函数名（上例中的testNewUserRegister）决定了数据驱动的文件名NewPersonRegister.csv
     - ==测试用例函数名“必须test开头，可以没有_”==，形如testHelloWorld_01()
-    - 结合1.中的路径，本例读取的文件是 ==submodule名称/testdata/test/NewPersonRegiser.csv==
+    - 结合1.中的路径，本例读取的文件是 ==submodule名称/testdata/test/NewPersonRegister.csv==
 3. java测试用例
     - @Test后面加(dataProvider = "providerMethod")
-    - testNewUserRegiser()的==函数参数个数+排序与csv文件中的数据一致==，但是不强制要求参数名称与csv第一行的表头一致
+    - testNewUserRegister()的==函数参数个数+排序与csv文件中的数据一致==，但是不强制要求参数名称与csv第一行的表头一致
 
 # 广告
 

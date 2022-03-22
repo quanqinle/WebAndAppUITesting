@@ -51,10 +51,9 @@ public class BaseTest {
    * @author quanqinle
    * @param m 反射得到的test函数名，函数名必须遵循规范“必须test开头，可以没有_”
    * @return
-   * @throws Exception
    */
   @DataProvider
-  public Object[][] providerMethod(Method m) throws Exception {
+  public Object[][] providerMethod(Method m) {
     String resSonFolder = "testdata";
     String methodName = m.getName();
     String runningEnv = ConfigUtil.getInstance().getProperty("running.env", "online");
@@ -63,11 +62,11 @@ public class BaseTest {
      * 测试用例函数名，形如testHelloWorld_01()，“必须test开头，可以没有_”
      */
     int beginIndex = "test".length();
-    int endIndex = methodName.indexOf("_") < 0 ? methodName.length() : methodName.indexOf("_");
+    int endIndex = !methodName.contains("_") ? methodName.length() : methodName.indexOf("_");
     String fileName = methodName.substring(beginIndex, endIndex) + ".csv";
     String csvFullPath =
         String.join(File.separator, Constant.ROOT, resSonFolder, runningEnv, fileName);
-    LogUtil.info("数据驱动:" + csvFullPath);
+    LogUtil.info("数据驱动：" + csvFullPath);
     return FileUtil.readFromCsv(csvFullPath, 2);
   }
 
@@ -78,11 +77,11 @@ public class BaseTest {
 
     // 兼容循环执行时，如果sessionId为空，则重新启动
     if (DriverFactory.getInstance().getDriver().getSessionId() == null) {
-      DriverFactory.setDf(null);
+      DriverFactory.setDriverFactory(null);
     }
     dimension = DriverFactory.getInstance().getDriver().manage().window().getSize();
     Constant.SCREEN_WIDTH = dimension.getWidth();
     Constant.SCREEN_HEIGHT = dimension.getHeight();
-    LogUtil.info("界面宽高:" + Constant.SCREEN_WIDTH + "x" + Constant.SCREEN_HEIGHT);
+    LogUtil.info("界面宽高：" + Constant.SCREEN_WIDTH + "x" + Constant.SCREEN_HEIGHT);
   }
 }

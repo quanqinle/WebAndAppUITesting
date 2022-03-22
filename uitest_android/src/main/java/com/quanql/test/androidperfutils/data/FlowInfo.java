@@ -64,7 +64,7 @@ public class FlowInfo {
 
         @SuppressWarnings("unchecked")
         String join =
-            StringUtils.join("接收/发送(bytes):", lReceive_Wlan0_Bytes, " / ", lTransmit_Wlan0_Bytes);
+            StringUtils.join("接收/发送(bytes)：", lReceive_Wlan0_Bytes, " / ", lTransmit_Wlan0_Bytes);
         LogUtil.debug(join);
       }
     }

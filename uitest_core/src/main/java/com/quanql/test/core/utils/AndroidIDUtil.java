@@ -54,7 +54,7 @@ public class AndroidIDUtil {
               if (reader != null) {
                 try {
                   reader.close();
-                } catch (IOException e1) {
+                } catch (IOException ignored) {
                 }
               }
             }
@@ -75,7 +75,7 @@ public class AndroidIDUtil {
    * @return 适用于appium的id串，形如${pakagename}:id/obfuscated_id
    */
   public static String getObfuscatedID(String original_id) {
-    if ("android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
+    if ("Android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
       String appiumAndroidIdPrefix = packageName + ":id/";
       if (!mappingFileProp.isEmpty()) {
         return appiumAndroidIdPrefix + APP_ID_MAPS.getOrDefault(original_id, original_id);

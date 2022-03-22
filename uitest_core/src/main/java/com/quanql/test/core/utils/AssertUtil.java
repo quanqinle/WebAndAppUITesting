@@ -2,6 +2,11 @@ package com.quanql.test.core.utils;
 
 import org.testng.Assert;
 
+/**
+ * 断言，TestNg @FIXME
+ *
+ * @author quanqinle
+ */
 public class AssertUtil {
 
   public static void fail(String message) {

@@ -51,8 +51,8 @@ public class PowerEmailableReporter implements IReporter {
       return;
     }
     ConfigUtil cr = ConfigUtil.getInstance();
-    if (cr.getSrouceCodeEncoding() != null) {
-      builder.setEncoding(cr.getSrouceCodeEncoding());
+    if (cr.getSourceCodeEncoding() != null) {
+      builder.setEncoding(cr.getSourceCodeEncoding());
     } else {
       builder.setEncoding("UTF-8");
     }
@@ -124,7 +124,9 @@ public class PowerEmailableReporter implements IReporter {
     }
   }
 
-  /** @param tests */
+  /**
+   * @param tests
+   */
   private void resultSummary(
       ISuite suite, IResultMap tests, String testname, String style, String details) {
     if (tests.getAllResults().size() > 0) {

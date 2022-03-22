@@ -38,7 +38,7 @@ public class MainFramePage extends AndroidBasePage {
    * @param barname
    */
   public static void clickTopTab(String barname) {
-    LogUtil.info("点击 顶部TAB:" + barname);
+    LogUtil.info("点击 顶部TAB：" + barname);
     By parentBy = By.xpath("//android.widget.HorizontalScrollView");
     By findBy = By.name(barname);
     WebElement element = baseOpt.scrollToView(parentBy, findBy, 2, 5);

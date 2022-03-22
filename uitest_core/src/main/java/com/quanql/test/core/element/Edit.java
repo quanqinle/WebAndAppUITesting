@@ -20,6 +20,6 @@ public class Edit extends BaseElement {
 
   public void sendkeys(String text) {
     LogUtil.info("在<" + oriElementStr + ">中输入：" + text);
-    baseOpt.sendkeys(by, text);
+    baseOpt.sendKeys(by, text);
   }
 }

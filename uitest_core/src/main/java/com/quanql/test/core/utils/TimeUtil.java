@@ -11,7 +11,7 @@ import java.util.Locale;
  */
 public class TimeUtil {
 
-  // for debug
+  /** for debug */
   public static void main(String[] args) {
     for (int i = 0; i < 5; i++) {
       System.out.println(getCurrentDateTime(i));
@@ -44,7 +44,8 @@ public class TimeUtil {
     String pattern = "yyyyMMddHHmmss";
 
     switch (type) {
-      case 0: // 默认值
+      case 0:
+        // 默认值
         break;
       case 1:
         pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
@@ -61,7 +62,9 @@ public class TimeUtil {
       default: // 默认值
         break;
     }
-    SimpleDateFormat df = new SimpleDateFormat(pattern, Locale.CHINA); // 设置日期格式
+
+    // 设置日期格式
+    SimpleDateFormat df = new SimpleDateFormat(pattern, Locale.CHINA);
     return df.format(new Date());
   }
 }

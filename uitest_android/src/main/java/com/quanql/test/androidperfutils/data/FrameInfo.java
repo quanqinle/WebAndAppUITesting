@@ -71,16 +71,14 @@ public class FrameInfo {
         columnCount = 4;
       } else if (str.contains("Draw\tProcess\tExecute")) {
         isPrintLog = true;
-        columnCount = 3; // 4.2前的系统只有3列数据
+        // Android 4.2 前的系统只有3列数据
+        columnCount = 3;
       }
 
       if (isPrintLog) {
         LogUtil.debug(str);
         String[] array = str.split("\t");
-        //				if (!StringUtil.isNumeric(array[0].trim())) {
-        //					isPrintLog = false;
-        //					break;
-        //				} else
+
         if (array.length >= 3 && StringUtils.isNumeric(array[0].trim())) {
           dDraw = Double.parseDouble(array[0].trim());
           if (4 == columnCount) {

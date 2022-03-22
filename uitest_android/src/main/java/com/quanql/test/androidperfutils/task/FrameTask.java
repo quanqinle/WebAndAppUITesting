@@ -1,10 +1,10 @@
 package com.quanql.test.androidperfutils.task;
 
+import com.google.common.base.Strings;
 import com.quanql.test.androidperfutils.data.AppInfo;
 import com.quanql.test.androidperfutils.data.FrameInfo;
 import com.quanql.test.core.utils.FileUtil;
 import com.quanql.test.core.utils.LogUtil;
-import com.quanql.test.core.utils.StringUtil;
 import com.quanql.test.core.utils.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -56,7 +56,7 @@ public class FrameTask implements Callable<String>, Runnable {
     this.bWriteFile = bWriteFile;
     setFile(filename);
     if (bWriteFile) {
-      if (!StringUtil.isEmptyOrWhitespaceOnly(FrameInfo.getPrintTitle())) {
+      if (!Strings.isNullOrEmpty(FrameInfo.getPrintTitle())) {
         FileUtil.write2Csv(
             getFile(), String.join(",", "SamplingTime", FrameInfo.getPrintTitle(), "EventName\n"));
       }
@@ -78,7 +78,7 @@ public class FrameTask implements Callable<String>, Runnable {
     frameInfo.getCurrentFrameData();
     sDataLine = frameInfo.getPrintLine();
     if (bWriteFile) {
-      if (!StringUtil.isEmptyOrWhitespaceOnly(sDataLine)) {
+      if (!Strings.isNullOrEmpty(sDataLine)) {
         FileUtil.write2Csv(
             getFile(),
             String.join(",", TimeUtil.getCurrentDateTime(4), sDataLine, eventName) + "\n");

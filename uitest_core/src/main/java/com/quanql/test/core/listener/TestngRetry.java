@@ -24,7 +24,7 @@ public class TestngRetry implements IRetryAnalyzer {
     maxRetryCount = config.getRetryCount();
     logger.info("retrycount=" + maxRetryCount);
     logger.info("sourceCodeDir=" + config.getSourceCodeDir());
-    logger.info("sourceCodeEncoding=" + config.getSrouceCodeEncoding());
+    logger.info("sourceCodeEncoding=" + config.getSourceCodeEncoding());
   }
 
   @Override

@@ -11,13 +11,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 文件操作 */
+/**
+ * 文件操作
+ *
+ * @author quanqinle
+ */
 public class FileUtil {
   public static BufferedWriter bw;
   public static FileOutputStream out;
   public static OutputStreamWriter osw;
 
-  // for debug
+  /** for debug */
   public static void main(String[] args) {
     createFolder("perfreport" + File.separator + "debug");
   }
@@ -45,7 +49,8 @@ public class FileUtil {
   }
 
   private static String getPerfReportFolder() {
-    return "perfreport" + File.separator + TimeUtil.getCurrentDateTime(2); // 存放目录
+    // 存放目录
+    return "perfreport" + File.separator + TimeUtil.getCurrentDateTime(2);
   }
 
   /**
@@ -87,7 +92,8 @@ public class FileUtil {
       }
       resultFile.createNewFile();
 
-      out = new FileOutputStream(resultFile, true); // 文末追加
+      // 文末追加
+      out = new FileOutputStream(resultFile, true);
       osw = new OutputStreamWriter(out, "UTF-8");
       bw = new BufferedWriter(osw);
       bw.write(content);
@@ -158,8 +164,9 @@ public class FileUtil {
     if (newFile.exists()) {
       newFile.delete();
     }
-    if (oldfile.exists()) { // 文件存在时
-      InputStream inStream = new FileInputStream(oldPath); // 读入原文件
+    if (oldfile.exists()) {
+      // 读入原文件
+      InputStream inStream = new FileInputStream(oldPath);
       FileOutputStream fs = new FileOutputStream(newPath);
       byte[] buffer = new byte[1444];
       while ((byteread = inStream.read(buffer)) != -1) {
@@ -175,19 +182,20 @@ public class FileUtil {
   /**
    * 删除文件
    *
-   * @param file 需删除的文件名
+   * @param file 需删除的文件名，或目录名
    */
   public void deleteFile(File file) {
-    LogUtil.info("Begining Delete File!" + file.getName());
+    LogUtil.info("Beginning Delete File!" + file.getName());
     try {
-      if (file.exists()) { // 判断文件是否存在
-        if (file.isFile()) { // 判断是否是文件
+      if (file.exists()) {
+        if (file.isFile()) {
           boolean de = file.delete();
           LogUtil.debug("filename=" + file.getName() + " " + de);
-        } else if (file.isDirectory()) { // 否则如果它是一个目录
-          File[] files = file.listFiles(); // 声明目录下所有的文件 files[];
-          for (int i = 0; i < files.length; i++) { // 遍历目录下所有的文件
-            this.deleteFile(files[i]); // 把每个文件 用这个方法进行迭代
+        } else if (file.isDirectory()) {
+          File[] files = file.listFiles();
+          assert files != null;
+          for (File value : files) {
+            this.deleteFile(value);
           }
         }
         file.delete();
@@ -202,7 +210,7 @@ public class FileUtil {
   }
 
   /** 创建文件 */
-  public void creatFile(String filePath) {
+  public void createFile(String filePath) {
     File filename = new File(filePath);
     if (!filename.exists()) {
       try {
@@ -216,7 +224,7 @@ public class FileUtil {
   /** 以字节为单位读取文件，常用于读二进制文件，如图片、声音、影像等文件。 */
   public static void readFileByBytes(String fileName) {
     File file = new File(fileName);
-    InputStream in = null;
+    InputStream in;
     try {
       System.out.println("以字节为单位读取文件内容，一次读一个字节：");
       // 一次读一个字节
@@ -344,7 +352,7 @@ public class FileUtil {
   /** 显示输入流中还剩的字节数 */
   private static void showAvailableBytes(InputStream in) {
     try {
-      System.out.println("当前字节输入流中的字节数为:" + in.available());
+      System.out.println("当前字节输入流中的字节数为：" + in.available());
     } catch (IOException e) {
       e.printStackTrace();
     }

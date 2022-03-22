@@ -3,29 +3,16 @@ package com.quanql.test.core.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * 日志输出代理类。 TODO: replace log4f with slf4j, or remove this file and use slf4j directly
- *
- * <p>主要完成业务代码和日志工具间的解耦，使切换日志工具更加方便。
- *
- * <p>如：将 slf4j 改为 common-logging 或自己的独立实现，则只需调整该类即可。
- *
- * <p>简化了调用方式：如使用log4j，通常用法是先生成一个实例，再调用输出方法。 现在，只需直接使用 Logs.debug();等静态方法即可
- *
- * @author yangzi
- *     <p>2008-09-08
- * @version 1.0
- * @since 1.5
- */
+/** 日志输出代理类。 */
 public class LogUtil {
   /**
    * 是否打印日志，true表示打印日志，false表示不打印。
    *
-   * <p>开发阶段可以将其设为ture，运行阶段可以设为false
+   * <p>开发阶段可以将其设为 ture，运行阶段可以设为 false
    */
   private static final boolean enabled = true;
-  /** 是否进行源代码定位，ture表示输出源代码所在类以及代码行 */
-  private static boolean showLocSrc = true;
+  /** 是否进行源代码定位，ture 表示输出源代码所在类以及代码行 */
+  private static final boolean showLocSrc = true;
   /** 指定的日志级别 */
   private static int level = 1;
   /** 日志级别：普通 */
@@ -46,19 +33,7 @@ public class LogUtil {
 
   public LogUtil() {}
 
-  static {
-    // 可以单独指定log4j的配置文件，也可以使用默认。
-    // org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
-    // 得到logger实例，作为输出工具。
-    // 此句作用是用一个输出实例，取代每个类里面的： Logger.getLogger(X.class)
-    //    logger = org.apache.log4j.Logger.getLogger("");
-  }
-
-  /**
-   * 测试
-   *
-   * @param args
-   */
+  /** 测试 */
   public static void main(String[] args) {
     LogUtil.info("调试信息");
   }
@@ -68,7 +43,7 @@ public class LogUtil {
    *
    * <p>如果要改变日志输出工具，
    *
-   * <p>如：由原来的log4j改为System.out.println()或logging，则只需改动此类即可。
+   * <p>如：由原来的slf4j改为System.out.println()或logging，则只需改动此类即可。
    *
    * @param level 日志级别
    * @param message 日志消息
@@ -80,7 +55,7 @@ public class LogUtil {
       // 加入源代码定位 fixme
       message = getStackMsg(ste) + msgSplit + message;
     }
-    // 转入具体实现，此处为log4j，可以改为其他不同的日志实现。
+    // 转入具体实现，此处为slf4j，可以改为其他不同的日志实现。
     switch (level) {
       case info:
         logger.info(message.toString());
@@ -130,7 +105,7 @@ public class LogUtil {
   /**
    * 输出info信息
    *
-   * @param message
+   * @param message 信息
    */
   public static void info(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。
@@ -147,7 +122,7 @@ public class LogUtil {
   /**
    * 输出debug信息
    *
-   * @param message
+   * @param message 信息
    */
   public static void debug(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。
@@ -164,7 +139,7 @@ public class LogUtil {
   /**
    * 输出warn信息
    *
-   * @param message
+   * @param message 信息
    */
   public static void warn(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。
@@ -181,7 +156,7 @@ public class LogUtil {
   /**
    * 输出error信息
    *
-   * @param message
+   * @param message 信息
    */
   public static void error(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。

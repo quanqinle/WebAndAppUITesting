@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * web
+ *
+ * @author quanqinle
+ */
 public class WebBaseOpt extends BaseOpt {
 
   private static WebBaseOpt baseOpt;
@@ -67,8 +72,7 @@ public class WebBaseOpt extends BaseOpt {
     // TODO 等待新窗口出现。以后可以优化
     baseOpt.wait(50);
     Set<String> wh = driver.getWindowHandles();
-    List<String> w = new ArrayList<>();
-    w.addAll(wh);
+    List<String> w = new ArrayList<>(wh);
     try {
       driver.switchTo().window(w.get(i));
     } catch (Exception e) {
@@ -80,8 +84,7 @@ public class WebBaseOpt extends BaseOpt {
 
   public void changeNewWindow() {
     Set<String> wh = driver.getWindowHandles();
-    List<String> w = new ArrayList<>();
-    w.addAll(wh);
+    List<String> w = new ArrayList<>(wh);
     try {
       driver.switchTo().window(w.get(w.size() - 1));
     } catch (Exception e) {
@@ -99,13 +102,15 @@ public class WebBaseOpt extends BaseOpt {
     baseOpt.wait(20);
     // Alert alert = driver.switchTo().alert();
 
-    try { // 不稳定，原因待查。还是用上面的吧
+    try {
+      // 不稳定，原因待查。还是用上面的吧
       // wait and switchTo, Otherwise, throws a TimeoutException
       alert = webDriverWait.until(ExpectedConditions.alertIsPresent());
     } catch (Exception e) {
       this.screenShot();
       LogUtil.info(driver.manage().logs() + "==>alert等待超时!");
-      alert = driver.switchTo().alert(); // 与 waituntil 功能重复，但until经常失败，为了增强健壮性才如此写
+      // 与 wait until 功能重复，但until经常失败，为了增强健壮性才如此写
+      alert = driver.switchTo().alert();
     }
 
     if (msg != null) {
@@ -124,25 +129,25 @@ public class WebBaseOpt extends BaseOpt {
    * @return -
    */
   public boolean compareUrl(String url, int loop) {
-    boolean thesame = false;
+    boolean isSame = false;
     String currentUrl = null;
     for (int i = 0; i < loop; i++) {
       currentUrl = driver.getCurrentUrl();
       if (currentUrl.contains(url)) {
-        thesame = true;
+        isSame = true;
         break;
       } else {
         wait(10);
       }
     }
-    if (!thesame) {
+    if (!isSame) {
       this.screenShot();
       LogUtil.error(
           driver.manage().logs() + "==>" + "url(" + currentUrl + ")与基准值(" + url + ")不一致！");
     } else {
       LogUtil.info(driver.manage().logs() + "==>" + "url与基准值一致！");
     }
-    return thesame;
+    return isSame;
   }
 
   /** 刷新页面 */
@@ -153,31 +158,32 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 等待frame可以用，切换到指定的frame
    *
-   * @param frameby -
+   * @param frameBy -
    */
-  public void switchTo(By frameby) {
+  public void switchTo(By frameBy) {
     WebDriverWait webDriverWait =
         new WebDriverWait(driver, Duration.ofSeconds(DRIVER_WAIT_TIMEOUT_IN_SECOND));
     try {
       // wait and switchTo, Otherwise, throws a TimeoutException
-      webDriverWait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameby));
-      // driver.switchTo().frame(this.findElement(frameby));
-      LogUtil.info(driver.manage().logs() + "==>switchTo frame:" + frameby.toString() + "成功.");
+      webDriverWait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameBy));
+      // driver.switchTo().frame(this.findElement(frameBy));
+      LogUtil.info(driver.manage().logs() + "==>switchTo frame：" + frameBy.toString() + "成功.");
     } catch (Exception e) {
       this.screenShot();
-      LogUtil.info(driver.manage().logs() + "==>switchTo frame:" + frameby.toString() + "等待超时!");
-      driver.switchTo().frame(this.findElement(frameby)); // 与waituntil功能重复，但until经常失败，为了增强健壮性才如此写
+      LogUtil.info(driver.manage().logs() + "==>switchTo frame：" + frameBy.toString() + "等待超时!");
+      // 与wait until功能重复，但until经常失败，为了增强健壮性才如此写
+      driver.switchTo().frame(this.findElement(frameBy));
     }
   }
 
   /**
    * 点击frame中的元素
    *
-   * @param frameby -
+   * @param frameBy -
    * @param by -
    */
-  public void clickInFrame(By frameby, By by) {
-    this.switchTo(frameby);
+  public void clickInFrame(By frameBy, By by) {
+    this.switchTo(frameBy);
     this.click(by);
     // tip：在此增加wait()将增加click的成功率！
     baseOpt.wait(20);
@@ -187,24 +193,24 @@ public class WebBaseOpt extends BaseOpt {
   /**
    * 在frame中的输入框输入
    *
-   * @param frameby -
+   * @param frameBy -
    * @param by -
    * @param text -
    */
-  public void typeInFrame(By frameby, By by, String text) {
-    this.switchTo(frameby);
-    this.sendkeys(by, text);
+  public void typeInFrame(By frameBy, By by, String text) {
+    this.switchTo(frameBy);
+    this.sendKeys(by, text);
     driver.switchTo().defaultContent();
   }
 
   /**
    * 在frame中查找元素
    *
-   * @param frameby -
+   * @param frameBy -
    * @param by -
    */
-  public void findElementInFrame(By frameby, By by) {
-    this.switchTo(frameby);
+  public void findElementInFrame(By frameBy, By by) {
+    this.switchTo(frameBy);
     this.findElement(by);
     driver.switchTo().defaultContent();
   }

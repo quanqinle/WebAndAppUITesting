@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 /**
  * 控件原始的基础类<br>
- * 注：组员提出要求简化控件定义和使用，没办法，增加一种元素定义和操作方式[无奈]
+ * 注：组员提出要求简化控件定义和使用，没办法，增加一种元素定义和操作方式 [无奈 ╮(￣▽￣)╭]
  *
  * @author quanqinle
  */
@@ -74,22 +74,21 @@ public class BaseElement {
    *
    * @author quanqinle
    * @param byType 支持：id、name、xpath。其中，android id自带解混淆的功能
-   * @param byValue
-   * @return
+   * @param byValue by的值
+   * @return By
    */
   private By parseElement(String byType, String byValue) {
-    String lowerByType = byType.toLowerCase();
-    if ("id".equals(lowerByType)) {
+    if ("id".equalsIgnoreCase(byType)) {
       if ("android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
         this.by = By.id(AndroidIDUtil.getObfuscatedID(byValue));
       } else {
         this.by = By.id(byValue);
       }
-    } else if ("rawid".equals(lowerByType)) {
+    } else if ("rawid".equalsIgnoreCase(byType)) {
       this.by = By.id(byValue);
-    } else if ("name".equals(lowerByType)) {
+    } else if ("name".equalsIgnoreCase(byType)) {
       this.by = By.name(byValue);
-    } else if ("xpath".equals(lowerByType)) {
+    } else if ("xpath".equalsIgnoreCase(byType)) {
       this.by = By.xpath(byValue);
     } else {
       this.by = By.id(byValue);
@@ -100,7 +99,7 @@ public class BaseElement {
   /**
    * 获取元素对象。对象未构建时，则findElement创建
    *
-   * @return
+   * @return 元素
    */
   public WebElement getElement() {
     if (element == null) {
@@ -116,7 +115,7 @@ public class BaseElement {
   /**
    * 控件是否显示
    *
-   * @return
+   * @return -
    */
   public boolean isDisplayed() {
     boolean b = baseOpt.isElementDisplayed(by);

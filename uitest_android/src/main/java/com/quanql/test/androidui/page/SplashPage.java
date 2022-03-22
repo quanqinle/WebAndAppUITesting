@@ -25,7 +25,7 @@ public class SplashPage extends AndroidBasePage {
   public static boolean isUserGuideShow() {
     boolean b = false;
     b = baseOpt.isElementDisplayed(By.id(viGuidePageId));
-    LogUtil.info("新人引导页存在:" + b);
+    LogUtil.info("新人引导页存在：" + b);
     return b;
   }
 

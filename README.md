@@ -15,9 +15,11 @@
   verification, log recording, and taking screenshot for failed tests.
 + WebUI, AndroidUI and iOSUI are separate modules. According to OS features, special base class methods have be written,
   and the configuration file `config.properties` under the module root directory will not affect each other.
-+ A testcase can test online or offline enviroment at the same time by different tests data driven.
++ A testcase can test online or offline environment at the same time by different tests data driven.
 + Log and assertion have been encapsulated into LogUtil and AssertUtil, which is easy to replace or extend in the
   future.
++ WebDriverManager carries out the management (i.e., download, setup, and maintenance) of the web drivers in a fully
+  automated manner.
 + Android: If `mapping.txt` the resource obfuscation file is provided, the framework can automatically replace the
   original element id with the obfuscated id, and then the positioning elements work fine.
 

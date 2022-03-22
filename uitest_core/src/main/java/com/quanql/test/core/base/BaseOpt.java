@@ -1,9 +1,11 @@
 package com.quanql.test.core.base;
 
+import com.google.common.base.Strings;
 import com.quanql.test.core.utils.AssertUtil;
 import com.quanql.test.core.utils.ConfigUtil;
 import com.quanql.test.core.utils.LogUtil;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,22 +22,22 @@ import java.util.List;
 
 /**
  * 常用事件封装 <br>
- * 只有web/android/ios都适用的，才放在这里<br>
- * 警告:如需修改此class，请告知项目管理员
+ * 只有 web/android/ios 都适用的，才放在这里<br>
+ * 警告:如需修改此 class，请告知项目管理员
  *
  * @author 权芹乐
  */
 public class BaseOpt {
 
   protected static BaseOpt baseOpt;
-  protected RemoteWebDriver driver;
-  protected WebDriverWait wait;
   /** second */
   protected static int DRIVER_WAIT_TIMEOUT_IN_SECOND =
       Integer.parseInt(ConfigUtil.getInstance().getProperty("waitTime"));
-
   /** 可配置 */
   protected static String PROJ_PACKAGE_NAME = "com.quanql.test";
+
+  protected RemoteWebDriver driver;
+  protected WebDriverWait wait;
 
   protected BaseOpt() {
     driver = DriverFactory.getInstance().getDriver();
@@ -93,7 +95,7 @@ public class BaseOpt {
   /**
    * 点击元素
    *
-   * @param element
+   * @param element 元素
    */
   public void click(WebElement element) {
     try {
@@ -109,7 +111,7 @@ public class BaseOpt {
   /**
    * 点击元素
    *
-   * @param by
+   * @param by -
    */
   public void click(By by) {
     try {
@@ -132,7 +134,7 @@ public class BaseOpt {
   /**
    * 点击对第num个元素by
    *
-   * @param by
+   * @param by -
    * @param num 相同元素的第num个，从0开始
    */
   public void click(By by, int num) {
@@ -150,11 +152,11 @@ public class BaseOpt {
   /**
    * 公用的输入操作
    *
-   * @param by
-   * @param element
-   * @param text
+   * @param by -
+   * @param element 元素
+   * @param text 文本
    */
-  private void sendkeys(By by, WebElement element, String text) {
+  private void sendKeys(By by, WebElement element, String text) {
 
     if ("input".equalsIgnoreCase(element.getTagName())
         || "textarea".equalsIgnoreCase(element.getTagName())) {
@@ -227,32 +229,32 @@ public class BaseOpt {
   /**
    * 输入文本
    *
-   * @param by
-   * @param text
+   * @param by -
+   * @param text 文本
    */
-  public void sendkeys(By by, String text) {
+  public void sendKeys(By by, String text) {
     WebElement element = waitForElementClickable(by);
-    sendkeys(by, element, text);
+    sendKeys(by, element, text);
   }
 
   /**
    * 在相同元素的第num个输入文本
    *
-   * @param by
-   * @param num
-   * @param text
+   * @param by -
+   * @param num 序号
+   * @param text 文本
    */
-  public void sendkeys(By by, int num, String text) {
+  public void sendKeys(By by, int num, String text) {
     waitForElementClickable(by);
     WebElement element = findElements(by).get(num);
-    sendkeys(by, element, text);
+    sendKeys(by, element, text);
   }
 
   /**
    * 查找元素
    *
-   * @param by
-   * @return
+   * @param by -
+   * @return 元素
    */
   public WebElement findElement(By by) {
     WebElement element = null;
@@ -270,7 +272,7 @@ public class BaseOpt {
   /**
    * 几秒后查看元素不存在
    *
-   * @param by
+   * @param by -
    * @param millis 等待的毫秒
    */
   public void findElementNotExist(By by, int millis) {
@@ -290,8 +292,8 @@ public class BaseOpt {
   /**
    * 查找元素集合
    *
-   * @param by
-   * @return
+   * @param by -
+   * @return 元素list
    */
   public List<WebElement> findElements(By by) {
     List<WebElement> elementList = null;
@@ -309,11 +311,11 @@ public class BaseOpt {
   /**
    * 检查元素是否存在
    *
-   * @param by
+   * @param by -
    * @return true存在
    */
   public boolean isElementExisted(By by) {
-    boolean b = false;
+    boolean b;
     try {
       getDriver().findElement(by);
       b = true;
@@ -330,14 +332,14 @@ public class BaseOpt {
    * 检查元素是否可见<br>
    * 立即检查，受implicitly.wait影响（同findElement()）
    *
-   * @param by
+   * @param by -
    * @return true存在
    */
   public boolean isElementDisplayed(By by) {
-    boolean b = false;
+    boolean b;
     try {
       b = getDriver().findElement(by).isDisplayed();
-      LogUtil.debug(getDriver().manage().logs() + "==>" + by.toString() + " 可见:" + b);
+      LogUtil.debug(getDriver().manage().logs() + "==>" + by.toString() + " 可见：" + b);
     } catch (Exception e) {
       LogUtil.info(getDriver().manage().logs() + "==>" + by.toString() + " 未找到！");
       b = false;
@@ -354,7 +356,7 @@ public class BaseOpt {
     String dirName = "screenshot";
     if (!(new File(dirName).isDirectory())) {
       // 不存在则新建目录
-      new File(dirName).mkdirs();
+      (new File(dirName)).mkdirs();
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -362,45 +364,47 @@ public class BaseOpt {
 
     StackTraceElement[] stack = (new Throwable()).getStackTrace();
 
-    String cn = "";
+    String className = "";
     int line = 0;
     // for循环找到项目中最上层的类文件
     for (StackTraceElement ste : stack) {
       /*
-       * PROJ_PACKAGE_NAME可自定义。
+       * PROJ_PACKAGE_NAME 可自定义。
        * 作用：调用栈中找到工程的包名，然后截图，即，避免使用底层类命名截图
        */
       if (ste.getClassName().contains(PROJ_PACKAGE_NAME)) {
-        cn = ste.getFileName();
+        className = ste.getFileName();
         line = ste.getLineNumber();
       }
     }
     LogUtil.debug("PROJ_PACKAGE_NAME：" + PROJ_PACKAGE_NAME);
 
-    if (cn != "" && !cn.isEmpty()) {
-      cn = cn.substring(0, cn.indexOf("."));
+    if (!Strings.isNullOrEmpty(className)) {
+      className = className.substring(0, className.indexOf("."));
     }
-    LogUtil.info("用例：" + cn + "在第" + line + "行失败产生截图：" + time + cn + ".png");
+    LogUtil.info("用例：" + className + "在第" + line + "行失败产生截图：" + time + className + ".png");
     WebDriver augmentedDriver = new Augmenter().augment(driver);
     File sourceFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
     try {
-      Files.copy(sourceFile.toPath(), Paths.get(dirName, time + cn + ".png"));
+      Files.copy(sourceFile.toPath(), Paths.get(dirName, time + className + ".png"));
     } catch (IOException e) {
-      LogUtil.error("用例：" + cn + "在第" + line + "行失败产生截图失败：" + e);
+      LogUtil.error("用例：" + className + "在第" + line + "行失败产生截图失败：" + e);
     }
     long te = System.currentTimeMillis();
     LogUtil.info("截屏耗时ms: " + (te - ts));
   }
 
   /**
-   * 在当前光标处，通过键盘输入文本（适用于无法获取element时）
+   * 在当前光标处，通过键盘输入文本（适用于无法获取 element 时）
    *
    * @author 权芹乐
-   * @param text
+   * @param text 输入
    */
   public void sendKeysByKeyboard(String text) {
     try {
-      getDriver().getKeyboard().sendKeys(text);
+      //      getDriver().getKeyboard().sendKeys(text);
+      Actions actions = new Actions(getDriver());
+      actions.sendKeys(text);
       LogUtil.info(getDriver().manage().logs() + "==>" + text + " 键盘输入成功！");
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>" + text + " 键盘输入失败！" + e);
@@ -422,7 +426,7 @@ public class BaseOpt {
       wait =
           new WebDriverWait(
               driver, Duration.ofSeconds(DRIVER_WAIT_TIMEOUT_IN_SECOND), Duration.ofMillis(500));
-      return (WebElement) wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+      return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     } catch (Exception e) {
       LogUtil.info(getDriver().manage().logs() + "==>" + by.toString() + "判断visibility失败！");
       // LogUtil.info(e.getMessage());
@@ -433,16 +437,16 @@ public class BaseOpt {
   /**
    * 等待默认超时时间可以自己设置， 比如滑动页面寻找元素时，没有必要等待很长时间，不确定出现时间可以使用默认等待时间。
    *
-   * @param by
-   * @param outTime
-   * @return
+   * @param by -
+   * @param outTime 超时时间，秒
+   * @return 元素
    */
   public WebElement waitForElementClickable(By by, int outTime) {
     try {
       // 兼容循环执行时 不会重新加载构造方法导致driver为空的问题
       driver = getDriver();
       wait = new WebDriverWait(driver, Duration.ofSeconds(outTime), Duration.ofMillis(200));
-      return (WebElement) wait.until(ExpectedConditions.elementToBeClickable(by));
+      return wait.until(ExpectedConditions.elementToBeClickable(by));
     } catch (Exception e) {
       LogUtil.info(getDriver().manage().logs() + "==>" + by.toString() + "判断Clickable失败！");
       return null;
@@ -457,22 +461,19 @@ public class BaseOpt {
   /**
    * 查找元素，找不到则返回null,不截屏抛异常。用户下一步判断. 使用该方法 key必须经过getObfuscatedID 判断混淆ID
    *
-   * @param key
-   * @return
+   * @param key 元素关键字，//开头代表xpath，否则是id
+   * @return 元素
    */
   public WebElement findElement(String key) {
 
-    WebElement element = null;
+    WebElement element;
     try {
       if (key.startsWith("//")) {
-
         element = getDriver().findElement(By.xpath(key));
       } else {
-
         element = getDriver().findElement(By.id(key));
       }
     } catch (Exception e) {
-
       return null;
     }
     return element;

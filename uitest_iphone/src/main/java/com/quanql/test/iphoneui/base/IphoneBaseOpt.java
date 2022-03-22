@@ -159,7 +159,7 @@ public class IphoneBaseOpt extends BaseOpt {
                getDriver().swipe(endX * 1 / 4, centreY, endX * 3 / 4, centreY, duration);
                break;
              default:
-               LogUtil.error("unknown direction:" + direction);
+               LogUtil.error("unknown direction：" + direction);
                break;
            }
       */

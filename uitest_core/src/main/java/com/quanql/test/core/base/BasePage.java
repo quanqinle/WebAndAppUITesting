@@ -2,8 +2,8 @@ package com.quanql.test.core.base;
 
 /**
  * 页面基础类 <br>
- * 只有web/android/ios都适用的，才放在这里<br>
- * 警告:如需修改此class，请告知项目管理员
+ * 只有 web/android/ios 都适用的，才放在这里<br>
+ * 警告:如需修改此 class，请告知项目管理员
  *
  * @author 权芹乐
  */
@@ -23,7 +23,7 @@ public class BasePage {
   }
 
   /**
-   * 获取当前页面元素的DOM树，结果是xml格式的字符串<br>
+   * 获取当前页面元素的 DOM 树，结果是 xml 格式的字符串<br>
    * 当页面无法通过工具识别元素时，可以通过该函数获取页面源码，分析所需元素
    *
    * @author quanqinle

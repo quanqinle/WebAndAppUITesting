@@ -4,10 +4,15 @@ import com.quanql.test.core.utils.LogUtil;
 import com.quanql.test.webui.base.WebBasePage;
 import org.openqa.selenium.By;
 
+/**
+ * demo
+ *
+ * @author Administrator
+ */
 public class DemoBaiduPage extends WebBasePage {
   private static String edtSearchId = "kw";
   private static String btnSearchXpath = "//input[@value='百度一下']";
-  private static String txtNeteaseXpath =
+  private static String txtNetEaseXpath =
       "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
 
   /** 通过url打开登录页面 */
@@ -22,8 +27,8 @@ public class DemoBaiduPage extends WebBasePage {
    * @param name
    */
   public static void typeInSearchEdt(String name) {
-    LogUtil.info("输入搜索内容:" + name);
-    baseOpt.sendkeys(By.id(edtSearchId), name);
+    LogUtil.info("输入搜索内容：" + name);
+    baseOpt.sendKeys(By.id(edtSearchId), name);
   }
 
   /** 点击搜索按钮 */
@@ -32,8 +37,8 @@ public class DemoBaiduPage extends WebBasePage {
     baseOpt.click(By.xpath(btnSearchXpath));
   }
 
-  public static boolean isNeteaseExisted() {
+  public static boolean isNetEaseExisted() {
     LogUtil.info("检查163官网是否存在");
-    return baseOpt.isElementDisplayed(By.xpath(txtNeteaseXpath));
+    return baseOpt.isElementDisplayed(By.xpath(txtNetEaseXpath));
   }
 }

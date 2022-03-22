@@ -21,12 +21,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * driver工厂
+ * driver 工厂
  *
  * @author 权芹乐 2016-09-04
  */
 public class DriverFactory extends RemoteWebDriver {
-  private static DriverFactory df = null;
+
+  private static DriverFactory driverFactory = null;
 
   protected RemoteWebDriver driver;
   protected DesiredCapabilities capabilities;
@@ -37,7 +38,7 @@ public class DriverFactory extends RemoteWebDriver {
 
   private static boolean CLOSED = false;
   private static boolean QUIT = false;
-  private static boolean CLOSEDAPP = false;
+  private static boolean CLOSED_APP = false;
 
   /** for debug */
   public static void main(String[] args) {
@@ -57,25 +58,25 @@ public class DriverFactory extends RemoteWebDriver {
   }
 
   public static DriverFactory getInstance() {
-    if (df == null) {
-      df = new DriverFactory();
+    if (driverFactory == null) {
+      driverFactory = new DriverFactory();
     }
-    return df;
+    return driverFactory;
   }
 
   protected void createDriver() {
 
-    if ("android".equalsIgnoreCase(driverType)) {
+    if ("Android".equalsIgnoreCase(driverType)) {
       createAndroidDriver(cap_noReset);
-    } else if ("ios".equalsIgnoreCase(driverType)) {
+    } else if ("iOS".equalsIgnoreCase(driverType)) {
       createIOSDriver(cap_noReset);
-    } else if ("iossafari".equalsIgnoreCase(driverType)) {
+    } else if ("iOSSafari".equalsIgnoreCase(driverType)) {
       createIOSSafariDriver(cap_noReset);
-    } else if ("chrome".equalsIgnoreCase(driverType)) {
+    } else if ("Chrome".equalsIgnoreCase(driverType)) {
       createChromeDriver(false);
     } else if ("H5".equalsIgnoreCase(driverType)) {
       createChromeDriver(true);
-    } else if ("firefox".equalsIgnoreCase(driverType)) {
+    } else if ("Firefox".equalsIgnoreCase(driverType)) {
       createFirefoxDriver();
     } else {
       AssertUtil.fail("unknown driverType = " + driverType);
@@ -89,15 +90,15 @@ public class DriverFactory extends RemoteWebDriver {
   }
 
   /**
-   * Android app测试
+   * Android app 测试
    *
-   * @param noReset
+   * @param noReset 不卸载、不重装
    */
   private void createAndroidDriver(Boolean noReset) {
 
     capabilities = new DesiredCapabilities();
-    // app is absolute path
 
+    // app is absolute path
     capabilities.setCapability(
         "app",
         String.join(File.separator, System.getProperty("user.dir"), property.getProperty("app")));
@@ -122,27 +123,30 @@ public class DriverFactory extends RemoteWebDriver {
       driver = new AndroidDriver(new URL(property.getProperty("remote.address")), capabilities);
     } catch (Exception e) {
       e.printStackTrace();
-      AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
+      AssertUtil.fail("初始化对象失败，e = " + e.getMessage());
     }
   }
 
   /**
-   * iOS上启动app
+   * iOS 上启动 app
    *
-   * @param noReset
+   * @param noReset 不卸载、不重装
    */
   private void createIOSDriver(Boolean noReset) {
+
     String appiumServerVersion = property.getProperty("appium.server.version", "1.5");
 
     capabilities = new DesiredCapabilities();
 
-    capabilities.setCapability("app", property.getProperty("app")); // iOS被测app路径是server上的路径
+    // iOS被测app路径是server上的路径
+    capabilities.setCapability("app", property.getProperty("app"));
     capabilities.setCapability("platformName", property.getProperty("platformName"));
     capabilities.setCapability("platformVersion", property.getProperty("platformVersion"));
     capabilities.setCapability("deviceName", property.getProperty("deviceName"));
     // debug时，等待时间调大点！！
     capabilities.setCapability("newCommandTimeout", property.getProperty("newCommandTimeout"));
-    capabilities.setCapability("noReset", noReset); // 不卸载、不重装
+    // 不卸载、不重装
+    capabilities.setCapability("noReset", noReset);
     capabilities.setCapability("noSign", "true");
     // 重置输入法，并且设置可以中文输入
     capabilities.setCapability("unicodeKeyboard", "True");
@@ -160,14 +164,14 @@ public class DriverFactory extends RemoteWebDriver {
       driver = new IOSDriver(new URL(property.getProperty("remote.address")), capabilities);
     } catch (Exception e) {
       e.printStackTrace();
-      AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
+      AssertUtil.fail("初始化对象失败，e = " + e.getMessage());
     }
   }
 
   /**
    * 启动iOS的safari浏览器
    *
-   * @param noReset
+   * @param noReset 不卸载、不重装
    */
   private void createIOSSafariDriver(Boolean noReset) {
 
@@ -192,7 +196,7 @@ public class DriverFactory extends RemoteWebDriver {
       driver = new IOSDriver(new URL(property.getProperty("remote.address")), capabilities);
     } catch (Exception e) {
       e.printStackTrace();
-      AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
+      AssertUtil.fail("初始化对象失败，e = " + e.getMessage());
     }
   }
 
@@ -220,9 +224,9 @@ public class DriverFactory extends RemoteWebDriver {
 
     // 模拟手机浏览器
     if (isMobileChrome) {
-      // 有两种方式：1使用预设的配置（如下），2自定义配置（见链接
+      // 有两种方式：1使用预设的配置（如下），2自定义配置（见链接）
       // https://sites.google.com/a/chromium.org/chromedriver/mobile-emulation
-      Map<String, String> mobileEmulation = new HashMap<>();
+      Map<String, String> mobileEmulation = new HashMap<>(3);
       // 可以修改
       mobileEmulation.put("deviceName", "Nexus 6");
       options.setExperimentalOption("mobileEmulation", mobileEmulation);
@@ -230,16 +234,14 @@ public class DriverFactory extends RemoteWebDriver {
 
     try {
       if ("local".equalsIgnoreCase(runningType)) {
-
         WebDriverManager.chromedriver().setup();
-
         driver = new ChromeDriver(options);
       } else {
         // For use with RemoteWebDriver
         driver = new RemoteWebDriver(new URL(property.getProperty("remote.address")), options);
       }
     } catch (MalformedURLException e) {
-      AssertUtil.fail("初始化对象失败,e = " + e.getMessage());
+      AssertUtil.fail("初始化对象失败，e = " + e.getMessage());
     }
 
     try {
@@ -288,7 +290,7 @@ public class DriverFactory extends RemoteWebDriver {
    * only for Android/iOS
    */
   public void closeApp() {
-    CLOSEDAPP = true;
+    CLOSED_APP = true;
     @SuppressWarnings("unchecked")
     AppiumDriver appiumDriver = (AppiumDriver) driver;
     appiumDriver.close();
@@ -296,10 +298,10 @@ public class DriverFactory extends RemoteWebDriver {
   }
 
   public static boolean isCloseApp() {
-    return CLOSEDAPP;
+    return CLOSED_APP;
   }
 
-  public static void setDf(DriverFactory df) {
-    DriverFactory.df = df;
+  public static void setDriverFactory(DriverFactory driverFactory) {
+    DriverFactory.driverFactory = driverFactory;
   }
 }

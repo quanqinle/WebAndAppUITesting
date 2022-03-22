@@ -73,7 +73,7 @@ public class TabHomePage extends MainFramePage {
   public static boolean isAdsDialogShow() {
     boolean b = false;
     b = baseOpt.isElementDisplayed(By.id(getObfuscatedID("ads_dialog")));
-    LogUtil.info("新人1元购广告Dialog存在:" + b);
+    LogUtil.info("新人1元购广告Dialog存在：" + b);
     return b;
   }
 
@@ -95,7 +95,7 @@ public class TabHomePage extends MainFramePage {
       }
     } catch (Exception e) {
     }
-    LogUtil.info("开屏splash广告存在:" + b);
+    LogUtil.info("开屏splash广告存在：" + b);
     return b;
   }
 
@@ -114,7 +114,7 @@ public class TabHomePage extends MainFramePage {
   public static boolean isBrandDisplay() {
     boolean b = false;
     b = baseOpt.isElementDisplayed(By.id(tvBrandtitleId));
-    LogUtil.info("品牌特卖存在:" + b);
+    LogUtil.info("品牌特卖存在：" + b);
     return b;
   }
 
