@@ -10,7 +10,7 @@
 
 + This is a **UI test automation framework for Web/Android/iOS/H5**, and supports Android performance testing. The core
   of the project uses Selenium/Appium.
-+ The project uses maven for project management and testng for test case management.
++ The project uses Maven for project management and TestNG for test case management.
 + The common Selenium APIs are encapsulated, such as `click()`, `type()`, etc. And they are added element availability
   verification, log recording, and taking screenshot for failed tests.
 + WebUI, AndroidUI and iOSUI are separate modules. According to OS features, special base class methods have be written,
@@ -28,11 +28,11 @@
 ## Requirements
 
 1. JDK >= 8 (The minimum Java version required is still 8.)
-2. maven >= 3
+2. Maven >= 3
 3. Selenium 4
 4. Appium 3
-5. testng 6 -- TODO: replace testNg with Junit
-6. IDE (eclipse or others, this tutorial takes eclipse as an example) + testng plugin + maven plugin
+5. TestNG 6 -- TODO: replace testNg with Junit
+6. IDE (eclipse or others, this tutorial takes eclipse as an example) + TestNG plugin + Maven plugin
 
 ## Android
 
@@ -85,11 +85,11 @@
 │          │         ├─base 
 │          │         │   ├─BaseOpt.java       <-- base class. such as click, type, findelement,screenShot etc.
 │          │         │   ├─BasePage.java      <-- page object base class
-│          │         │   ├─BaseTest.java      <-- test case base class. manage testng life cycle
+│          │         │   ├─BaseTest.java      <-- test case base class. manage TestNG life cycle
 │          │         │   └─DriverFactory.java <-- driver factory, web and android and other drivers are here
 │          │         ├─listener 
 │          │         └─utils
-│          └─resources  <-- log4j config file is here
+│          └─resources  <-- slf4j config file is here
 └─uitest_web
     └─src
         └─main

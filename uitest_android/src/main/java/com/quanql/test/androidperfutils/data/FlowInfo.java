@@ -1,9 +1,9 @@
 package com.quanql.test.androidperfutils.data;
 
+import com.google.common.base.Strings;
 import com.quanql.test.androidperfutils.AndroidConstant;
 import com.quanql.test.androidperfutils.CommandResult;
 import com.quanql.test.androidperfutils.ShellUtils;
-import com.quanql.test.core.utils.DoubleUtil;
 import com.quanql.test.core.utils.LogUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,8 +15,8 @@ import java.math.BigDecimal;
  * @author 权芹乐
  */
 public class FlowInfo {
-  private String appPackageName = "";
   private static String printTitle = "ReceiveWlan0(mb),TransmitWlan0(mb),Wlan0Total(mb)";
+  private String appPackageName = "";
   private String printLine = "";
 
   private long lReceive_Wlan0_Bytes = 0L;
@@ -30,22 +30,32 @@ public class FlowInfo {
     this.appPackageName = appPackageName;
   }
 
+  public static String getPrintTitle() {
+    return printTitle;
+  }
+
+  public static void setPrintTitle(String printTitle) {
+    FlowInfo.printTitle = printTitle;
+  }
+
   public void getCurrentFlowData() {
-    if (!appPackageName.isEmpty()) {
-      getCurrentFlowData(this.appPackageName);
-      this.printLine =
-          StringUtils.join(
-              new String[] {
-                String.valueOf(DoubleUtil.div(this.getlReceive_Wlan0_Bytes(), 1024 * 1024, 4)),
-                String.valueOf(DoubleUtil.div(this.getlTransmit_Wlan0_Bytes(), 1024 * 1024, 4)),
-                String.valueOf(
-                    DoubleUtil.div(
-                        this.getlReceive_Wlan0_Bytes() + this.getlTransmit_Wlan0_Bytes(),
-                        1024 * 1024,
-                        4))
-              },
-              ",");
+    if (Strings.isNullOrEmpty(appPackageName)) {
+      return;
     }
+
+    getCurrentFlowData(this.appPackageName);
+    this.printLine =
+        StringUtils.join(
+            new String[] {
+              String.format("%.4f", (this.getlReceive_Wlan0_Bytes() / 1024D / 1024D)),
+              String.format("%.4f", (this.getlTransmit_Wlan0_Bytes() / 1024D / 1024D)),
+              String.format(
+                  "%.4f",
+                  ((this.getlReceive_Wlan0_Bytes() + this.getlTransmit_Wlan0_Bytes())
+                      / 1024D
+                      / 1024D))
+            },
+            ",");
   }
 
   public void getCurrentFlowData(String appPkgName) {
@@ -62,7 +72,6 @@ public class FlowInfo {
         lReceive_Wlan0_Bytes = Long.parseLong(array[1]);
         lTransmit_Wlan0_Bytes = Long.parseLong(array[9]);
 
-        @SuppressWarnings("unchecked")
         String join =
             StringUtils.join("接收/发送(bytes)：", lReceive_Wlan0_Bytes, " / ", lTransmit_Wlan0_Bytes);
         LogUtil.debug(join);
@@ -71,7 +80,7 @@ public class FlowInfo {
   }
 
   /**
-   * 获取app当前wlan0通道的累计流量
+   * 获取 app 当前 wlan0 通道的累计流量
    *
    * @param appPkgName
    * @author 权芹乐
@@ -84,14 +93,6 @@ public class FlowInfo {
 
   public void setAppPackageName(String appPackageName) {
     this.appPackageName = appPackageName;
-  }
-
-  public static String getPrintTitle() {
-    return printTitle;
-  }
-
-  public static void setPrintTitle(String printTitle) {
-    FlowInfo.printTitle = printTitle;
   }
 
   public String getPrintLine() {
@@ -130,9 +131,9 @@ public class FlowInfo {
     String[] secondTemp = secondFlow.split(",");
 
     // 计算两次操作间隔的流量
-    float receiveFlow = Float.valueOf(secondTemp[0]) - Float.valueOf(firstTemp[0]);
-    float transmitFlow = Float.valueOf(secondTemp[1]) - Float.valueOf(firstTemp[1]);
-    float totalFlow = Float.valueOf(secondTemp[2]) - Float.valueOf(firstTemp[2]);
+    float receiveFlow = Float.parseFloat(secondTemp[0]) - Float.parseFloat(firstTemp[0]);
+    float transmitFlow = Float.parseFloat(secondTemp[1]) - Float.parseFloat(firstTemp[1]);
+    float totalFlow = Float.parseFloat(secondTemp[2]) - Float.parseFloat(firstTemp[2]);
 
     this.printLine =
         StringUtils.join(

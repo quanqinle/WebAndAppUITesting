@@ -3,7 +3,6 @@ package com.quanql.test.androidperfutils.data;
 import com.quanql.test.androidperfutils.CommandResult;
 import com.quanql.test.androidperfutils.ShellUtils;
 import com.quanql.test.core.utils.Constant;
-import com.quanql.test.core.utils.DoubleUtil;
 import com.quanql.test.core.utils.LogUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -128,7 +127,7 @@ public class FrameInfo {
               + ","
               + junkCount
               + ","
-              + DoubleUtil.div(junkCount, iFrameTotal, 4);
+              + String.format("%.4f", ((double) junkCount / iFrameTotal));
     }
   }
 

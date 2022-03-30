@@ -8,12 +8,12 @@
 
 # 简述
 
-+ 这是一个适用于 Web/Android/iOS/H5 的UI自动化项目，以及支持 Android 性能测试。项目底层使用了 Selenium/Appium。
-+ 项目用 maven 进行工程管理，通过testng进行用例管理。
-+ 对常用的 selenium api 进行了封装，如click()、type()等，在其中增加了元素可用性判断、log记录、失败截图。
++ 这是一个适用于 Web/Android/iOS/H5 的 UI自动化项目，以及支持 Android 性能测试。项目底层使用了 Selenium/Appium。
++ 项目用 Maven 进行工程管理，通过 TestNG 进行用例管理。
++ 对常用的 Selenium api 进行了封装，如 click()、type()等，在其中增加了元素可用性判断、log 记录、失败截图。
 + WebUI、AndroidUI、iOSUI 分别单独成 module，根据 OS 特性可以编写专用的基类方法，并且 module 根目录下配置文件 config.properties 互不影响
 + 同一个 testcase 支持可配置的读取线上环境、线下环境 2 份测试驱动数据
-+ 封装了日志LogUtil、断言AssertUtil，方便以后替换或扩展其他功能
++ 封装了日志 LogUtil、断言 AssertUtil，方便以后替换或扩展其他功能
 + 借助 WebDriverManager 全自动的管理 WebDriver，如下载、配置等.
 + Android：如提供资源混淆文件 mapping.txt，框架可以自行将原始元素 id 替换成混淆后的 id，然后实现正常的定位元素
 
@@ -22,11 +22,11 @@
 ## 公共
 
 1. jdk >= 1.8
-2. maven >= 3
+2. Maven >= 3
 3. Selenium 3
 4. Appium 3
-5. testng 6
-6. IDE(eclipse或其他，以下以eclipse为例) + testng插件 + maven插件
+5. TestNG 6
+6. IDE(eclipse或其他，以下以eclipse为例) + TestNG插件 + Maven插件
 
 ## Android
 
@@ -75,11 +75,11 @@
 │          │         ├─base 
 │          │         │   ├─BaseOpt.java       <-- 事件基类。click、type、findelement、截图等
 │          │         │   ├─BasePage.java      <-- 页面基类。
-│          │         │   ├─BaseTest.java      <-- 测试用例基类。管理testng生命周期
+│          │         │   ├─BaseTest.java      <-- 测试用例基类。管理TestNG生命周期
 │          │         │   └─DriverFactory.java <-- driver构造类。web、android的driver都在这里
 │          │         ├─listener 
 │          │         └─utils 工具箱
-│          └─resources 存放log4j配置
+│          └─resources 存放 slf4j 配置
 └─uitest_web
     └─src
         └─main

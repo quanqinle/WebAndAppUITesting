@@ -139,7 +139,7 @@
                         <exclude>Driver/**</exclude>
                         <exclude>repository/**</exclude>
                         <exclude>testdata/**</exclude>
-                        <exclude>log4j.xml</exclude>
+                        <exclude>logback.xml</exclude>
                         <exclude>UICore.properties</exclude>
                     </excludes>
                 </configuration>

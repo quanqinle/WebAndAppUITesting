@@ -3,7 +3,6 @@ package com.quanql.test.androidperfutils.data;
 import com.quanql.test.androidperfutils.AndroidConstant;
 import com.quanql.test.androidperfutils.CommandResult;
 import com.quanql.test.androidperfutils.ShellUtils;
-import com.quanql.test.core.utils.DoubleUtil;
 import com.quanql.test.core.utils.LogUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -36,9 +35,9 @@ public class MemoryInfo {
       this.printLine =
           StringUtils.join(
               new String[] {
-                String.valueOf(DoubleUtil.div(this.getlNativeHeap_kB(), 1024, 4)),
-                String.valueOf(DoubleUtil.div(this.getlDalvikHeap_kB(), 1024, 4)),
-                String.valueOf(DoubleUtil.div(this.getlPssTOTAL_kB(), 1024, 4))
+                String.format("%.4f", (this.getlNativeHeap_kB() / 1024D)),
+                String.format("%.4f", (this.getlDalvikHeap_kB() / 1024D)),
+                String.format("%.4f", (this.getlPssTOTAL_kB() / 1024D))
               },
               ",");
     }
