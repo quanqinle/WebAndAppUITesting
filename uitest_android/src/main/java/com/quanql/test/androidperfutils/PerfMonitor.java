@@ -8,10 +8,7 @@ import com.quanql.test.core.utils.ConfigUtil;
 import com.quanql.test.core.utils.LogUtil;
 import com.quanql.test.core.utils.TimeUtil;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 性能监控
@@ -20,16 +17,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class PerfMonitor {
 
-  /**
-   * 暂时不hide，方便灵活使用
-   */
+  /** 暂时不hide，方便灵活使用 */
   public ExecutorService executor = null;
+
   private int poolSize = 3;
-  /**
-   * ms.采样频率
-   */
-  private int period =
-      Integer.parseInt(ConfigUtil.getInstance().getProperty("sample.rate"));
+  /** ms.采样频率 */
+  private int period = Integer.parseInt(ConfigUtil.getInstance().getProperty("sample.rate"));
 
   public enum PoolType {
     SCHEDULED,
@@ -89,7 +82,10 @@ public class PerfMonitor {
    * @param poolSize
    */
   private void initScheduledThreadPool(int poolSize) {
-    this.executor = Executors.newScheduledThreadPool(poolSize);
+    //    this.executor = Executors.newScheduledThreadPool(poolSize);
+    this.executor =
+        new ThreadPoolExecutor(
+            poolSize, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
   }
 
   /**
@@ -99,7 +95,10 @@ public class PerfMonitor {
    * @param poolSize
    */
   private void initFixedThreadPool(int poolSize) {
-    this.executor = Executors.newFixedThreadPool(poolSize);
+    //    this.executor = Executors.newFixedThreadPool(poolSize);
+    this.executor =
+        new ThreadPoolExecutor(
+            poolSize, poolSize, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
   }
 
   /**

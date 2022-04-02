@@ -29,7 +29,7 @@ public class MainFramePage extends AndroidBasePage {
   public static Text TabMineText =
       new Text(
           "//android.widget.RelativeLayout[@resource-id='"
-              + AndroidIDUtil.getObfuscatedID("tab_mine")
+              + AndroidIDUtil.getObfuscatedId("tab_mine")
               + "']//android.widget.TextView");
 
   /**

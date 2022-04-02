@@ -33,7 +33,6 @@ public class ShellUtils {
    *
    * @param command command
    * @return
-   * @see ShellUtils#execCommand(String[], boolean)
    */
   public static CommandResult execCommand(String command) {
     return execCommand(command, true);
@@ -42,11 +41,10 @@ public class ShellUtils {
   /**
    * execute shell commands
    *
-   * @param commands command
-   * @param isNeedResultMsg whether need result msg
-   * @return if isNeedResultMsg is false, {@link CommandResult#successMsg} is null and {@link
-   *     CommandResult#errorMsg} is null.
-   *     <p>if {@link CommandResult#result} is -1, there maybe some excepiton.
+   * @param command
+   * @param isNeedResultMsg if you need result msg
+   * @return if isNeedResultMsg is false, successMsgList is null and errorMsgList is null.
+   *     <p>if CommandResult.returnCode is -1, there maybe some exception.
    */
   public static CommandResult execCommand(String command, boolean isNeedResultMsg) {
     long ts = System.currentTimeMillis();
@@ -69,10 +67,12 @@ public class ShellUtils {
       long ts1 = System.currentTimeMillis();
       process = Runtime.getRuntime().exec(command);
       LogUtil.debug("execCommand-exec耗时ms: " + (System.currentTimeMillis() - ts1));
-      outputSteam = new DataOutputStream(process.getOutputStream()); // 子进程的输入pipe输出流
+      // 子进程的输入pipe输出流
+      outputSteam = new DataOutputStream(process.getOutputStream());
 
       ts1 = System.currentTimeMillis();
-      // result = process.waitFor(); //quanqinle:在测试掉帧率时，大概率失败
+      // quanqinle:在测试掉帧率时，大概率失败，先注释掉
+      // result = process.waitFor();
       result = process.waitFor(5, TimeUnit.SECONDS) ? 0 : 1;
       LogUtil.debug("execCommand-waitFor耗时ms: " + (System.currentTimeMillis() - ts1));
       LogUtil.debug("cmd result:" + result);
@@ -81,10 +81,10 @@ public class ShellUtils {
       if (isNeedResultMsg) {
         // successMsg = new StringBuilder();
         // errorMsg = new StringBuilder();
-        successMsgList = new ArrayList<String>();
-        errorMsgList = new ArrayList<String>();
-        successResult =
-            new BufferedReader(new InputStreamReader(process.getInputStream())); // 子进程的输出pipe输入流
+        successMsgList = new ArrayList<>();
+        errorMsgList = new ArrayList<>();
+        // 子进程的输出pipe输入流
+        successResult = new BufferedReader(new InputStreamReader(process.getInputStream()));
         errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         String line = null;
         while ((line = successResult.readLine()) != null) {
@@ -100,8 +100,6 @@ public class ShellUtils {
           }
         }
       }
-    } catch (IOException e) {
-      e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {

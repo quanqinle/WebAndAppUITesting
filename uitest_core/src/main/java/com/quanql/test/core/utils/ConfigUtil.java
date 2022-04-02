@@ -3,6 +3,7 @@ package com.quanql.test.core.utils;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -46,9 +47,11 @@ public class ConfigUtil {
     return properties.getProperty(key, defaultValue);
   }
 
-  public String getPropertyValueAsUTF8(String propertyName) {
+  public String getPropertyValueAsUtf8(String propertyName) {
     try {
-      return new String(properties.getProperty(propertyName).getBytes("ISO-8859-1"), "UTF-8");
+      return new String(
+          properties.getProperty(propertyName).getBytes(StandardCharsets.ISO_8859_1),
+          StandardCharsets.UTF_8);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -56,7 +59,9 @@ public class ConfigUtil {
   }
 
   /**
-   * @param file
+   * 载入文件
+   *
+   * @param file 文件
    */
   public void loadConfig(String file) {
     try {
@@ -73,7 +78,7 @@ public class ConfigUtil {
   /**
    * 解析 testng listener 参数
    *
-   * @param properties
+   * @param properties 属性
    */
   private void parseTestngListenerVals(Properties properties) {
     if (properties != null) {

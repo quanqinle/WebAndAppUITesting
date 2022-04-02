@@ -7,8 +7,6 @@ import com.quanql.test.androidperfutils.ShellUtils;
 import com.quanql.test.core.utils.LogUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.math.BigDecimal;
-
 /**
  * 流量信息
  *
@@ -135,13 +133,6 @@ public class FlowInfo {
     float transmitFlow = Float.parseFloat(secondTemp[1]) - Float.parseFloat(firstTemp[1]);
     float totalFlow = Float.parseFloat(secondTemp[2]) - Float.parseFloat(firstTemp[2]);
 
-    this.printLine =
-        StringUtils.join(
-            new String[] {
-              String.valueOf(new BigDecimal(receiveFlow).setScale(4, 4)),
-              String.valueOf(new BigDecimal(transmitFlow).setScale(4, 4)),
-              String.valueOf(new BigDecimal(totalFlow).setScale(4, 4))
-            },
-            ",");
+    this.printLine = String.format("%.4f, %.4f, %.4f", receiveFlow, transmitFlow, totalFlow);
   }
 }

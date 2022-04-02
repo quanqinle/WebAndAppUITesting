@@ -80,7 +80,7 @@ public class BaseElement {
   private By parseElement(String byType, String byValue) {
     if ("id".equalsIgnoreCase(byType)) {
       if ("android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
-        this.by = By.id(AndroidIDUtil.getObfuscatedID(byValue));
+        this.by = By.id(AndroidIDUtil.getObfuscatedId(byValue));
       } else {
         this.by = By.id(byValue);
       }

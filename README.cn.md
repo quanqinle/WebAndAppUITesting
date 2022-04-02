@@ -236,7 +236,7 @@ public class DemoBaiduPage extends WebBasePage {
 
     /**
      * 搜索框输入内容
-     * @param name
+     * @param name -
      */
     public static void typeInSearchEdt(String name) {
         LogUtil.info("输入搜索内容：" + name);

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 处理混淆后的Android id
+ * 处理混淆后的 Android id
  *
  * @author quanqinle
  */
@@ -33,8 +33,8 @@ public class AndroidIDUtil {
             File file = new File(mappingFileFullPath);
             BufferedReader reader = null;
             try {
-              String tempStr = null;
-              String[] tempArr = {"", ""};
+              String tempStr;
+              String[] tempArr;
 
               reader = new BufferedReader(new FileReader(file));
               while ((tempStr = reader.readLine()) != null) {
@@ -71,18 +71,18 @@ public class AndroidIDUtil {
    * 1.该方法只对android项目有效，非android项目会直接原样返回传入的参数，即original_id<br>
    *
    * @author quanqinle
-   * @param original_id 即${pakagename}.R.id.original_id中的original_id
+   * @param originalId 即${pakagename}.R.id.original_id中的original_id
    * @return 适用于appium的id串，形如${pakagename}:id/obfuscated_id
    */
-  public static String getObfuscatedID(String original_id) {
+  public static String getObfuscatedId(String originalId) {
     if ("Android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
       String appiumAndroidIdPrefix = packageName + ":id/";
       if (!mappingFileProp.isEmpty()) {
-        return appiumAndroidIdPrefix + APP_ID_MAPS.getOrDefault(original_id, original_id);
+        return appiumAndroidIdPrefix + APP_ID_MAPS.getOrDefault(originalId, originalId);
       }
-      return appiumAndroidIdPrefix + original_id;
+      return appiumAndroidIdPrefix + originalId;
     } else {
-      return original_id;
+      return originalId;
     }
   }
 }

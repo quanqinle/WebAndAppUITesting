@@ -38,7 +38,7 @@ public class AndroidBasePage extends BasePage {
    * @return 适用于appium的id串，形如com.quanql.demo:id/val
    */
   public static String getObfuscatedID(String key) {
-    return AndroidIDUtil.getObfuscatedID(key);
+    return AndroidIDUtil.getObfuscatedId(key);
   }
 
   /**

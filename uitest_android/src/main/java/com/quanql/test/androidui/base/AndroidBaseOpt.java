@@ -4,13 +4,15 @@ import com.quanql.test.core.base.BaseOpt;
 import com.quanql.test.core.base.DriverFactory;
 import com.quanql.test.core.utils.AssertUtil;
 import com.quanql.test.core.utils.LogUtil;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.touch.LongPressOptions;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.touch.TouchActions;
 
 /**
  * 常用事件封装
@@ -21,11 +23,11 @@ public class AndroidBaseOpt extends BaseOpt {
 
   private static AndroidBaseOpt baseOpt = null;
   protected AndroidDriver driver;
-  protected TouchAction touchAction;
+  protected Actions actions;
 
   private AndroidBaseOpt() {
     driver = (AndroidDriver) DriverFactory.getInstance().getDriver();
-    touchAction = new TouchAction(driver);
+    actions = new Actions(driver);
   }
 
   public static AndroidBaseOpt getInstance() {
@@ -38,11 +40,10 @@ public class AndroidBaseOpt extends BaseOpt {
 
   /** 兼容循环执行时 不会重新加载构造方法的问题 */
   @Override
-  @SuppressWarnings("unchecked")
   public AndroidDriver getDriver() {
     if (driver == null || driver.getSessionId() == null) {
       driver = (AndroidDriver) DriverFactory.getInstance().getDriver();
-      touchAction = new TouchAction(driver);
+      actions = new Actions(driver);
     }
 
     return driver;
@@ -55,7 +56,8 @@ public class AndroidBaseOpt extends BaseOpt {
    */
   public void switch2Newline() {
     try {
-      getDriver().findElement(By.name("下一个")).click(); // 点击键盘上的换行
+      // 点击键盘上的换行 ? KEYCODE_NAVIGATE_NEXT ?
+      getDriver().findElement(By.name("下一个")).click();
       LogUtil.info(getDriver().manage().logs() + "==>键盘点击NEXT成功！");
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>键盘点击NEXT失败！" + e);
@@ -68,27 +70,36 @@ public class AndroidBaseOpt extends BaseOpt {
    * 长按元素
    *
    * @author 权芹乐
-   * @param by
+   * @param by -
    */
   public void longPress(By by) {
     try {
       // 兼容循环执行时 不会重新加载构造方法导致driver为空的问题
       driver = getDriver();
-      touchAction = new TouchAction(driver);
-      touchAction.longPress((LongPressOptions) findElement(by)).perform();
+      actions = new Actions(driver);
+      actions.clickAndHold(findElement(by)).release().perform();
       LogUtil.debug(getDriver().manage().logs() + "==>长按" + by.toString() + "成功！");
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>长按" + by.toString() + "失败！" + e);
       screenShot();
-      AssertUtil.fail(getDriver().manage().logs() + "==>长按" + by.toString() + "失败！" + e);
+      AssertUtil.fail(getDriver().manage().logs() + "==>长按" + by + "失败！" + e);
     }
   }
 
-  /** 滑动 */
-  public void swipe(int startx, int starty, int endx, int endy, int duration) {
+  /**
+   * 滑动
+   *
+   * @param xStart -
+   * @param yStart -
+   * @param xEnd -
+   * @param yEnd -
+   * @param duration 耗时ms。Note：这个参数失效了！
+   */
+  public void swipe(int xStart, int yStart, int xEnd, int yEnd, int duration) {
     try {
-      // fixme
-      //      getDriver().swipe(startx, starty, endx, endy, duration);
+      TouchActions action = new TouchActions(getDriver());
+      action.scroll(xEnd - xStart, yEnd - yStart);
+      action.perform();
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>滚屏失败！" + e);
       screenShot();
@@ -99,7 +110,7 @@ public class AndroidBaseOpt extends BaseOpt {
   /** 点击物理返回键 */
   public void clickBack() {
     try {
-      //      getDriver().pressKeyCode(AndroidKeyCode.BACK); fixme
+      getDriver().pressKey(new KeyEvent(AndroidKey.BACK));
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>点击返回失败！" + e);
       screenShot();
@@ -144,48 +155,47 @@ public class AndroidBaseOpt extends BaseOpt {
 
     WebElement findElement;
     for (int i = 0; i < steps; i++) {
-      // parentElement.findElement(findBy); //在父元素中查找。只xpath适用
-      findElement = (WebElement) waitForElementClickable(findBy, 3);
+      // 在父元素中查找。只xpath适用 parentElement.findElement(findBy);
+      findElement = waitForElementClickable(findBy, 3);
       if (findElement != null) {
         return findElement;
       }
-      /*fixme
+
       switch (direction) {
           // 向上滑动
         case 0:
-          getDriver().swipe(centreX, endY * 3 / 4, centreX, endY * 1 / 4, duration);
+          this.swipe(centreX, endY * 3 / 4, centreX, endY / 4, duration);
           break;
           // 向下滑动
         case 1:
-          getDriver().swipe(centreX, endY * 1 / 4, centreX, endY * 3 / 4, duration);
+          this.swipe(centreX, endY / 4, centreX, endY * 3 / 4, duration);
           break;
           // 向左滑动
         case 2:
-          getDriver().swipe(endX * 3 / 4, centreY, endX * 1 / 4, centreY, duration);
+          this.swipe(endX * 3 / 4, centreY, endX / 4, centreY, duration);
           break;
           // 向右滑动
         case 3:
-          getDriver().swipe(endX * 1 / 4, centreY, endX * 3 / 4, centreY, duration);
+          this.swipe(endX / 4, centreY, endX * 3 / 4, centreY, duration);
           break;
         default:
           LogUtil.error("unknown direction:" + direction);
           break;
       }
-      */
     } // end for
 
     LogUtil.error(getDriver().manage().logs() + "==>" + findBy.toString() + " 未找到！");
     screenShot();
-    AssertUtil.fail(getDriver().manage().logs() + "==>" + findBy.toString() + " 未找到！");
+    AssertUtil.fail(getDriver().manage().logs() + "==>" + findBy + " 未找到！");
     return null;
   }
 
   /**
    * 判断要点击的元素是否被其它元素覆盖
    *
-   * @param clickBy
-   * @param coverBy
-   * @return
+   * @param clickBy -
+   * @param coverBy -
+   * @return -
    */
   public boolean isCovered(By clickBy, By coverBy) {
 
@@ -193,21 +203,18 @@ public class AndroidBaseOpt extends BaseOpt {
     WebElement coverElement = getDriver().findElement(coverBy);
 
     // 获取控件开始位置高度
-    Point clickstart = clickElement.getLocation();
-    int clickStartY = clickstart.y;
+    Point clickStart = clickElement.getLocation();
+    int clickStartY = clickStart.y;
 
-    Point coverstart = coverElement.getLocation();
-    int coverStartY = coverstart.y;
+    Point coverStart = coverElement.getLocation();
+    int coverStartY = coverStart.y;
 
     // 获取控件高度
-    Dimension firstq = clickElement.getSize();
-    int height = firstq.getHeight();
+    Dimension dimension = clickElement.getSize();
+    int height = dimension.getHeight();
 
     // 控件中间高度是否大于底部高度
-    if (clickStartY + height / 2 >= coverStartY) {
-
-      return true;
-    }
-    return false;
+    int half = 2;
+    return clickStartY + height / half >= coverStartY;
   }
 }
