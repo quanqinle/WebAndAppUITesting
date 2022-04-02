@@ -57,7 +57,8 @@ public class CpuInfo {
     for (String str : cr.getSuccessMsgArray()) {
       if (str.contains(appname)) {
         array = str.trim().split(AndroidConstant.BLANK_SPLIT);
-        this.cpu = array[0]; // TODO 解析其他字段
+        // TODO 解析其他字段
+        this.cpu = array[0];
 
         break;
       }

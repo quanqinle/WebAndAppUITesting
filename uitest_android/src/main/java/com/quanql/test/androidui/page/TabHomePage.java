@@ -78,12 +78,12 @@ public class TabHomePage extends MainFramePage {
   }
 
   /**
-   * 开屏splash广告是否存在
+   * 开屏 splash 广告是否存在
    *
-   * @return
+   * @return -
    */
   public static boolean isAdsSplashShow() {
-    // FIXME 出现过时效的情况，待查！
+    // FIXME 出现过失效的情况，待查！
     boolean b = false;
     try {
       for (int i = 0; i < 5; i++) {

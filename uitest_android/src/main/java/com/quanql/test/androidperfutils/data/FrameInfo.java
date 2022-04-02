@@ -33,12 +33,13 @@ public class FrameInfo {
     this.dProcess = dProcess;
     this.dExecute = dExecute;
     this.dTotal = dDraw + dPrepare + dProcess + dExecute;
-    this.isJunk = Double.compare(dTotal, 16f) > 0 ? true : false;
+    this.isJunk = Double.compare(dTotal, 16f) > 0;
   }
 
   public void getCurrentFrameData() {
 
-    int iFrameTotal = 0; // 二维：帧数
+    // 二维：帧数
+    int iFrameTotal = 0;
 
     double dDraw = 0f;
     double dPrepare = 0f;
@@ -55,11 +56,12 @@ public class FrameInfo {
     int junkCount = 0;
 
     boolean isPrintLog = false;
-    int columnCount = 0; // 每帧由n列组成
+    // 每帧由n列组成
+    int columnCount = 0;
 
     CommandResult cr =
         ShellUtils.execCommand("adb shell dumpsys gfxinfo " + Constant.APP_PACKAGE_NAME);
-    //		LogUtil.info(cr.getSuccessMsg());
+    LogUtil.debug(cr.getSuccessMsg());
 
     for (String str : cr.getSuccessMsgArray()) {
       if (str.contains("View hierarchy:")) {
@@ -92,7 +94,8 @@ public class FrameInfo {
 
           dTotal = dDraw + dPrepare + dProcess + dExecute;
           if (Double.compare(dTotal, 0f) <= 0) {
-            continue; // 过滤0值
+            // 过滤0值
+            continue;
           }
           junkCount += Double.compare(dTotal, 16.67f) > 0 ? 1 : 0;
           // frames[iSamplingIndex][iFrameNum] = new

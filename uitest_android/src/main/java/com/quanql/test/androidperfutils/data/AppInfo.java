@@ -26,7 +26,7 @@ public class AppInfo {
   private String pc;
   private String stat;
   private String name;
-  private String uid; // TODO
+  private String uid;
 
   public static void main(String[] args) {
     LogUtil.info(getAppVersion());

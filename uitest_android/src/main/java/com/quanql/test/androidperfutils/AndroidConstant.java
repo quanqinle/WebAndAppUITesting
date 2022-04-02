@@ -24,14 +24,14 @@ public class AndroidConstant {
 
   /**
    * 性能数据<br>
-   * quanql: 部分借鉴GT。以下待整理 TODO
+   * quanql: 部分借鉴 GT。以下待整理 TODO
    */
   /** test suite 序列号 */
   public static String
       TEST_SUITE_INDEX /* = DRIVER_TYPE.equals("android")?"":TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion()*/;
 
   {
-    if ("android".equals(Constant.DRIVER_TYPE)) {
+    if ("Android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
       TEST_SUITE_INDEX = TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion();
     }
   }
