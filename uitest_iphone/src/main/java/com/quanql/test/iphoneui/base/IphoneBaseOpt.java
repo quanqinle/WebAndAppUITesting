@@ -4,13 +4,13 @@ import com.quanql.test.core.base.BaseOpt;
 import com.quanql.test.core.base.DriverFactory;
 import com.quanql.test.core.utils.AssertUtil;
 import com.quanql.test.core.utils.LogUtil;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.touch.LongPressOptions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.touch.TouchActions;
 
 /**
  * 常用事件封装
@@ -21,12 +21,11 @@ public class IphoneBaseOpt extends BaseOpt {
 
   private static IphoneBaseOpt baseOpt = null;
   protected IOSDriver driver;
-  protected TouchAction touchAction;
+  protected Actions actions;
 
-  @SuppressWarnings("unchecked")
   private IphoneBaseOpt() {
     driver = (IOSDriver) DriverFactory.getInstance().getDriver();
-    touchAction = new TouchAction(driver);
+    actions = new Actions(driver);
   }
 
   public static IphoneBaseOpt getInstance() {
@@ -42,7 +41,7 @@ public class IphoneBaseOpt extends BaseOpt {
   public IOSDriver getDriver() {
     if (driver == null || driver.getSessionId() == null) {
       driver = (IOSDriver) DriverFactory.getInstance().getDriver();
-      touchAction = new TouchAction(driver);
+      actions = new Actions(driver);
     }
 
     return driver;
@@ -69,27 +68,36 @@ public class IphoneBaseOpt extends BaseOpt {
    * 长按元素
    *
    * @author 权芹乐
-   * @param by
+   * @param by -
    */
   public void longPress(By by) {
     try {
       // 兼容循环执行时 不会重新加载构造方法导致driver为空的问题
       driver = getDriver();
-      touchAction = new TouchAction(driver);
-      touchAction.longPress((LongPressOptions) findElement(by)).perform();
+      actions = new Actions(driver);
+      actions.clickAndHold(findElement(by)).release().perform();
       LogUtil.debug(getDriver().manage().logs() + "==>长按" + by.toString() + "成功！");
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>长按" + by.toString() + "失败！" + e);
       screenShot();
-      AssertUtil.fail(getDriver().manage().logs() + "==>长按" + by.toString() + "失败！" + e);
+      AssertUtil.fail(getDriver().manage().logs() + "==>长按" + by + "失败！" + e);
     }
   }
 
-  /** 滑动 */
-  public void swipe(int startx, int starty, int endx, int endy, int duration) {
+  /**
+   * 滑动
+   *
+   * @param xStart -
+   * @param yStart -
+   * @param xEnd -
+   * @param yEnd -
+   * @param duration 耗时ms。Note：这个参数失效了！
+   */
+  public void swipe(int xStart, int yStart, int xEnd, int yEnd, int duration) {
     try {
-      // fixme http://appium.io/docs/en/writing-running-appium/tutorial/swipe-tutorial/
-      //      getDriver().swipe(startx, starty, endx, endy, duration);
+      TouchActions action = new TouchActions(getDriver());
+      action.scroll(xEnd - xStart, yEnd - yStart);
+      action.perform();
     } catch (Exception e) {
       LogUtil.error(getDriver().manage().logs() + "==>滚屏失败！" + e);
       screenShot();
@@ -139,44 +147,42 @@ public class IphoneBaseOpt extends BaseOpt {
       if (findElement != null) {
         return findElement;
       }
-      // fixme http://appium.io/docs/en/writing-running-appium/tutorial/swipe-tutorial/
-      /*
-           switch (direction) {
-               // 向上滑动
-             case 0:
-               getDriver().swipe(centreX, endY * 3 / 4, centreX, endY * 1 / 4, duration);
-               break;
-               // 向下滑动
-             case 1:
-               getDriver().swipe(centreX, endY * 1 / 4, centreX, endY * 3 / 4, duration);
-               break;
-               // 向左滑动
-             case 2:
-               getDriver().swipe(endX * 3 / 4, centreY, endX * 1 / 4, centreY, duration);
-               break;
-               // 向右滑动
-             case 3:
-               getDriver().swipe(endX * 1 / 4, centreY, endX * 3 / 4, centreY, duration);
-               break;
-             default:
-               LogUtil.error("unknown direction：" + direction);
-               break;
-           }
-      */
+
+      switch (direction) {
+          // 向上滑动
+        case 0:
+          this.swipe(centreX, endY * 3 / 4, centreX, endY / 4, duration);
+          break;
+          // 向下滑动
+        case 1:
+          this.swipe(centreX, endY / 4, centreX, endY * 3 / 4, duration);
+          break;
+          // 向左滑动
+        case 2:
+          this.swipe(endX * 3 / 4, centreY, endX / 4, centreY, duration);
+          break;
+          // 向右滑动
+        case 3:
+          this.swipe(endX / 4, centreY, endX * 3 / 4, centreY, duration);
+          break;
+        default:
+          LogUtil.error("unknown direction：" + direction);
+          break;
+      }
     } // end for
 
     LogUtil.error(getDriver().manage().logs() + "==>" + findBy.toString() + " 未找到！");
     screenShot();
-    AssertUtil.fail(getDriver().manage().logs() + "==>" + findBy.toString() + " 未找到！");
+    AssertUtil.fail(getDriver().manage().logs() + "==>" + findBy + " 未找到！");
     return null;
   }
 
   /**
    * 判断要点击的元素是否被其它元素覆盖
    *
-   * @param clickBy
-   * @param coverBy
-   * @return
+   * @param clickBy -
+   * @param coverBy -
+   * @return -
    */
   public boolean isCovered(By clickBy, By coverBy) {
 
@@ -184,20 +190,18 @@ public class IphoneBaseOpt extends BaseOpt {
     WebElement coverElement = getDriver().findElement(coverBy);
 
     // 获取控件开始位置高度
-    Point clickstart = clickElement.getLocation();
-    int clickStartY = clickstart.y;
+    Point clickStart = clickElement.getLocation();
+    int clickStartY = clickStart.y;
 
-    Point coverstart = coverElement.getLocation();
-    int coverStartY = coverstart.y;
+    Point coverStart = coverElement.getLocation();
+    int coverStartY = coverStart.y;
 
     // 获取控件高度
-    Dimension firstq = clickElement.getSize();
-    int height = firstq.getHeight();
+    Dimension dimension = clickElement.getSize();
+    int height = dimension.getHeight();
 
     // 控件中间高度是否大于底部高度
-    if (clickStartY + height / 2 >= coverStartY) {
-      return true;
-    }
-    return false;
+    int half = 2;
+    return clickStartY + height / half >= coverStartY;
   }
 }

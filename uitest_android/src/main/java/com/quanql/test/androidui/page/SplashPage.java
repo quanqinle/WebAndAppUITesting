@@ -15,7 +15,7 @@ public class SplashPage extends AndroidBasePage {
   public static Button EnterAppBtn = new Button("id=btn_next");
 
   /** 控件 */
-  private static String viGuidePageId = getObfuscatedID("user_guide_viewpager");
+  private static String viGuidePageId = getObfuscatedId("user_guide_viewpager");
 
   /**
    * 新人引导页是否存在

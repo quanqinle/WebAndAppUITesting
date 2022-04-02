@@ -15,7 +15,7 @@ public class CpuInfo {
   private static String printTitle = "CPU(%)";
   private String printLine = "";
 
-  private String CPU = "";
+  private String cpu = "";
 
   // for debug
   public static void main(String[] args) {}
@@ -36,7 +36,7 @@ public class CpuInfo {
   /** 获取最新CPU信息 */
   public void getCurrentCpuData(String appPackageName) {
     getCpuDataByTop(appPackageName);
-    setPrintLine(this.CPU);
+    setPrintLine(this.cpu);
   }
 
   /** 获取最新CPU信息，使用dumpsys cpuinfo方式 */
@@ -57,13 +57,13 @@ public class CpuInfo {
     for (String str : cr.getSuccessMsgArray()) {
       if (str.contains(appname)) {
         array = str.trim().split(AndroidConstant.BLANK_SPLIT);
-        this.CPU = array[0]; // TODO 解析其他字段
+        this.cpu = array[0]; // TODO 解析其他字段
 
         break;
       }
     }
     LogUtil.debug("dumpsys cpuinfo->\n" + cr.getSuccessMsg());
-    LogUtil.debug("CPU%= " + this.CPU);
+    LogUtil.debug("CPU%= " + this.cpu);
   }
 
   /**
@@ -96,19 +96,19 @@ public class CpuInfo {
         array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 
         // 为了方便后续数据分析，记录结果时去除百分号
-        this.CPU = array[2].substring(0, array[2].length() - 1);
+        this.cpu = array[2].substring(0, array[2].length() - 1);
       }
     }
     LogUtil.debug("top->\n" + cr.getSuccessMsg());
-    LogUtil.debug("CPU%= " + this.CPU);
+    LogUtil.debug("CPU%= " + this.cpu);
   }
 
-  public String getCPU() {
-    return CPU;
+  public String getCpu() {
+    return cpu;
   }
 
-  public void setCPU(String cpu) {
-    CPU = cpu;
+  public void setCpu(String cpu) {
+    this.cpu = cpu;
   }
 
   public static String getPrintTitle() {

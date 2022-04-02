@@ -72,7 +72,7 @@ public class TabMyPage extends MainFramePage {
 
     LogUtil.info("用户是否需要登录");
 
-    return baseOpt.isElementDisplayed(By.id(getObfuscatedID("tv_login")));
+    return baseOpt.isElementDisplayed(By.id(getObfuscatedId("tv_login")));
   }
 
   /**

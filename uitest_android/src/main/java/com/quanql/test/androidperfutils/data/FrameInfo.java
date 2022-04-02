@@ -46,11 +46,11 @@ public class FrameInfo {
     double dExecute = 0f;
     double dTotal = 0f;
 
-    double dDrawAVG = 0f;
-    double dPrepareAVG = 0f;
-    double dProcessAVG = 0f;
-    double dExecuteAVG = 0f;
-    double dTotalAVG = 0f;
+    double dDrawAvg = 0f;
+    double dPrepareAvg = 0f;
+    double dProcessAvg = 0f;
+    double dExecuteAvg = 0f;
+    double dTotalAvg = 0f;
 
     int junkCount = 0;
 
@@ -99,29 +99,29 @@ public class FrameInfo {
           // FrameInfo(dDraw, dPrepare, dProcess, dExecute);
           iFrameTotal++;
 
-          dDrawAVG += dDraw;
-          dPrepareAVG += dPrepare;
-          dProcessAVG += dProcess;
-          dExecuteAVG += dExecute;
-          dTotalAVG += dTotal;
+          dDrawAvg += dDraw;
+          dPrepareAvg += dPrepare;
+          dProcessAvg += dProcess;
+          dExecuteAvg += dExecute;
+          dTotalAvg += dTotal;
         }
       }
     } // parse result end
     if (0 == iFrameTotal) {
-      /*this.printLine = dDrawAVG + "," + dPrepareAVG + "," + dProcessAVG + "," + dExecuteAVG + "," + dTotalAVG + ","
+      /*this.printLine = dDrawAvg + "," + dPrepareAvg + "," + dProcessAVG + "," + dExecuteAVG + "," + dTotalAVG + ","
       + iFrameTotal + "," + junkCount + "," + 0;*/
       this.printLine = null;
     } else {
       this.printLine =
-          dDrawAVG / iFrameTotal
+          dDrawAvg / iFrameTotal
               + ","
-              + dPrepareAVG / iFrameTotal
+              + dPrepareAvg / iFrameTotal
               + ","
-              + dProcessAVG / iFrameTotal
+              + dProcessAvg / iFrameTotal
               + ","
-              + dExecuteAVG / iFrameTotal
+              + dExecuteAvg / iFrameTotal
               + ","
-              + dTotalAVG / iFrameTotal
+              + dTotalAvg / iFrameTotal
               + ","
               + iFrameTotal
               + ","

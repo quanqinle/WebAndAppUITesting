@@ -37,7 +37,7 @@ public class AndroidBasePage extends BasePage {
    * @param key 即com.quanql.demo.R.id.key中的key
    * @return 适用于appium的id串，形如com.quanql.demo:id/val
    */
-  public static String getObfuscatedID(String key) {
+  public static String getObfuscatedId(String key) {
     return AndroidIDUtil.getObfuscatedId(key);
   }
 

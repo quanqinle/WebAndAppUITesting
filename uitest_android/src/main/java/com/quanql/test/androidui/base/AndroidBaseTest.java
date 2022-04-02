@@ -38,7 +38,7 @@ public class AndroidBaseTest extends BaseTest {
   @Override
   @AfterClass
   public void aAfterClass() {
-    // uninstallApp4OPPO();
+    // uninstallAppForOppo();
   }
 
   @Override
@@ -66,7 +66,7 @@ public class AndroidBaseTest extends BaseTest {
    *
    * @author 权芹乐
    */
-  public static void uninstallApp4OPPO() {
+  public static void uninstallAppForOppo() {
     try {
       ShellUtils.execCommand("adb uninstall io.appium.settings");
       ShellUtils.execCommand("adb uninstall io.appium.unlock");

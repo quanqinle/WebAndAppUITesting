@@ -1,5 +1,6 @@
 package com.quanql.test.androidperfutils;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.quanql.test.androidperfutils.task.CpuTask;
 import com.quanql.test.androidperfutils.task.FlowTask;
 import com.quanql.test.androidperfutils.task.FrameTask;
@@ -20,12 +21,17 @@ public class PerfMonitor {
   /** 暂时不hide，方便灵活使用 */
   public ExecutorService executor = null;
 
-  private int poolSize = 3;
+  private int corePoolSize = 3;
+  private static ThreadFactory namedFactory =
+      new ThreadFactoryBuilder().setNameFormat("thread-%d").build();
+
   /** ms.采样频率 */
   private int period = Integer.parseInt(ConfigUtil.getInstance().getProperty("sample.rate"));
 
   public enum PoolType {
+    /** scheduled */
     SCHEDULED,
+    /** fixed */
     FIXED;
   }
 
@@ -51,7 +57,7 @@ public class PerfMonitor {
 
   public PerfMonitor() {
     this(PoolType.SCHEDULED, 1);
-    this.poolSize = 1;
+    this.corePoolSize = 1;
   }
 
   /**
@@ -61,16 +67,16 @@ public class PerfMonitor {
    * @param poolSize -
    */
   public PerfMonitor(PoolType poolType, int poolSize) {
-    this.poolSize = poolSize;
+    this.corePoolSize = poolSize;
     switch (poolType) {
       case SCHEDULED:
-        this.initScheduledThreadPool(this.poolSize);
+        this.initScheduledThreadPool(this.corePoolSize);
         break;
       case FIXED:
-        this.initFixedThreadPool(this.poolSize);
+        this.initFixedThreadPool(this.corePoolSize);
         break;
       default:
-        this.initScheduledThreadPool(this.poolSize);
+        this.initScheduledThreadPool(this.corePoolSize);
         break;
     }
   }
@@ -83,9 +89,16 @@ public class PerfMonitor {
    */
   private void initScheduledThreadPool(int poolSize) {
     //    this.executor = Executors.newScheduledThreadPool(poolSize);
+
     this.executor =
         new ThreadPoolExecutor(
-            poolSize, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+            poolSize,
+            50,
+            60L,
+            TimeUnit.SECONDS,
+            new SynchronousQueue<>(),
+            namedFactory,
+            new ThreadPoolExecutor.AbortPolicy());
   }
 
   /**
@@ -98,7 +111,13 @@ public class PerfMonitor {
     //    this.executor = Executors.newFixedThreadPool(poolSize);
     this.executor =
         new ThreadPoolExecutor(
-            poolSize, poolSize, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+            poolSize,
+            poolSize,
+            0L,
+            TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<>(),
+            namedFactory,
+            new ThreadPoolExecutor.AbortPolicy());
   }
 
   /**

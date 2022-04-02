@@ -34,7 +34,7 @@ public class DriverFactory extends RemoteWebDriver {
 
   private static ConfigUtil property;
   private static String driverType;
-  private static boolean cap_noReset = true;
+  private static boolean noResetInCap = true;
 
   private static boolean CLOSED = false;
   private static boolean QUIT = false;
@@ -67,11 +67,11 @@ public class DriverFactory extends RemoteWebDriver {
   protected void createDriver() {
 
     if ("Android".equalsIgnoreCase(driverType)) {
-      createAndroidDriver(cap_noReset);
+      createAndroidDriver(noResetInCap);
     } else if ("iOS".equalsIgnoreCase(driverType)) {
-      createIOSDriver(cap_noReset);
+      createIosDriver(noResetInCap);
     } else if ("iOSSafari".equalsIgnoreCase(driverType)) {
-      createIOSSafariDriver(cap_noReset);
+      createIosSafariDriver(noResetInCap);
     } else if ("Chrome".equalsIgnoreCase(driverType)) {
       createChromeDriver(false);
     } else if ("H5".equalsIgnoreCase(driverType)) {
@@ -132,7 +132,7 @@ public class DriverFactory extends RemoteWebDriver {
    *
    * @param noReset 不卸载、不重装
    */
-  private void createIOSDriver(Boolean noReset) {
+  private void createIosDriver(Boolean noReset) {
 
     String appiumServerVersion = property.getProperty("appium.server.version", "1.5");
 
@@ -173,7 +173,7 @@ public class DriverFactory extends RemoteWebDriver {
    *
    * @param noReset 不卸载、不重装
    */
-  private void createIOSSafariDriver(Boolean noReset) {
+  private void createIosSafariDriver(Boolean noReset) {
 
     capabilities = new DesiredCapabilities();
 
@@ -255,8 +255,8 @@ public class DriverFactory extends RemoteWebDriver {
     return driverType;
   }
 
-  public static void setNoReset(boolean cap_noReset) {
-    DriverFactory.cap_noReset = cap_noReset;
+  public static void setNoReset(boolean noResetInCap) {
+    DriverFactory.noResetInCap = noResetInCap;
   }
 
   public RemoteWebDriver getDriver() {

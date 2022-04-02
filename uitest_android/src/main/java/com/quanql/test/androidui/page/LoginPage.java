@@ -29,10 +29,10 @@ public class LoginPage extends AndroidBasePage {
    * @author qinle.quan
    * @category 性能测试适用
    */
-  private static String memLoginAppId = getObfuscatedID("member_login_btn_login"); // 立即登录按钮
+  private static String memLoginAppId = getObfuscatedId("member_login_btn_login"); // 立即登录按钮
 
-  private static String usernameAppId = getObfuscatedID("member_login_edt_email"); // 用户名
-  private static String passwordAppId = getObfuscatedID("member_login_edt_pwd"); // 密码
+  private static String usernameAppId = getObfuscatedId("member_login_edt_email"); // 用户名
+  private static String passwordAppId = getObfuscatedId("member_login_edt_pwd"); // 密码
 
   /**
    * 输入用户名/密码，点击登陆
@@ -53,14 +53,14 @@ public class LoginPage extends AndroidBasePage {
     }
   }
 
-  public static void typeUsername(String Name) {
+  public static void typeUsername(String name) {
     LogUtil.info("输入用户名");
-    baseOpt.sendKeys(By.id(usernameAppId), Name);
+    baseOpt.sendKeys(By.id(usernameAppId), name);
   }
 
-  public static void typePassword(String Password) {
+  public static void typePassword(String password) {
     LogUtil.info("输入密码");
-    baseOpt.sendKeys(By.id(passwordAppId), Password);
+    baseOpt.sendKeys(By.id(passwordAppId), password);
   }
 
   public static void clickLogin() {

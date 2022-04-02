@@ -3,33 +3,37 @@ package com.quanql.test.core.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** 日志输出代理类。 */
+/**
+ * 日志输出代理类
+ *
+ * @author quanqinle
+ */
 public class LogUtil {
   /**
    * 是否打印日志，true表示打印日志，false表示不打印。
    *
    * <p>开发阶段可以将其设为 ture，运行阶段可以设为 false
    */
-  private static final boolean enabled = true;
+  private static final boolean ENABLED = true;
   /** 是否进行源代码定位，ture 表示输出源代码所在类以及代码行 */
-  private static final boolean showLocSrc = true;
+  private static final boolean SHOW_LOC_SRC = true;
   /** 指定的日志级别 */
-  private static int level = 1;
+  private static final int LEVEL = 1;
   /** 日志级别：普通 */
-  private static final int info = 1;
+  private static final int INFO = 1;
   /** 日志级别：调试 */
-  private static final int debug = 2;
+  private static final int DEBUG = 2;
   /** 日志级别：警告 */
-  private static final int warn = 3;
+  private static final int WARN = 3;
   /** 日志级别：错误 */
-  private static final int error = 4;
+  private static final int ERROR = 4;
   /** 消息所属和消息内容的分隔符 */
-  private static final String msgSplit = ":";
+  private static final String MSG_SPLIT = ":";
   /** 该类的名称，用于识别该类的堆栈 */
-  private static final String thisClassName = LogUtil.class.getName();
+  private static final String THIS_CLASS_NAME = LogUtil.class.getName();
 
   /** 默认输出日志的日志工具：logback */
-  private static Logger logger = LoggerFactory.getLogger("");
+  private static final Logger logger = LoggerFactory.getLogger("");
 
   public LogUtil() {}
 
@@ -48,25 +52,25 @@ public class LogUtil {
    * @param level 日志级别
    * @param message 日志消息
    * @param ste 堆栈信息。
-   *     <p>如果不需要输出源代码信息，则只需将静态成员属性 showLocSrc设为false即可。
+   *     <p>如果不需要输出源代码信息，则只需将静态成员属性 SHOW_LOC_SRC设为false即可。
    */
   private static void log(int level, Object message, StackTraceElement[] ste) {
     if (ste != null) {
       // 加入源代码定位 fixme
-      message = getStackMsg(ste) + msgSplit + message;
+      message = getStackMsg(ste) + MSG_SPLIT + message;
     }
     // 转入具体实现，此处为slf4j，可以改为其他不同的日志实现。
     switch (level) {
-      case info:
+      case INFO:
         logger.info(message.toString());
         break;
-      case debug:
+      case DEBUG:
         logger.debug(message.toString());
         break;
-      case warn:
+      case WARN:
         logger.warn(message.toString());
         break;
-      case error:
+      case ERROR:
         logger.error(message.toString());
         break;
       default:
@@ -81,7 +85,7 @@ public class LogUtil {
    *
    * @param ste 堆栈信息
    * @return 调用输出日志的代码所在的类.方法.代码行的相关信息
-   *     <p>如：com.MyClass 类里的 fun()方法调用了Logs.debug("test");
+   *     <p>如：com.MyClass 类里的 fun()方法调用了Logs.DEBUG("test");
    *     <p>则堆栈信息为: com.MyClass.fun(MyClass.java 代码行号)
    */
   private static String getStackMsg(StackTraceElement[] ste) {
@@ -95,7 +99,7 @@ public class LogUtil {
         return s == null ? "" : s.toString();
       }
       // 定位本类的堆栈
-      if (thisClassName.equals(s.getClassName())) {
+      if (THIS_CLASS_NAME.equals(s.getClassName())) {
         srcFlag = true;
       }
     }
@@ -103,70 +107,70 @@ public class LogUtil {
   }
 
   /**
-   * 输出info信息
+   * 输出INFO信息
    *
    * @param message 信息
    */
   public static void info(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。
-    if (!enabled || info < level) {
+    if (!ENABLED || INFO < LEVEL) {
       return;
     }
-    if (showLocSrc) {
-      log(info, message, Thread.currentThread().getStackTrace());
+    if (SHOW_LOC_SRC) {
+      log(INFO, message, Thread.currentThread().getStackTrace());
     } else {
-      log(info, message, null);
+      log(INFO, message, null);
     }
   }
 
   /**
-   * 输出debug信息
+   * 输出DEBUG信息
    *
    * @param message 信息
    */
   public static void debug(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。
-    if (!enabled || debug < level) {
+    if (!ENABLED || DEBUG < LEVEL) {
       return;
     }
-    if (showLocSrc) {
-      log(debug, message, Thread.currentThread().getStackTrace());
+    if (SHOW_LOC_SRC) {
+      log(DEBUG, message, Thread.currentThread().getStackTrace());
     } else {
-      log(debug, message, null);
+      log(DEBUG, message, null);
     }
   }
 
   /**
-   * 输出warn信息
+   * 输出WARN信息
    *
    * @param message 信息
    */
   public static void warn(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。
-    if (!enabled || warn < level) {
+    if (!ENABLED || WARN < LEVEL) {
       return;
     }
-    if (showLocSrc) {
-      log(warn, message, Thread.currentThread().getStackTrace());
+    if (SHOW_LOC_SRC) {
+      log(WARN, message, Thread.currentThread().getStackTrace());
     } else {
-      log(warn, message, null);
+      log(WARN, message, null);
     }
   }
 
   /**
-   * 输出error信息
+   * 输出ERROR信息
    *
    * @param message 信息
    */
   public static void error(Object message) {
     // 如果禁止日志或者输出级别不符，则返回。
-    if (!enabled || error < level) {
+    if (!ENABLED || ERROR < LEVEL) {
       return;
     }
-    if (showLocSrc) {
-      log(error, message, Thread.currentThread().getStackTrace());
+    if (SHOW_LOC_SRC) {
+      log(ERROR, message, Thread.currentThread().getStackTrace());
     } else {
-      log(error, message, null);
+      log(ERROR, message, null);
     }
   }
 
@@ -174,7 +178,7 @@ public class LogUtil {
    * 获取当前文件名和行号，用于打印log
    *
    * @author 权芹乐 2014-12-2
-   * @return
+   * @return [filename:line number]
    */
   public static String getFileAndLine() {
     StackTraceElement ste = new Throwable().getStackTrace()[1];

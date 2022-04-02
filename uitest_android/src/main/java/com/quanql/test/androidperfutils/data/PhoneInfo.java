@@ -7,7 +7,9 @@ import com.quanql.test.core.utils.LogUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** @author 权芹乐 */
+/**
+ * @author 权芹乐
+ */
 public class PhoneInfo {
   // getprop
   private String abi;
@@ -18,7 +20,7 @@ public class PhoneInfo {
   @SuppressWarnings("unused")
   private String manufacturer;
 
-  private static final Pattern p = Pattern.compile("\\:\\s\\[(.*)]$");
+  private static final Pattern PATTERN = Pattern.compile("\\:\\s\\[(.*)]$");
 
   public static void main(String[] args) {
     PhoneInfo phoneInfo = new PhoneInfo();
@@ -87,7 +89,7 @@ public class PhoneInfo {
     // p = Pattern.compile("\\:\\s\\[");
     // strs = p.split(line);
 
-    Matcher m = p.matcher(line);
+    Matcher m = PATTERN.matcher(line);
     if (m.find()) {
       return m.group(1).trim();
     } else {

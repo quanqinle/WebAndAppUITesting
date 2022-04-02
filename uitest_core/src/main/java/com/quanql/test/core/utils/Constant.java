@@ -30,9 +30,13 @@ public final class Constant {
 
   /** Return code */
   public enum PhoneState {
+    /** ok */
     STATE_OK,
+    /** without adb */
     STATE_NOT_ADB,
+    /** no phone found */
     STATE_NOT_FOUND_PHONE,
+    /** phones found */
     STATE_MULTI_FOUND_PHONE
   }
 

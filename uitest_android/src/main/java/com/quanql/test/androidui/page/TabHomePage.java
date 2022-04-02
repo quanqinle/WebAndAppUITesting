@@ -48,15 +48,15 @@ public class TabHomePage extends MainFramePage {
   public static Button Children = new Button("id=Rv_four_ads_left");
 
   /** 元素定义，适用于性能测试 */
-  private static String tvBrandtitleId = getObfuscatedID("iv_banner"); // 品牌标题
+  private static String tvBrandtitleId = getObfuscatedId("iv_banner"); // 品牌标题
 
-  private static String viMainContentId = getObfuscatedID("home_page_listview");
-  private static String rlDiscountId = getObfuscatedID("click_ads_right_top_right"); // 超值量贩
-  private static String rlClearId = getObfuscatedID("click_ads_right_bottom_right"); // 清仓
-  private static String homeBottom = getObfuscatedID("home_bottom");
+  private static String viMainContentId = getObfuscatedId("home_page_listview");
+  private static String rlDiscountId = getObfuscatedId("click_ads_right_top_right"); // 超值量贩
+  private static String rlClearId = getObfuscatedId("click_ads_right_bottom_right"); // 清仓
+  private static String homeBottom = getObfuscatedId("home_bottom");
 
   // 今日特卖
-  private static String tabHome = getObfuscatedID("tab_home");
+  private static String tabHome = getObfuscatedId("tab_home");
 
   /** 如果广告Dialog存在，则关闭；否则，do nothing */
   public static void closeAdsDialog() {
@@ -72,7 +72,7 @@ public class TabHomePage extends MainFramePage {
    */
   public static boolean isAdsDialogShow() {
     boolean b = false;
-    b = baseOpt.isElementDisplayed(By.id(getObfuscatedID("ads_dialog")));
+    b = baseOpt.isElementDisplayed(By.id(getObfuscatedId("ads_dialog")));
     LogUtil.info("新人1元购广告Dialog存在：" + b);
     return b;
   }
@@ -180,7 +180,7 @@ public class TabHomePage extends MainFramePage {
     ConfigUtil property = ConfigUtil.getInstance();
     String version = property.getProperty("updateVersion");
     if ("true".equals(version)) {
-      baseOpt.click(By.id(getObfuscatedID("update_btn_cancel")));
+      baseOpt.click(By.id(getObfuscatedId("update_btn_cancel")));
     }
   }
 
@@ -206,9 +206,9 @@ public class TabHomePage extends MainFramePage {
   public static boolean tabHomePageCheck() {
 
     WebElement family = baseOpt.findElement(familyName);
-    WebElement redPerson = baseOpt.findElement(getObfuscatedID("click_ads_right_top"));
+    WebElement redPerson = baseOpt.findElement(getObfuscatedId("click_ads_right_top"));
     WebElement brand =
-        baseOpt.scrollToView(By.id(viMainContentId), By.id(getObfuscatedID("iv_banner")), 0, 8);
+        baseOpt.scrollToView(By.id(viMainContentId), By.id(getObfuscatedId("iv_banner")), 0, 8);
 
     if (family == null || redPerson == null || brand == null) {
 
