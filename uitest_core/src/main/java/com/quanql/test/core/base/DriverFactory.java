@@ -155,11 +155,6 @@ public class DriverFactory extends RemoteWebDriver {
     capabilities.setCapability(
         "autoAcceptAlerts", property.getProperty("autoAcceptAlerts", "True"));
 
-    if (appiumServerVersion.startsWith("1.6")) {
-      // 适用于 appium 1.6.0
-      capabilities.setCapability("automationName", "XCUITest");
-    }
-
     try {
       driver = new IOSDriver(new URL(property.getProperty("remote.address")), capabilities);
     } catch (Exception e) {

@@ -23,7 +23,8 @@ public class FrameInfo {
   private double dExecute = 0f;
   private double dTotal = 0f;
   // TODO 增加该帧绘制时的时间
-  private boolean isJunk = false; // 是否掉帧
+  /** 是否掉帧 */
+  private boolean isJunk = false;
 
   public FrameInfo() {}
 

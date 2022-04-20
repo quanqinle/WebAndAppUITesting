@@ -64,9 +64,7 @@ public class FileUtil {
    * @param content 写入内容，需调用者自行用半角逗号分隔
    */
   public static void write2Csv(String fileName, String content) {
-
-    write2Csv(
-        getPerfReportFolder(), /* CommonUtil.getCurrentDateTime(3) + */ fileName, content, false);
+    write2Csv(getPerfReportFolder(), fileName, content, false);
   }
 
   /**

@@ -10,7 +10,10 @@ import com.quanql.test.core.utils.AssertUtil;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-/** DEMO：手机号登录 */
+/**
+ * DEMO：手机号登录
+ * @author 权芹乐
+ */
 public class DemoLoginTest extends AndroidBaseTest {
 
   @Override

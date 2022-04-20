@@ -163,13 +163,14 @@ public class PerfMonitor {
    * @param pool
    */
   private void shutdownAndAwaitTermination(ExecutorService pool) {
+    int TIMEOUT = 5;
     pool.shutdown(); // Disable new tasks from being submitted
     try {
       // Wait a while for existing tasks to terminate
-      if (!pool.awaitTermination(5, TimeUnit.SECONDS)) {
+      if (!pool.awaitTermination(TIMEOUT, TimeUnit.SECONDS)) {
         pool.shutdownNow(); // Cancel currently executing tasks
         // Wait a while for tasks to respond to being cancelled
-        if (!pool.awaitTermination(5, TimeUnit.SECONDS)) {
+        if (!pool.awaitTermination(TIMEOUT, TimeUnit.SECONDS)) {
           System.err.println("Pool did not terminate");
         }
       }

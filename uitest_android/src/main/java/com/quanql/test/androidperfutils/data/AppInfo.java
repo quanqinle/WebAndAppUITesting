@@ -19,7 +19,9 @@ public class AppInfo {
   // u0_a99 19548 383 1705304 129988 ffffffff 00000000 S com.quanql.demo
   private String user;
   private String pid;
-  private String ppid; // 父pid
+  /** 父pid */
+  private String ppid;
+
   private String vsize;
   private String rss;
   private String wchan;

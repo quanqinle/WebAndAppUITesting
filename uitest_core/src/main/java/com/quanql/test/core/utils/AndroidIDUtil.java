@@ -13,8 +13,10 @@ import java.util.Map;
  * @author quanqinle
  */
 public class AndroidIDUtil {
+  /** that is Android */
+  public static final String ANDROID_NAME = "Android";
 
-  private static String packageName = Constant.APP_PACKAGE_NAME;
+  private static final String packageName = Constant.APP_PACKAGE_NAME;
   protected static String mappingFileProp =
       ConfigUtil.getInstance().getProperty("resource.mapping.file", "");
   protected static String mappingFileFullPath =
@@ -75,7 +77,7 @@ public class AndroidIDUtil {
    * @return 适用于appium的id串，形如${pakagename}:id/obfuscated_id
    */
   public static String getObfuscatedId(String originalId) {
-    if ("Android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
+    if (ANDROID_NAME.equalsIgnoreCase(Constant.DRIVER_TYPE)) {
       String appiumAndroidIdPrefix = packageName + ":id/";
       if (!mappingFileProp.isEmpty()) {
         return appiumAndroidIdPrefix + APP_ID_MAPS.getOrDefault(originalId, originalId);

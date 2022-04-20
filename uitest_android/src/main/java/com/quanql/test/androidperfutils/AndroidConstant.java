@@ -21,6 +21,8 @@ public class AndroidConstant {
   public static final int ANDROID_4X = 0;
 
   public static final int ANDROID_2X = 1;
+  /** that is Android */
+  public static final String ANDROID_NAME = "Android";
 
   /**
    * 性能数据<br>
@@ -31,7 +33,7 @@ public class AndroidConstant {
       TEST_SUITE_INDEX /* = DRIVER_TYPE.equals("android")?"":TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion()*/;
 
   {
-    if ("Android".equalsIgnoreCase(Constant.DRIVER_TYPE)) {
+    if (ANDROID_NAME.equalsIgnoreCase(Constant.DRIVER_TYPE)) {
       TEST_SUITE_INDEX = TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion();
     }
   }

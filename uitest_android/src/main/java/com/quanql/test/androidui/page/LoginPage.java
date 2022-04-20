@@ -29,10 +29,13 @@ public class LoginPage extends AndroidBasePage {
    * @author qinle.quan
    * @category 性能测试适用
    */
-  private static String memLoginAppId = getObfuscatedId("member_login_btn_login"); // 立即登录按钮
+  /** 立即登录按钮 */
+  private static String memLoginAppId = getObfuscatedId("member_login_btn_login");
 
-  private static String usernameAppId = getObfuscatedId("member_login_edt_email"); // 用户名
-  private static String passwordAppId = getObfuscatedId("member_login_edt_pwd"); // 密码
+  /** 用户名 */
+  private static String usernameAppId = getObfuscatedId("member_login_edt_email");
+  /** 密码 */
+  private static String passwordAppId = getObfuscatedId("member_login_edt_pwd");
 
   /**
    * 输入用户名/密码，点击登陆

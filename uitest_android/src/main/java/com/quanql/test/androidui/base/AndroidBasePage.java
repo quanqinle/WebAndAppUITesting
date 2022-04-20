@@ -4,7 +4,6 @@ import com.quanql.test.core.base.BasePage;
 import com.quanql.test.core.utils.AndroidIDUtil;
 import com.quanql.test.core.utils.Constant;
 import com.quanql.test.core.utils.LogUtil;
-import io.appium.java_client.android.AndroidDriver;
 
 /**
  * 页面基础类 <br>
@@ -27,7 +26,7 @@ public class AndroidBasePage extends BasePage {
    * @return
    */
   public static String getCurrentActivity() {
-    return ((AndroidDriver) baseOpt.getDriver()).currentActivity();
+    return baseOpt.getDriver().currentActivity();
   }
 
   /**

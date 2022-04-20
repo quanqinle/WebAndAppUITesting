@@ -48,11 +48,11 @@ public class TabHomePage extends MainFramePage {
   public static Button Children = new Button("id=Rv_four_ads_left");
 
   /** 元素定义，适用于性能测试 */
-  private static String tvBrandtitleId = getObfuscatedId("iv_banner"); // 品牌标题
+  private static final String tvBrandtitleId = getObfuscatedId("iv_banner");
 
-  private static String viMainContentId = getObfuscatedId("home_page_listview");
-  private static String rlDiscountId = getObfuscatedId("click_ads_right_top_right"); // 超值量贩
-  private static String rlClearId = getObfuscatedId("click_ads_right_bottom_right"); // 清仓
+  private static final String viMainContentId = getObfuscatedId("home_page_listview");
+  private static final String rlDiscountId = getObfuscatedId("click_ads_right_top_right");
+  private static final String rlClearId = getObfuscatedId("click_ads_right_bottom_right");
   private static String homeBottom = getObfuscatedId("home_bottom");
 
   // 今日特卖
@@ -75,35 +75,6 @@ public class TabHomePage extends MainFramePage {
     b = baseOpt.isElementDisplayed(By.id(getObfuscatedId("ads_dialog")));
     LogUtil.info("新人1元购广告Dialog存在：" + b);
     return b;
-  }
-
-  /**
-   * 开屏 splash 广告是否存在
-   *
-   * @return -
-   */
-  public static boolean isAdsSplashShow() {
-    // FIXME 出现过失效的情况，待查！
-    boolean b = false;
-    try {
-      for (int i = 0; i < 5; i++) {
-        if (getCurrentActivity().contains("SplashAdsActivity")) {
-          b = true;
-          break;
-        }
-        wait(1000);
-      }
-    } catch (Exception e) {
-    }
-    LogUtil.info("开屏splash广告存在：" + b);
-    return b;
-  }
-
-  /** 如果开屏splash广告存在，则处理并进入首页；否则，do nothing */
-  public static void completeAdsSplashPage() {
-    if (isAdsSplashShow()) {
-      GotoHomepage.click();
-    }
   }
 
   /**
@@ -176,10 +147,11 @@ public class TabHomePage extends MainFramePage {
    */
   public static void clickUpdateMessage() {
 
+    String UPDATE_APP = "true";
     LogUtil.info("判断是否需要版本更新，存在则取消更新");
     ConfigUtil property = ConfigUtil.getInstance();
     String version = property.getProperty("updateVersion");
-    if ("true".equals(version)) {
+    if (UPDATE_APP.equals(version)) {
       baseOpt.click(By.id(getObfuscatedId("update_btn_cancel")));
     }
   }

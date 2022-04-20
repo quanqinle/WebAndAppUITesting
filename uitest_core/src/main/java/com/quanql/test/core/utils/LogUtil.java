@@ -56,7 +56,7 @@ public class LogUtil {
    */
   private static void log(int level, Object message, StackTraceElement[] ste) {
     if (ste != null) {
-      // 加入源代码定位 fixme
+      // 加入源代码定位
       message = getStackMsg(ste) + MSG_SPLIT + message;
     }
     // 转入具体实现，此处为slf4j，可以改为其他不同的日志实现。

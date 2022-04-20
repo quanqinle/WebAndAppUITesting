@@ -93,7 +93,8 @@ public class CpuInfo {
 
     CommandResult cr = ShellUtils.execCommand(cpucmd);
     for (String str : cr.getSuccessMsgArray()) {
-      if (str.endsWith(appname)) { // 结尾
+      // 结尾
+      if (str.endsWith(appname)) {
         array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 
         // 为了方便后续数据分析，记录结果时去除百分号
