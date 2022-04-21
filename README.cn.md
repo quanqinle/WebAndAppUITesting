@@ -2,7 +2,8 @@
 
 简体中文 | [English](./README.md)
 
-> Selenium 4 已经发布，我正在修改该项目以适配它。老版本的代码已经归档到分支`backup-Selenium3`。
+> Selenium 4 已经发布，此项目正在修改以适配它。快完工了……
+> 老版本的代码已经归档到分支`backup-Selenium3`。
 
 ---
 
@@ -100,7 +101,22 @@
 
 ## 1. Web UI
 
-// TODO: to add a demo later
+### 元素识别
+
+1. 打开浏览器，例如 Chrome，进入被测网页界面
+2. 点击 F12 打开开发者工具，识别所需元素。建议使用相对路径的 cssSelector 定位元素，例如：`button[aria-label='Google 搜索']`
+
+### 编写用例
+
++ 页面 demo：uitest_web 下的 DemoBaiduPage.java
++ 用例 demo：uitest_web 下的 Demo163Test.java
+
+### 运行用例
+
+1. 配置 config.properties
+    + driver.type=chrome、firefox、iOSSafari
+    + running.type=local（单机模式）、remote（多机，hub-node 模式）
+    + remote.address=hub地址，仅 running.type=remote 时有效
 
 ## 2. iPhone UI
 
@@ -145,9 +161,11 @@
 
 ## 3. Android UI
 
-// TODO 稍后补充
+与 iPhone 类似。
 
 ## 4. H5
+
+与 web 类似，配置 config.properties 中，driver.type 设为 H5。这样就会通过 Chrome 模拟手机浏览器。
 
 # 两种用例编写方式
 

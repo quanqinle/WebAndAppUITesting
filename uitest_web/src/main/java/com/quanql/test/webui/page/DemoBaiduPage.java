@@ -28,7 +28,7 @@ public class DemoBaiduPage extends WebBasePage {
    */
   public static void typeInSearchEdt(String name) {
     LogUtil.info("输入搜索内容：" + name);
-    baseOpt.sendKeys(By.id(EDT_SEARCH_ID), name);
+    baseOpt.input(By.id(EDT_SEARCH_ID), name);
   }
 
   /** 点击搜索按钮 */

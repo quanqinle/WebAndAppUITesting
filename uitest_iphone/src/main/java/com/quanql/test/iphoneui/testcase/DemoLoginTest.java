@@ -19,8 +19,8 @@ public class DemoLoginTest extends IphoneBaseTest {
     TabHomePage.wait(20000);
     TabHomePage.TabMine.click();
     TabMyPage.LoginNowBtn.click();
-    LoginPage.UserName.sendkeys("111111");
-    LoginPage.PassWord.sendkeys("2222");
+    LoginPage.UserName.input("111111");
+    LoginPage.PassWord.input("2222");
     LoginPage.LoginBtn.click();
     AssertUtil.assertTrue(LoginPage.LoginFailAlert.isDisplayed(), "期望登录失败提示框出现");
     LoginPage.AlertOKBtn.click();

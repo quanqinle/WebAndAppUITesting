@@ -199,7 +199,7 @@ public class WebBaseOpt extends BaseOpt {
    */
   public void typeInFrame(By frameBy, By by, String text) {
     this.switchTo(frameBy);
-    this.sendKeys(by, text);
+    this.input(by, text);
     driver.switchTo().defaultContent();
   }
 

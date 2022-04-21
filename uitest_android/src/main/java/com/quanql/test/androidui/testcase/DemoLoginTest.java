@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 /**
  * DEMO：手机号登录
+ *
  * @author 权芹乐
  */
 public class DemoLoginTest extends AndroidBaseTest {
@@ -40,9 +41,9 @@ public class DemoLoginTest extends AndroidBaseTest {
     // 点 立即登录
     TabMyPage.LoginNowBtn.click();
     // 输入用户名
-    LoginPage.UserName.sendkeys(username);
+    LoginPage.UserName.input(username);
     // 输入密码
-    LoginPage.PassWord.sendkeys(passwd);
+    LoginPage.PassWord.input(passwd);
     // 点击
     LoginPage.LoginBtn.click();
     // 断言判断登录成功

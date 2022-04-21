@@ -58,12 +58,12 @@ public class LoginPage extends AndroidBasePage {
 
   public static void typeUsername(String name) {
     LogUtil.info("输入用户名");
-    baseOpt.sendKeys(By.id(USERNAME_APP_ID), name);
+    baseOpt.input(By.id(USERNAME_APP_ID), name);
   }
 
   public static void typePassword(String password) {
     LogUtil.info("输入密码");
-    baseOpt.sendKeys(By.id(PASSWORD_APP_ID), password);
+    baseOpt.input(By.id(PASSWORD_APP_ID), password);
   }
 
   public static void clickLogin() {

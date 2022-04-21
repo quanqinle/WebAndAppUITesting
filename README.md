@@ -2,8 +2,8 @@
 
 [简体中文](./README.cn.md) | English
 
-> Selenium 4 has come. I will modify this project to fix with it. If you use the old Selenium 3 still, go to the
-> branch `backup-Selenium3`.
+> Selenium 4 has come. I am modifying this project to fix with it. And almost done.
+> If you use the old Selenium 3 still, go to the branch `backup-Selenium3`.
 
 ---
 
@@ -112,7 +112,23 @@
 
 ## 1. Web UI
 
-// TODO: to add a demo later
+### Find Elements
+
+1. Open browser, i.e. Chrome, open the url
+2. Click F12 to open up the `DevTools` window, find elements by it. Relative cssSelector expression is recommended, such
+   as, `button[aria-label='Google Search']`
+
+### Write test cases
+
++ page demo: See more details in `DemoBaiduPage.java` of uitest_web
++ case demo: See more details in `Demo163Test.java` of uitest_web
+
+### Run test cases
+
+1. configure `config.properties`
+    + driver.type=chrome, firefox, iOSSafari
+    + running.type=local (Standalone mode)、remote (hub-node mode)
+    + remote.address=the hub server url, only used as `running.type=remote`
 
 ## 2. iPhone UI
 
@@ -135,7 +151,7 @@
 > ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/quanql.zip  
 ```
 
-### Find Element
+### Find Elements
 
 1. On the `iOS settings` page of appium server, set `App Path` to the directory of the zip generated in the previous
    step, then set `Force Device` and `Platform Version`
@@ -161,11 +177,12 @@
 
 ## 3. Android UI
 
-// TODO: to add a demo later
+Similar with **iPhone**.
 
 ## 4. H5
 
-// TODO: to add a demo later
+Similar with **web**. In configure `config.properties`, set `driver.type=H5` so as to run test cases on mobile emulation
+mode in Chrome.
 
 # Two ways to write test cases
 

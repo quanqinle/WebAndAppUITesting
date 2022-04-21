@@ -18,8 +18,8 @@ public class Edit extends BaseElement {
     super(strElement);
   }
 
-  public void sendkeys(String text) {
+  public void input(String text) {
     LogUtil.info("在<" + oriElementStr + ">中输入：" + text);
-    baseOpt.sendKeys(by, text);
+    baseOpt.input(by, text);
   }
 }

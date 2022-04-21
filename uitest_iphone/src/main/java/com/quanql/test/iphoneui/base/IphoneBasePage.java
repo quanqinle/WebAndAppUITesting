@@ -17,7 +17,7 @@ public class IphoneBasePage extends BasePage {
 
   /**
    * 页面向上滑动 1/2 屏幕高度，循环 loop 次<br>
-   * 注意：swipe函数在模拟器上不可用！！
+   * 注意：swipe 函数在模拟器上不可用！！
    *
    * @author 权芹乐
    * @param loop 循环次数

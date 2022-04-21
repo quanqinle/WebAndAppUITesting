@@ -156,7 +156,7 @@ public class BaseOpt {
    * @param element 元素
    * @param text 文本
    */
-  private void sendKeys(By by, WebElement element, String text) {
+  private void input(By by, WebElement element, String text) {
     int tryLoop = 3;
 
     if ("input".equalsIgnoreCase(element.getTagName())
@@ -233,9 +233,9 @@ public class BaseOpt {
    * @param by -
    * @param text 文本
    */
-  public void sendKeys(By by, String text) {
+  public void input(By by, String text) {
     WebElement element = waitForElementClickable(by);
-    sendKeys(by, element, text);
+    input(by, element, text);
   }
 
   /**
@@ -245,10 +245,10 @@ public class BaseOpt {
    * @param num 序号
    * @param text 文本
    */
-  public void sendKeys(By by, int num, String text) {
+  public void input(By by, int num, String text) {
     waitForElementClickable(by);
     WebElement element = findElements(by).get(num);
-    sendKeys(by, element, text);
+    input(by, element, text);
   }
 
   /**
@@ -403,7 +403,7 @@ public class BaseOpt {
    */
   public void sendKeysByKeyboard(String text) {
     try {
-      //      getDriver().getKeyboard().sendKeys(text);
+      //      getDriver().getKeyboard().input(text);
       Actions actions = new Actions(getDriver());
       actions.sendKeys(text);
       LogUtil.info(getDriver().manage().logs() + "==>" + text + " 键盘输入成功！");
