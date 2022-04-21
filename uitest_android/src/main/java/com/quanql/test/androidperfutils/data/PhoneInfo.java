@@ -11,13 +11,13 @@ import java.util.regex.Pattern;
  * @author 权芹乐
  */
 public class PhoneInfo {
-  // getprop
+  /** getprop */
   private String abi;
+
   private String sdk;
   private String heapgrowthlimit;
   private String heapsize;
 
-  @SuppressWarnings("unused")
   private String manufacturer;
 
   private static final Pattern PATTERN = Pattern.compile("\\:\\s\\[(.*)]$");

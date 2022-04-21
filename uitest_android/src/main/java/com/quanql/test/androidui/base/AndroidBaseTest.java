@@ -24,7 +24,7 @@ import org.testng.annotations.BeforeMethod;
  */
 public class AndroidBaseTest extends BaseTest {
 
-  // 性能
+  /** 性能 */
   public AppInfo appInfo;
 
   @Override
@@ -73,6 +73,7 @@ public class AndroidBaseTest extends BaseTest {
       ShellUtils.execCommand("adb uninstall io.appium.android.ime");
       ShellUtils.execCommand("adb shell am kill-all");
     } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 

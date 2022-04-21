@@ -2,7 +2,7 @@
 
 简体中文 | [English](./README.md)
 
-> Selenium 4就要来了，我会修改该项目以适配它。老版本的代码已经归档到分支`backup-Selenium3`。
+> Selenium 4 已经发布，我正在修改该项目以适配它。老版本的代码已经归档到分支`backup-Selenium3`。
 
 ---
 
@@ -24,25 +24,25 @@
 1. jdk >= 1.8
 2. Maven >= 3
 3. Selenium 3
-4. Appium 3
+4. Appium (java-client 8)
 5. TestNG 6
-6. IDE(eclipse或其他，以下以eclipse为例) + TestNG插件 + Maven插件
+6. IDE (Eclipse 或其他，以下以 Eclipse 为例) + TestNG 插件 + Maven 插件
 
 ## Android
 
-1. 安装Android SDK  
+1. 安装 Android SDK  
    1.1 配置环境变量  
    1.2 控制台下验证`adb`运行正常  
    1.3 如果使用模拟器运行用例，需要先用`AVD Manager`创建模拟器
-2. 安装Appium服务端程序，参见[http://appium.io/](http://appium.io/)。避免踩坑，建议使用现成的安装包，界面操作更省心
+2. 安装 Appium 服务端程序，参见[http://appium.io/](http://appium.io/)。避免踩坑，建议使用现成的安装包，界面操作更省心
 
 ## iPhone
 
-1. **Mac OS X是必须的！**   
-   1.1 Appium Server运行、元素识别、脚本执行都需要用到Mac  
-   1.2 安装Xcode，验证安装，直至被测app可以编译成功，并在模拟器中打开
+1. **macOS 是必须的！**   
+   1.1 Appium Server 运行、元素识别、脚本执行都需要用到 macOS  
+   1.2 安装 Xcode，验证安装，直至被测 app 可以编译成功，并在模拟器中打开
 2. 在真机上测试，按手册操作[Deploying an iOS app to a real device](http://appium.io/slate/en/master/)
-3. 安装Appium服务端程序，安装后会发现它比Windows版多了对iOS测试的支持
+3. 安装 Appium 服务端程序，安装后会发现它比 Windows 版多了对 iOS 测试的支持
    ![Appium Server Mac](/docs/images/appium-server-mac.png)
 
 # 工程结构
@@ -106,9 +106,9 @@
 
 ### 编译被测应用
 
-1. 前提：保证xcode已经可以编译通过被测app，且在模拟器上验证基本功能正常
+1. 前提：保证 xcode 已经可以编译通过被测 app，且在模拟器上验证基本功能正常
 2. 更新代码
-3. 编译app
+3. 编译 app
 
 ```
 > cd $APP_PATH
@@ -116,7 +116,7 @@
 > xcodebuild -workspace quanqlAPP.xcworkspace -scheme quanql -configuration Debug -sdk iphonesimulator -arch x86_64  
 ```
 
-4. 生成压缩包，其中**quanql.zip就是被测包**
+4. 生成压缩包，其中**quanql.zip 就是被测包**
 
 ```
 > ditto -ck --sequesterRsrc --keepParent \`ls -1 -d -t ~/Library/Developer/Xcode/DerivedData/\*/Build/Products/Debug-iphonesimulator/*.app | head -n 1\`  ~/quanql.zip  
@@ -124,24 +124,24 @@
 
 ### 元素识别
 
-1. 进入appium server的iOS settings界面，设置App Path=上一步生成的zip，设置Force Device和Platform Version
-2. 点击launch
-3. 点击inspector，后续元素识别操作同Android
-4. 建议使用相对路径的xpath定位元素，例如：`Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']")`
+1. 进入 Appium server 的 iOS settings 界面，设置 App Path=上一步生成的zip，设置 Force Device 和 Platform Version
+2. 点击 launch
+3. 点击 inspector，后续元素识别操作同 Android
+4. 建议使用相对路径的 xpath 定位元素，例如：`Button("xpath=//UIAAlert[@name='提示']//UIAButton[@name='确定']")`
 
 ### 编写用例
 
-+ 页面demo：uitest_iphone下的LoginPage.java
-+ 用例demo：uitest_iphone下的DemoLoginTest.java
++ 页面 demo：uitest_iphone 下的 LoginPage.java
++ 用例 demo：uitest_iphone 下的 DemoLoginTest.java
 
 ### 运行用例
 
-1. 配置config.properties
+1. 配置 config.properties
     + remote.address=appium server的地址
     + app=appium server机器上的绝对路径
 2. appium client
-    + 可以在Mac上，即，和appium server在同一台机器上
-    + 也可以在PC上，执行指令会被发送到远端的appium server，执行时在appium server上
+    + 可以在 Mac 上，即，和 appium server 在同一台机器上
+    + 也可以在 PC 上，执行指令会被发送到远端的 appium server，执行时在 appium server 上
 
 ## 3. Android UI
 
@@ -151,10 +151,10 @@
 
 # 两种用例编写方式
 
-我将参与UI自动化用例编写的人员分为两类，（当然，也可能有的团队不会分的这么细，一个人齐活）
+我将参与 UI 自动化用例编写的人员分为两类，（当然，也可能有的团队不会分的这么细，一个人齐活）
 
-1. 第一类：编写底层/基础功能的人员，他们可能负责编写base中公共方法、识别和封装元素，这类人可以不了解业务，但对编程技能要求高；
-2. 第二类：业务用例编写人员，将页面、组件按照一定的业务要求进行整合，使之符合一定的story，完成业务测试向自动化的转化，这类人要求熟悉业务，对编程技能要求不高。而他们使用的页面和元素就是第一类人员提供的。
+1. 第一类：编写底层/基础功能的人员，他们可能负责编写 base 中公共方法、识别和封装元素，这类人可以不了解业务，但对编程技能要求高；
+2. 第二类：业务用例编写人员，将页面、组件按照一定的业务要求进行整合，使之符合一定的 story，完成业务测试向自动化的转化，这类人要求熟悉业务，对编程技能要求不高。而他们使用的页面和元素就是第一类人员提供的。
 
 下面介绍工程中提供的两了种用例编写方式，第一种对业务用例编写人员更友好、技术要求不高、代码可读性强。而我个人更习惯第二种，因为它对复杂控件和场景支持更好。
 
@@ -163,7 +163,7 @@
 例如，`./uitest_iphone/src/main/java/com/quanql/test/iphoneui/page/LoginPage.java` 和
 `./uitest_android/src/main/java/com/quanql/test/androidui/testcase/DemoLoginTest.java`
 
-封装登录page
+封装登录 page
 
 ```java
 /**
@@ -183,7 +183,7 @@ public class LoginPage extends IphoneBasePage {
 }
 ```
 
-“登录”测试用例（使用登录page）
+“登录”测试用例（使用登录 page）
 
 ```java
 /**
@@ -214,7 +214,7 @@ public class DemoLoginTest extends IphoneBaseTest {
 
 例如，`./uitest_web/src/main/java/com/quanql/test/webui/testcase/Demo163Test.java`
 
-封装登录page
+封装登录 page
 
 ```java
 /**
@@ -258,12 +258,12 @@ public class DemoBaiduPage extends WebBasePage {
 }
 ```
 
-“登录”测试用例（使用登录page）
+“登录”测试用例（使用登录 page）
 
 ```java
 /**
  * 说明：
- * 只能调用page分装中提供的方法，限制了用例编写人员随意的对控件使用不合适的操作。
+ * 只能调用 page 分装中提供的方法，限制了用例编写人员随意的对控件使用不合适的操作。
  */
 public class Demo163Test extends WebBaseTest {
 
@@ -307,15 +307,15 @@ public class NewUserRegisterTest extends AndroidBaseTest {
 ### 配置文件 config.properties
 
 ```
-##测试用例运行环境: online, test
-##决定了读取哪份数据驱动，同时，参数名也是数据的存放目录
+## 测试用例运行环境: online, test
+## 决定了读取哪份数据驱动，同时，参数名也是数据的存放目录
 running.env=test
 ```
 
 ### 测试数据 NewPersonRegister.csv
 
-+ testdata目录和src同级
-+ 测试数据，当前只支持csv格式
++ `testdata` 目录和 `src` 同级
++ 测试数据，当前只支持 csv 格式
 
 ```
 ├─uitest_android
@@ -334,14 +334,14 @@ telephone,passwd
 18888888888,pwd123
 ```
 
-## 数据驱动解释
+## 数据驱动介绍
 
-1. config.properties中参数running.env决定数据读取目录
-2. @Test的函数名（上例中的testNewUserRegister）决定了数据驱动的文件名NewPersonRegister.csv
-    - ==测试用例函数名“必须test开头，可以没有_”==，形如testHelloWorld_01()
+1. config.properties 中参数 running.env 决定数据读取目录
+2. @Test 的函数名（上例中的 testNewUserRegister）决定了数据驱动的文件名 NewPersonRegister.csv
+    - ==测试用例函数名“必须test开头，可以没有_”==，形如 testHelloWorld_01()
     - 结合1.中的路径，本例读取的文件是 ==submodule名称/testdata/test/NewPersonRegister.csv==
-3. java测试用例
-    - @Test后面加(dataProvider = "providerMethod")
+3. java 测试用例
+    - @Test 后面加(dataProvider = "providerMethod")
     - testNewUserRegister()的==函数参数个数+排序与csv文件中的数据一致==，但是不强制要求参数名称与csv第一行的表头一致
 
 # 广告

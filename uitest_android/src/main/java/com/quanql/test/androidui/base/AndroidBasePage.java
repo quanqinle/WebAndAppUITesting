@@ -16,14 +16,11 @@ public class AndroidBasePage extends BasePage {
 
   protected static AndroidBaseOpt baseOpt = AndroidBaseOpt.getInstance();
 
-  // for debug
-  public static void main(String[] args) {}
-
   /**
-   * 获取当前activity<br>
+   * 获取当前 activity<br>
    * only for Android
    *
-   * @return
+   * @return -
    */
   public static String getCurrentActivity() {
     return baseOpt.getDriver().currentActivity();

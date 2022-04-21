@@ -15,9 +15,13 @@ import org.apache.commons.lang3.StringUtils;
 public class AppInfo {
   private static String appPackageName = AndroidConstant.APP_PACKAGE_NAME;
   private static String version;
-  // USER PID PPID VSIZE RSS WCHAN PC NAME
-  // u0_a99 19548 383 1705304 129988 ffffffff 00000000 S com.quanql.demo
+
+  /**
+   * USER PID PPID VSIZE RSS WCHAN PC NAME <br>
+   * u0_a99 19548 383 1705304 129988 ffffffff 00000000 S com.quanql.demo
+   */
   private String user;
+
   private String pid;
   /** 父pid */
   private String ppid;

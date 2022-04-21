@@ -24,24 +24,26 @@ public class AndroidConstant {
   /** that is Android */
   public static final String ANDROID_NAME = "Android";
 
-  /**
+  /*
    * 性能数据<br>
    * quanql: 部分借鉴 GT。以下待整理 TODO
    */
+
   /** test suite 序列号 */
   public static String
       TEST_SUITE_INDEX /* = DRIVER_TYPE.equals("android")?"":TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion()*/;
 
-  {
+  static {
     if (ANDROID_NAME.equalsIgnoreCase(Constant.DRIVER_TYPE)) {
       TEST_SUITE_INDEX = TimeUtil.getCurrentDateTime(2) + "_" + AppInfo.getAppVersion();
     }
   }
 
-  /** 是否记录性能，以及所记录的文件 */
+  /* 是否记录性能，以及所记录的文件 */
+
   /** 性能测试汇总记录文件 */
   public static String PERF_SUMMARY_FILE = "-perfSummary";
-  /** 在每步业务操作中采集性能 */
+  /** 在每一步业务操作中采集性能 */
   public static final boolean PERF_SAMPLE_AT_OPTS = false;
 
   public static String PERF_AT_OPTS_FILE = "-perfAtOpts";

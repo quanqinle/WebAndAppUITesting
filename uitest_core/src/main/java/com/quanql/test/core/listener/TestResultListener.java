@@ -46,16 +46,16 @@ public class TestResultListener extends TestListenerAdapter {
     super.onFinish(testContext);
 
     // List of test results which we will delete later
-    ArrayList<ITestResult> testsToBeRemoved = new ArrayList<ITestResult>();
+    ArrayList<ITestResult> testsToBeRemoved = new ArrayList<>();
     // collect all id's from passed test
-    Set<Integer> passedTestIds = new HashSet<Integer>();
+    Set<Integer> passedTestIds = new HashSet<>();
     for (ITestResult passedTest : testContext.getPassedTests().getAllResults()) {
       logger.info("PassedTests = " + passedTest.getName());
       passedTestIds.add(getId(passedTest));
     }
 
     // Eliminate the repeat methods
-    Set<Integer> skipTestIds = new HashSet<Integer>();
+    Set<Integer> skipTestIds = new HashSet<>();
     for (ITestResult skipTest : testContext.getSkippedTests().getAllResults()) {
       logger.info("skipTest = " + skipTest.getName());
       // id = class + method + dataprovider
@@ -69,7 +69,7 @@ public class TestResultListener extends TestListenerAdapter {
     }
 
     // Eliminate the repeat failed methods
-    Set<Integer> failedTestIds = new HashSet<Integer>();
+    Set<Integer> failedTestIds = new HashSet<>();
     for (ITestResult failedTest : testContext.getFailedTests().getAllResults()) {
       logger.info("failedTest = " + failedTest.getName());
       // id = class + method + dataprovider

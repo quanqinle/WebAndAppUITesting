@@ -32,7 +32,7 @@ public class ShellUtils {
    * execute shell commands, default return result msg
    *
    * @param command command
-   * @return
+   * @return -
    */
   public static CommandResult execCommand(String command) {
     return execCommand(command, true);
@@ -41,7 +41,7 @@ public class ShellUtils {
   /**
    * execute shell commands
    *
-   * @param command
+   * @param command -
    * @param isNeedResultMsg if you need result msg
    * @return if isNeedResultMsg is false, successMsgList is null and errorMsgList is null.
    *     <p>if CommandResult.returnCode is -1, there maybe some exception.

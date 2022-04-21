@@ -15,7 +15,7 @@ public class SplashPage extends AndroidBasePage {
   public static Button EnterAppBtn = new Button("id=btn_next");
 
   /** 控件 */
-  private static String viGuidePageId = getObfuscatedId("user_guide_viewpager");
+  private static final String VI_GUIDE_PAGE_ID = getObfuscatedId("user_guide_viewpager");
 
   /**
    * 新人引导页是否存在
@@ -24,7 +24,7 @@ public class SplashPage extends AndroidBasePage {
    */
   public static boolean isUserGuideShow() {
     boolean b = false;
-    b = baseOpt.isElementDisplayed(By.id(viGuidePageId));
+    b = baseOpt.isElementDisplayed(By.id(VI_GUIDE_PAGE_ID));
     LogUtil.info("新人引导页存在：" + b);
     return b;
   }

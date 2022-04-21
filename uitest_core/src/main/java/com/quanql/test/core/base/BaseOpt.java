@@ -157,12 +157,12 @@ public class BaseOpt {
    * @param text 文本
    */
   private void sendKeys(By by, WebElement element, String text) {
-    int TRY_LOOP = 3;
+    int tryLoop = 3;
 
     if ("input".equalsIgnoreCase(element.getTagName())
         || "textarea".equalsIgnoreCase(element.getTagName())) {
       boolean bl = false;
-      for (int i = 0; i < TRY_LOOP; i++) {
+      for (int i = 0; i < tryLoop; i++) {
         element.clear();
         // element.setValue(text); //官网论坛说，执行效率比sendKeys高。但遇到输密码会出错
         element.sendKeys(text);
@@ -192,7 +192,7 @@ public class BaseOpt {
       }
     } else if ("div".equalsIgnoreCase(element.getTagName())) {
       boolean bl = false;
-      for (int i = 0; i < TRY_LOOP; i++) {
+      for (int i = 0; i < tryLoop; i++) {
         element.clear();
         element.sendKeys(text);
         if (element.getText().equals(text)) {

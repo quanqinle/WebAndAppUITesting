@@ -8,6 +8,10 @@
 package com.quanql.test.core.utils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +42,10 @@ public class FileUtil {
     // dirFile.mkdirs(); // 不存在则新建目录
     // }
     boolean bFile = dirFile.exists();
-    if (bFile == false) {
+    if (!bFile) {
       bFile = dirFile.mkdirs();
     }
-    if (bFile == true) {
+    if (bFile) {
       LogUtil.debug("Create folder successfully!");
     } else {
       LogUtil.info("Create folder error!");
@@ -74,7 +78,7 @@ public class FileUtil {
    * @param folderName 以项目目录为根目录
    * @param fileName 文件名（后缀默认csv，不含加后缀）
    * @param content 写入内容，自行用半角逗号分隔
-   * @isDelete 是否删除已有文件
+   * @param isDelete 是否删除已有文件
    */
   public static void write2Csv(
       String folderName, String fileName, String content, boolean isDelete) {
@@ -92,7 +96,7 @@ public class FileUtil {
 
       // 文末追加
       out = new FileOutputStream(resultFile, true);
-      osw = new OutputStreamWriter(out, "UTF-8");
+      osw = new OutputStreamWriter(out, StandardCharsets.UTF_8);
       bw = new BufferedWriter(osw);
       bw.write(content);
     } catch (IOException e) {
@@ -106,18 +110,18 @@ public class FileUtil {
    * 从csv中读取测试数据
    *
    * @author quanqinle
-   * @param filePath
-   * @param startline 从第n行开始读数据（n从1开始），超出[1，maxline]时，使用默认值1
-   * @return
+   * @param filePath 路径
+   * @param startLine 从第n行开始读数据（n从1开始），超出[1，maxline]时，使用默认值1
+   * @return -
    */
-  public static Object[][] readFromCsv(String filePath, int startline) {
+  public static Object[][] readFromCsv(String filePath, int startLine) {
     List<String> lines = FileUtil.readFileByLines(filePath);
     int linecnt = lines.size();
-    if (0 >= startline || startline > linecnt) {
-      startline = 1;
+    if (0 >= startLine || startLine > linecnt) {
+      startLine = 1;
     }
 
-    int lineInList = startline - 1;
+    int lineInList = startLine - 1;
     Object[][] result = new Object[lines.size() - lineInList][];
 
     // 第1行是字段名，不用存放到数据对象中
@@ -152,11 +156,11 @@ public class FileUtil {
    *
    * @param oldPath 需要复制文件的路径
    * @param newPath 复制后的完整路径
-   * @throws FileNotFoundException
-   * @throws IOException
+   * @throws FileNotFoundException -
+   * @throws IOException -
    */
   public void copyFile(String oldPath, String newPath) throws IOException {
-    int byteread = 0;
+    int byteread;
     File oldfile = new File(oldPath);
     File newFile = new File(newPath);
     if (newFile.exists()) {
@@ -164,7 +168,7 @@ public class FileUtil {
     }
     if (oldfile.exists()) {
       // 读入原文件
-      InputStream inStream = new FileInputStream(oldPath);
+      InputStream inStream = Files.newInputStream(Paths.get(oldPath));
       FileOutputStream fs = new FileOutputStream(newPath);
       byte[] buffer = new byte[1444];
       while ((byteread = inStream.read(buffer)) != -1) {
@@ -186,10 +190,12 @@ public class FileUtil {
     LogUtil.info("Beginning Delete File!" + file.getName());
     try {
       if (file.exists()) {
-        if (file.isFile()) {
+        BasicFileAttributes basicFileAttributes =
+            Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+        if (basicFileAttributes.isRegularFile()) {
           boolean de = file.delete();
           LogUtil.debug("filename=" + file.getName() + " " + de);
-        } else if (file.isDirectory()) {
+        } else if (basicFileAttributes.isDirectory()) {
           File[] files = file.listFiles();
           assert files != null;
           for (File value : files) {
@@ -204,7 +210,6 @@ public class FileUtil {
       LogUtil.info(e.getStackTrace());
     }
     LogUtil.info("End Delete File!" + file.getName());
-    return;
   }
 
   /** 创建文件 */
@@ -226,7 +231,7 @@ public class FileUtil {
     try {
       System.out.println("以字节为单位读取文件内容，一次读一个字节：");
       // 一次读一个字节
-      in = new FileInputStream(file);
+      in = Files.newInputStream(file.toPath());
       int tempbyte;
       while ((tempbyte = in.read()) != -1) {
         System.out.write(tempbyte);
@@ -236,12 +241,13 @@ public class FileUtil {
       e.printStackTrace();
       return;
     }
+
     try {
       System.out.println("以字节为单位读取文件内容，一次读多个字节：");
       // 一次读多个字节
       byte[] tempbytes = new byte[100];
-      int byteread = 0;
-      in = new FileInputStream(fileName);
+      int byteread;
+      in = Files.newInputStream(Paths.get(fileName));
       FileUtil.showAvailableBytes(in);
       // 读入多个字节到字节数组中，byteread为一次读入的字节数
       while ((byteread = in.read(tempbytes)) != -1) {
@@ -254,6 +260,7 @@ public class FileUtil {
         try {
           in.close();
         } catch (IOException e1) {
+          e1.printStackTrace();
         }
       }
     }
@@ -266,7 +273,7 @@ public class FileUtil {
     try {
       System.out.println("以字符为单位读取文件内容，一次读一个字节：");
       // 一次读一个字符
-      reader = new InputStreamReader(new FileInputStream(file));
+      reader = new InputStreamReader(Files.newInputStream(file.toPath()));
       int tempchar;
       while ((tempchar = reader.read()) != -1) {
         // 对于windows下，\r\n这两个字符在一起时，表示一个换行。
@@ -284,18 +291,16 @@ public class FileUtil {
       System.out.println("以字符为单位读取文件内容，一次读多个字节：");
       // 一次读多个字符
       char[] tempchars = new char[30];
-      int charread = 0;
-      reader = new InputStreamReader(new FileInputStream(fileName));
-      // 读入多个字符到字符数组中，charread为一次读取字符数
+      int charread;
+      reader = new InputStreamReader(Files.newInputStream(Paths.get(fileName)));
+      // 读入多个字符到字符数组中，charread 为一次读取字符数
       while ((charread = reader.read(tempchars)) != -1) {
-        // 同样屏蔽掉\r不显示
+        // 同样屏蔽掉 \r 不显示
         if ((charread == tempchars.length) && (tempchars[tempchars.length - 1] != '\r')) {
           System.out.print(tempchars);
         } else {
           for (int i = 0; i < charread; i++) {
-            if (tempchars[i] == '\r') {
-              continue;
-            } else {
+            if (tempchars[i] != '\r') {
               System.out.print(tempchars[i]);
             }
           }
@@ -309,6 +314,7 @@ public class FileUtil {
         try {
           reader.close();
         } catch (IOException e1) {
+          e1.printStackTrace();
         }
       }
     }
@@ -317,14 +323,16 @@ public class FileUtil {
   /** 以行为单位读取文件，常用于读面向行的格式化文件 */
   public static List<String> readFileByLines(String fileName) {
     File file = new File(fileName);
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
 
     BufferedReader reader = null;
     try {
       LogUtil.debug("以行为单位读取文件内容，一次读一整行：");
-      reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+      reader =
+          new BufferedReader(
+              new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
 
-      String tempString = null;
+      String tempString;
       int line = 1;
       // 一次读入一行，直到读入null为文件结束
       while ((tempString = reader.readLine()) != null) {
@@ -341,6 +349,7 @@ public class FileUtil {
         try {
           reader.close();
         } catch (IOException e1) {
+          e1.printStackTrace();
         }
       }
     }

@@ -17,9 +17,9 @@ public class MemoryInfo {
   private static String printTitle = "Native Heap(mb),Dalvik Heap(mb),PSS TOTAL(mb)";
   private String printLine = "";
 
-  private long lNativeHeap_kB = 0L;
-  private long lDalvikHeap_kB = 0L;
-  private long lPssTOTAL_kB = 0L;
+  private long lNativeHeapKB = 0L;
+  private long lDalvikHeapKB = 0L;
+  private long lPssTotalKB = 0L;
 
   public MemoryInfo() {
     this(AndroidConstant.APP_PACKAGE_NAME);
@@ -35,9 +35,9 @@ public class MemoryInfo {
       this.printLine =
           StringUtils.join(
               new String[] {
-                String.format("%.4f", (this.getlNativeHeap_kB() / 1024D)),
-                String.format("%.4f", (this.getlDalvikHeap_kB() / 1024D)),
-                String.format("%.4f", (this.getlPssTOTAL_kB() / 1024D))
+                String.format("%.4f", (this.getLNativeHeapKB() / 1024D)),
+                String.format("%.4f", (this.getLDalvikHeapKB() / 1024D)),
+                String.format("%.4f", (this.getLPssTotalKB() / 1024D))
               },
               ",");
     }
@@ -66,22 +66,22 @@ public class MemoryInfo {
       if (isInTable) {
         if (str.contains("Native Heap")) {
           array = str.trim().split(AndroidConstant.BLANK_SPLIT);
-          lNativeHeap_kB = Long.parseLong(array[2]);
+          lNativeHeapKB = Long.parseLong(array[2]);
         }
         if (str.contains("Dalvik Heap")) {
           array = str.trim().split(AndroidConstant.BLANK_SPLIT);
-          lDalvikHeap_kB = Long.parseLong(array[2]);
+          lDalvikHeapKB = Long.parseLong(array[2]);
         }
         if (str.contains("TOTAL")) {
           array = str.trim().split(AndroidConstant.BLANK_SPLIT);
-          lPssTOTAL_kB = Long.parseLong(array[1]);
+          lPssTotalKB = Long.parseLong(array[1]);
         }
       }
     }
 
-    LogUtil.debug("Native Heap: " + lNativeHeap_kB + " kB");
-    LogUtil.debug("Dalvik Heap: " + lDalvikHeap_kB + " kB");
-    LogUtil.debug("PSS TOTAL: " + lPssTOTAL_kB + " kB");
+    LogUtil.debug("Native Heap: " + lNativeHeapKB + " kB");
+    LogUtil.debug("Dalvik Heap: " + lDalvikHeapKB + " kB");
+    LogUtil.debug("PSS TOTAL: " + lPssTotalKB + " kB");
   }
 
   public String getAppPackageName() {
@@ -92,28 +92,28 @@ public class MemoryInfo {
     this.appPackageName = appPackageName;
   }
 
-  public long getlNativeHeap_kB() {
-    return lNativeHeap_kB;
+  public long getLNativeHeapKB() {
+    return lNativeHeapKB;
   }
 
-  public void setlNativeHeap_kB(long lNativeHeap_kB) {
-    this.lNativeHeap_kB = lNativeHeap_kB;
+  public void setLNativeHeapKB(long lNativeHeapKB) {
+    this.lNativeHeapKB = lNativeHeapKB;
   }
 
-  public long getlDalvikHeap_kB() {
-    return lDalvikHeap_kB;
+  public long getLDalvikHeapKB() {
+    return lDalvikHeapKB;
   }
 
-  public void setlDalvikHeap_kB(long lDalvikHeap_kB) {
-    this.lDalvikHeap_kB = lDalvikHeap_kB;
+  public void setLDalvikHeapKB(long lDalvikHeapKB) {
+    this.lDalvikHeapKB = lDalvikHeapKB;
   }
 
-  public long getlPssTOTAL_kB() {
-    return lPssTOTAL_kB;
+  public long getLPssTotalKB() {
+    return lPssTotalKB;
   }
 
-  public void setlPssTOTAL_kB(long lPssTOTAL_kB) {
-    this.lPssTOTAL_kB = lPssTOTAL_kB;
+  public void setLPssTotalKB(long lPssTotalKB) {
+    this.lPssTotalKB = lPssTotalKB;
   }
 
   public static String getPrintTitle() {

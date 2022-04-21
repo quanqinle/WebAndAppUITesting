@@ -25,24 +25,24 @@ public class LoginPage extends AndroidBasePage {
   /** 手机验证码登录 */
   public static Button TelMessageBtn = new Button("id=tv_fast_login");
 
-  /**
+  /*
    * @author qinle.quan
    * @category 性能测试适用
    */
   /** 立即登录按钮 */
-  private static String memLoginAppId = getObfuscatedId("member_login_btn_login");
+  private static final String MEM_LOGIN_APP_ID = getObfuscatedId("member_login_btn_login");
 
   /** 用户名 */
-  private static String usernameAppId = getObfuscatedId("member_login_edt_email");
+  private static final String USERNAME_APP_ID = getObfuscatedId("member_login_edt_email");
   /** 密码 */
-  private static String passwordAppId = getObfuscatedId("member_login_edt_pwd");
+  private static final String PASSWORD_APP_ID = getObfuscatedId("member_login_edt_pwd");
 
   /**
    * 输入用户名/密码，点击登陆
    *
    * @author qinle.quan
-   * @param name
-   * @param passwd
+   * @param name -
+   * @param passwd -
    */
   public static void login(String name, String passwd) {
 
@@ -58,17 +58,17 @@ public class LoginPage extends AndroidBasePage {
 
   public static void typeUsername(String name) {
     LogUtil.info("输入用户名");
-    baseOpt.sendKeys(By.id(usernameAppId), name);
+    baseOpt.sendKeys(By.id(USERNAME_APP_ID), name);
   }
 
   public static void typePassword(String password) {
     LogUtil.info("输入密码");
-    baseOpt.sendKeys(By.id(passwordAppId), password);
+    baseOpt.sendKeys(By.id(PASSWORD_APP_ID), password);
   }
 
   public static void clickLogin() {
     LogUtil.info("点击立即登录");
-    baseOpt.click(By.id(memLoginAppId));
+    baseOpt.click(By.id(MEM_LOGIN_APP_ID));
     wait(3000);
   }
 

@@ -10,9 +10,9 @@ import org.openqa.selenium.By;
  * @author Administrator
  */
 public class DemoBaiduPage extends WebBasePage {
-  private static String edtSearchId = "kw";
-  private static String btnSearchXpath = "//input[@value='百度一下']";
-  private static String txtNetEaseXpath =
+  private static final String EDT_SEARCH_ID = "kw";
+  private static final String BTN_SEARCH_XPATH = "//input[@value='百度一下']";
+  private static final String TXT_NETEASE_XPATH =
       "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
 
   /** 通过url打开登录页面 */
@@ -28,17 +28,17 @@ public class DemoBaiduPage extends WebBasePage {
    */
   public static void typeInSearchEdt(String name) {
     LogUtil.info("输入搜索内容：" + name);
-    baseOpt.sendKeys(By.id(edtSearchId), name);
+    baseOpt.sendKeys(By.id(EDT_SEARCH_ID), name);
   }
 
   /** 点击搜索按钮 */
   public static void clickSearchBtn() {
     LogUtil.info("点击搜索按钮");
-    baseOpt.click(By.xpath(btnSearchXpath));
+    baseOpt.click(By.xpath(BTN_SEARCH_XPATH));
   }
 
   public static boolean isNetEaseExisted() {
     LogUtil.info("检查163官网是否存在");
-    return baseOpt.isElementDisplayed(By.xpath(txtNetEaseXpath));
+    return baseOpt.isElementDisplayed(By.xpath(TXT_NETEASE_XPATH));
   }
 }

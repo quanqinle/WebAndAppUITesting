@@ -2,7 +2,8 @@
 
 [简体中文](./README.cn.md) | English
 
-> Selenium 4 has come. I will modify this project to fix with it. If you use the old Selenium 3 still, go to the branch `backup-Selenium3`.
+> Selenium 4 has come. I will modify this project to fix with it. If you use the old Selenium 3 still, go to the
+> branch `backup-Selenium3`.
 
 ---
 
@@ -13,7 +14,8 @@
 + The project uses Maven for project management and TestNG for test case management.
 + The common Selenium APIs are encapsulated, such as `click()`, `type()`, etc. And they are added element availability
   verification, log recording, and taking screenshot for failed tests.
-+ WebUI, AndroidUI and iOSUI are separate modules. According to OS features, special base class methods have be written,
++ WebUI, AndroidUI and iOSUI are separate modules. According to OS features, special base class methods have been
+  written,
   and the configuration file `config.properties` under the module root directory will not affect each other.
 + A testcase can test online or offline environment at the same time by different tests data driven.
 + Log and assertion have been encapsulated into LogUtil and AssertUtil, which is easy to replace or extend in the
@@ -30,9 +32,9 @@
 1. JDK >= 8 (The minimum Java version required is still 8.)
 2. Maven >= 3
 3. Selenium 4
-4. Appium 3
-5. TestNG 6 -- TODO: replace testNg with Junit
-6. IDE (eclipse or others, this tutorial takes eclipse as an example) + TestNG plugin + Maven plugin
+4. Appium (java-client 8)
+5. TestNG 6 -- TODO: to replace testNg with Junit
+6. IDE (Eclipse or others, this tutorial takes Eclipse as an example) + TestNG plugin + Maven plugin
 
 ## Android
 
@@ -40,13 +42,13 @@
    1.1 Configure environment variables  
    1.2 Verify `adb` in the console whether it run ok or not  
    1.3 If you are about to run the test cases on emulators, you need to create emulators using `AVD Manager`
-2. Install the Appium server program, see [http://appium.io/](http://appium.io/). Recommend to inatll it in the way
+2. Install the Appium server program, see [http://appium.io/](http://appium.io/). Recommend to install it in the way
    of `Appium Desktop`.
 
 ## iPhone
 
-1. **Mac OS X is required!**  
-   1.1 Appium Server's operation, element recognition, and script execution all require the Mac  
+1. **macOS is required!**  
+   1.1 Appium Server's operation, element recognition, and script execution all require the macOS  
    1.2 Install Xcode, verify the installation until the tested app can be compiled successfully and can be run in a
    simulator
 2. If you want to run test case on a device, follow the
@@ -138,7 +140,7 @@
 1. On the `iOS settings` page of appium server, set `App Path` to the directory of the zip generated in the previous
    step, then set `Force Device` and `Platform Version`
 2. Click `launch`
-3. Click `inspector`. The operation of finding element is simililar with Android
+3. Click `inspector`. The operation of finding element is similar with Android
 4. Relative XPath expression is recommended, such
    as, `Button("xpath=//UIAAlert[@name='prompt']//UIAButton[@name='OK']")`
 
@@ -187,13 +189,13 @@ complex controls and scenarios better.
 More details in `./uitest_iphone/src/main/java/com/quanql/test/iphoneui/page/LoginPage.java` and
 `./uitest_android/src/main/java/com/quanql/test/androidui/testcase/DemoLoginTest.java`
 
-The Log in page
+The Login page
 
 ```java
 /**
- * Note that there're nothing in this class except elements location.
+ * Note that there are nothing in this class except elements location.
  *
- * This's the FIRST difference from the other way.
+ * This is the FIRST difference from the other way.
  */
 public class LoginPage extends IphoneBasePage {
 
@@ -214,7 +216,7 @@ The Log in test case (using Log in page)
  * 1. firstly locate certain element, e.g. LoginPage.UserName
  * 2. secondly operate the element, e.g. LoginPage.UserName.sendkeys("111111"), type into something
  *
- * This's the SECOND difference from the other way.
+ * This is the SECOND difference from the other way.
  */
 public class DemoLoginTest extends IphoneBaseTest {
 
@@ -239,12 +241,12 @@ Log in page
 
 ```java
 /**
- * Note that not only elements location but also elements operation are in this class.
+ * Note that not only elements' location but also elements' operation are in this class.
  */
 public class DemoBaiduPage extends WebBasePage {
     private static String edtSearchId = "kw";
     private static String btnSearchXpath = "//input[@value='百度一下']";
-    private static String txtNeteaseXpath = "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
+    private static String txtNetEaseXpath = "//div[@id='content_left']/div//a[contains(.,'www.163.com')]";
 
     /**
      * open Baidu
@@ -256,7 +258,7 @@ public class DemoBaiduPage extends WebBasePage {
 
     /**
      * type in search bar
-     * @param name
+     * @param name -
      */
     public static void typeInSearchEdt(String name) {
         LogUtil.info("Enter search content:" + name);
@@ -271,9 +273,9 @@ public class DemoBaiduPage extends WebBasePage {
         baseOpt.click(By.xpath(btnSearchXpath));
     }
 
-    public static boolean isNeteaseExisted() {
-        LogUtil.info("varify the goal page is open");
-        return baseOpt.isElementDisplayed(By.xpath(txtNeteaseXpath));
+    public static boolean isNetEaseExisted() {
+        LogUtil.info("verify the goal page is open");
+        return baseOpt.isElementDisplayed(By.xpath(txtNetEaseXpath));
     }
 }
 ```
@@ -288,11 +290,11 @@ The Log in test case (using Log in page)
 public class Demo163Test extends WebBaseTest {
 
     @Test
-    public void testSearchNetease() {
+    public void testSearchNetEase() {
         DemoBaiduPage.openBaidu();
         DemoBaiduPage.typeInSearchEdt("NetEase");
         DemoBaiduPage.clickSearchBtn();
-        AssertUtil.assertTrue(DemoBaiduPage.isNeteaseExisted(), "NetEase isn't in the first place of the results！");
+        AssertUtil.assertTrue(DemoBaiduPage.isNetEaseExisted(), "NetEase isn't in the first place of the results！");
     }
 
 }
@@ -313,7 +315,7 @@ See the example first
 public class NewUserRegisterTest extends AndroidBaseTest {
 
     @Test(dataProvider = "providerMethod")
-    public void testNewUserRegiser(String telephone, String passwd) {
+    public void testNewUserRegister(String telephone, String passwd) {
         TabHomePage.TabMine.click();
         TabMyPage.MyRegister.click();
         RegisterPage.TelPhoneNum.sendkeys(telephone);
@@ -332,22 +334,22 @@ public class NewUserRegisterTest extends AndroidBaseTest {
 running.env=test
 ```
 
-### test data `NewPersonRegiser.csv`
+### test data `NewPersonRegister.csv`
 
-+ testdata and src at the same level
-+ only csv format supports currently
++ `testdata` and `src` at the same level
++ only .csv format supports currently
 
 ```
 ├─uitest_android
    ├─src 
    └─testdata  
       ├─online     <-- Online data
-      │  └─ NewPersonRegiser.csv   
+      │  └─ NewPersonRegister.csv   
       └─test       <-- Offline data
-         └─ NewPersonRegiser.csv
+         └─ NewPersonRegister.csv
 ```
 
-Use text editor to open `NewPersonRegiser.csv`, you will see like the following, or you can open it in Excel:
+Use text editor to open `NewPersonRegister.csv`, you will see like the following, or you can open it in Excel:
 
 ```
 telephone,passwd
@@ -357,14 +359,14 @@ telephone,passwd
 ## Data-Driven more detail
 
 1. running.env in `config.properties` determines the data directory
-2. the test method name annotated by `@Test` (ie. testNewUserRegiser in the above example) determines the data-driven
-   filename NewPersonRegiser.csv
+2. the test method name annotated by `@Test` (i.e. testNewUserRegister in the above example) determines the data-driven
+   filename NewPersonRegister.csv
     - the test method name **must start with test, but _ is optional**, e.g. testHelloWorld_01()
     - combined with the path in `1.`, the full file directory in this example
-      is `submodule_name/testdata/test/NewPersonRegiser.csv`
+      is `submodule_name/testdata/test/NewPersonRegister.csv`
 3. test case
     - `@Test` followed by `(dataProvider = "providerMethod")`
-    - the number and sort of parameters in testNewUserRegiser() are same with the stuff in the csv file, however it's
+    - the number and sort of parameters in testNewUserRegister() are same with the stuff in the csv file, however it's
       not necessary to keep parameter name and cvs header the same
 
 # Advertising

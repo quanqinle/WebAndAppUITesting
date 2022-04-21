@@ -286,7 +286,6 @@ public class DriverFactory extends RemoteWebDriver {
    */
   public void closeApp() {
     CLOSED_APP = true;
-    @SuppressWarnings("unchecked")
     AppiumDriver appiumDriver = (AppiumDriver) driver;
     appiumDriver.close();
     //    appiumDriver.closeApp();

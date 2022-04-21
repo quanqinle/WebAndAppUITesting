@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class FrameInfo {
 
-  private static String printTitle =
+  private static final String PRINT_TITLE =
       "DrawAvg,PrepareAvg,ProcessAvg,ExecuteAvg,TotalAvg,TotalFrameCnt,DropFrameCnt,DropFrameRate";
   private String printLine = "";
 
@@ -95,7 +95,7 @@ public class FrameInfo {
 
           dTotal = dDraw + dPrepare + dProcess + dExecute;
           if (Double.compare(dTotal, 0f) <= 0) {
-            // 过滤0值
+            // 过滤 0 值
             continue;
           }
           junkCount += Double.compare(dTotal, 16.67f) > 0 ? 1 : 0;
@@ -136,7 +136,7 @@ public class FrameInfo {
   }
 
   public static String getPrintTitle() {
-    return printTitle;
+    return PRINT_TITLE;
   }
 
   public String getPrintLine() {

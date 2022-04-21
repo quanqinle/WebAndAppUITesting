@@ -14,7 +14,7 @@ package com.quanql.test.androidperfutils;
  */
 public class CommandResult {
 
-  private String delimiter = "\n";
+  private final String delimiter = "\n";
   /** result of command * */
   private int returnCode;
   /** success message of command result * */
@@ -35,9 +35,9 @@ public class CommandResult {
   }
 
   /**
-   * 获取String数组形式的成功结果
+   * 获取 String 数组形式的成功结果
    *
-   * @return
+   * @return -
    */
   public String[] getSuccessMsgArray() {
     return successMsgArray;
@@ -48,9 +48,9 @@ public class CommandResult {
   }
 
   /**
-   * 获取String形式的成功结果
+   * 获取 String 形式的成功结果
    *
-   * @return
+   * @return -
    */
   public String getSuccessMsg() {
     return successMsg;

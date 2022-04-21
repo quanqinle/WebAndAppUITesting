@@ -22,17 +22,17 @@ public class PerfMonitor {
   public ExecutorService executor = null;
 
   private int corePoolSize = 3;
-  private static ThreadFactory namedFactory =
+  private static final ThreadFactory NAMED_FACTORY =
       new ThreadFactoryBuilder().setNameFormat("thread-%d").build();
 
   /** ms.采样频率 */
-  private int period = Integer.parseInt(ConfigUtil.getInstance().getProperty("sample.rate"));
+  private final int period = Integer.parseInt(ConfigUtil.getInstance().getProperty("sample.rate"));
 
   public enum PoolType {
     /** scheduled */
     SCHEDULED,
     /** fixed */
-    FIXED;
+    FIXED
   }
 
   public static void main(String[] args) {
@@ -97,7 +97,7 @@ public class PerfMonitor {
             60L,
             TimeUnit.SECONDS,
             new SynchronousQueue<>(),
-            namedFactory,
+            NAMED_FACTORY,
             new ThreadPoolExecutor.AbortPolicy());
   }
 
@@ -116,7 +116,7 @@ public class PerfMonitor {
             0L,
             TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>(),
-            namedFactory,
+            NAMED_FACTORY,
             new ThreadPoolExecutor.AbortPolicy());
   }
 
@@ -163,14 +163,14 @@ public class PerfMonitor {
    * @param pool
    */
   private void shutdownAndAwaitTermination(ExecutorService pool) {
-    int TIMEOUT = 5;
+    int timeout = 5;
     pool.shutdown(); // Disable new tasks from being submitted
     try {
       // Wait a while for existing tasks to terminate
-      if (!pool.awaitTermination(TIMEOUT, TimeUnit.SECONDS)) {
+      if (!pool.awaitTermination(timeout, TimeUnit.SECONDS)) {
         pool.shutdownNow(); // Cancel currently executing tasks
         // Wait a while for tasks to respond to being cancelled
-        if (!pool.awaitTermination(TIMEOUT, TimeUnit.SECONDS)) {
+        if (!pool.awaitTermination(timeout, TimeUnit.SECONDS)) {
           System.err.println("Pool did not terminate");
         }
       }

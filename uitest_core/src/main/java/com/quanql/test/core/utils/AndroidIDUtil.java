@@ -16,7 +16,7 @@ public class AndroidIDUtil {
   /** that is Android */
   public static final String ANDROID_NAME = "Android";
 
-  private static final String packageName = Constant.APP_PACKAGE_NAME;
+  private static final String APP_PACKAGE_NAME = Constant.APP_PACKAGE_NAME;
   protected static String mappingFileProp =
       ConfigUtil.getInstance().getProperty("resource.mapping.file", "");
   protected static String mappingFileFullPath =
@@ -30,7 +30,7 @@ public class AndroidIDUtil {
         {
           if (!mappingFileProp.isEmpty()) {
             long ts = System.currentTimeMillis();
-            String resIdStr = packageName + ".R.id.";
+            String resIdStr = APP_PACKAGE_NAME + ".R.id.";
             int startIndex = resIdStr.length();
             File file = new File(mappingFileFullPath);
             BufferedReader reader = null;
@@ -78,7 +78,7 @@ public class AndroidIDUtil {
    */
   public static String getObfuscatedId(String originalId) {
     if (ANDROID_NAME.equalsIgnoreCase(Constant.DRIVER_TYPE)) {
-      String appiumAndroidIdPrefix = packageName + ":id/";
+      String appiumAndroidIdPrefix = APP_PACKAGE_NAME + ":id/";
       if (!mappingFileProp.isEmpty()) {
         return appiumAndroidIdPrefix + APP_ID_MAPS.getOrDefault(originalId, originalId);
       }

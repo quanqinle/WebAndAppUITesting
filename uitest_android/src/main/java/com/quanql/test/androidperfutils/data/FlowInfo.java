@@ -14,11 +14,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class FlowInfo {
   private static String printTitle = "ReceiveWlan0(mb),TransmitWlan0(mb),Wlan0Total(mb)";
-  private String appPackageName = "";
+  private String appPackageName;
   private String printLine = "";
 
-  private long lReceive_Wlan0_Bytes = 0L;
-  private long lTransmit_Wlan0_Bytes = 0L;
+  private long lReceiveWlan0Bytes = 0L;
+  private long lTransmitWlan0Bytes = 0L;
 
   public FlowInfo() {
     this(AndroidConstant.APP_PACKAGE_NAME);
@@ -45,13 +45,11 @@ public class FlowInfo {
     this.printLine =
         StringUtils.join(
             new String[] {
-              String.format("%.4f", (this.getlReceive_Wlan0_Bytes() / 1024D / 1024D)),
-              String.format("%.4f", (this.getlTransmit_Wlan0_Bytes() / 1024D / 1024D)),
+              String.format("%.4f", (this.getLReceiveWlan0Bytes() / 1024D / 1024D)),
+              String.format("%.4f", (this.getLTransmitWlan0Bytes() / 1024D / 1024D)),
               String.format(
                   "%.4f",
-                  ((this.getlReceive_Wlan0_Bytes() + this.getlTransmit_Wlan0_Bytes())
-                      / 1024D
-                      / 1024D))
+                  ((this.getLReceiveWlan0Bytes() + this.getLTransmitWlan0Bytes()) / 1024D / 1024D))
             },
             ",");
   }
@@ -67,11 +65,11 @@ public class FlowInfo {
       if (str.contains("wlan0")) {
         LogUtil.debug(str);
         array = str.trim().split(AndroidConstant.BLANK_SPLIT);
-        lReceive_Wlan0_Bytes = Long.parseLong(array[1]);
-        lTransmit_Wlan0_Bytes = Long.parseLong(array[9]);
+        lReceiveWlan0Bytes = Long.parseLong(array[1]);
+        lTransmitWlan0Bytes = Long.parseLong(array[9]);
 
         String join =
-            StringUtils.join("接收/发送(bytes)：", lReceive_Wlan0_Bytes, " / ", lTransmit_Wlan0_Bytes);
+            StringUtils.join("接收/发送(bytes)：", lReceiveWlan0Bytes, " / ", lTransmitWlan0Bytes);
         LogUtil.debug(join);
       }
     }
@@ -101,27 +99,27 @@ public class FlowInfo {
     this.printLine = printLine;
   }
 
-  public long getlReceive_Wlan0_Bytes() {
-    return lReceive_Wlan0_Bytes;
+  public long getLReceiveWlan0Bytes() {
+    return lReceiveWlan0Bytes;
   }
 
-  public void setlReceive_Wlan0_Bytes(long lReceive_Wlan0_Bytes) {
-    this.lReceive_Wlan0_Bytes = lReceive_Wlan0_Bytes;
+  public void setLReceiveWlan0Bytes(long lReceiveWlan0Bytes) {
+    this.lReceiveWlan0Bytes = lReceiveWlan0Bytes;
   }
 
-  public long getlTransmit_Wlan0_Bytes() {
-    return lTransmit_Wlan0_Bytes;
+  public long getLTransmitWlan0Bytes() {
+    return lTransmitWlan0Bytes;
   }
 
-  public void setlTransmit_Wlan0_Bytes(long lTransmit_Wlan0_Bytes) {
-    this.lTransmit_Wlan0_Bytes = lTransmit_Wlan0_Bytes;
+  public void setLTransmitWlan0Bytes(long lTransmitWlan0Bytes) {
+    this.lTransmitWlan0Bytes = lTransmitWlan0Bytes;
   }
 
   /**
    * 结算两次操作间的流量
    *
-   * @param firstFlow
-   * @param secondFlow
+   * @param firstFlow -
+   * @param secondFlow -
    */
   public void countFlow(String firstFlow, String secondFlow) {
 

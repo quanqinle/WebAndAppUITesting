@@ -11,14 +11,11 @@ import com.quanql.test.core.utils.LogUtil;
  * @author 权芹乐
  */
 public class CpuInfo {
-  private String appPackageName = "";
+  private String appPackageName;
   private static String printTitle = "CPU(%)";
   private String printLine = "";
 
   private String cpu = "";
-
-  // for debug
-  public static void main(String[] args) {}
 
   public CpuInfo() {
     this(AndroidConstant.APP_PACKAGE_NAME);
@@ -48,14 +45,13 @@ public class CpuInfo {
     // 3.5% 8155/com.quanql.demo:xg_service_v2: 3.3% user + 0.1% kernel /
     // faults: 3599 minor
     // 2.3% 919/system_server: 1.3% user + 0.9% kernel / faults: 71 minor
-    String appname = appPackageName;
-    String cpucmd = "adb shell dumpsys cpuinfo " + appname;
+    String cpuCmd = "adb shell dumpsys cpuinfo " + appPackageName;
 
     String[] array;
 
-    CommandResult cr = ShellUtils.execCommand(cpucmd);
+    CommandResult cr = ShellUtils.execCommand(cpuCmd);
     for (String str : cr.getSuccessMsgArray()) {
-      if (str.contains(appname)) {
+      if (str.contains(appPackageName)) {
         array = str.trim().split(AndroidConstant.BLANK_SPLIT);
         // TODO 解析其他字段
         this.cpu = array[0];
@@ -86,15 +82,14 @@ public class CpuInfo {
     // 30253 4 0% S 1 1084K 324K bg u0_a288
     // /data/data/com.quanql.demo/lib/libtpnsWatchdog.so
 
-    String appname = appPackageName;
-    String cpucmd = "adb shell \"top -n 1\"|grep " + appname;
+    String cpuCmd = "adb shell \"top -n 1\"|grep " + appPackageName;
 
     String[] array;
 
-    CommandResult cr = ShellUtils.execCommand(cpucmd);
+    CommandResult cr = ShellUtils.execCommand(cpuCmd);
     for (String str : cr.getSuccessMsgArray()) {
       // 结尾
-      if (str.endsWith(appname)) {
+      if (str.endsWith(appPackageName)) {
         array = str.trim().split(AndroidConstant.BLANK_SPLIT);
 
         // 为了方便后续数据分析，记录结果时去除百分号

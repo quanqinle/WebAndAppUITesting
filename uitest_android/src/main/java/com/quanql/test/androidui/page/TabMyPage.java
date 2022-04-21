@@ -28,7 +28,7 @@ public class TabMyPage extends MainFramePage {
   public static boolean isMyPageShow() {
 
     LogUtil.info("我的页面是否存在");
-    /** 元素 */
+    /* 元素 */
     String myPageAppId = "ll_main";
     return baseOpt.isElementDisplayed(By.id(myPageAppId));
   }
@@ -52,12 +52,8 @@ public class TabMyPage extends MainFramePage {
    */
   public static boolean tabMyPageCheck() {
 
-    if (baseOpt.findElement("//android.widget.TextView[@text='个人主页']") == null
-        || baseOpt.findElement("//android.widget.TextView[@text='我的订单']") == null
-        || baseOpt.findElement("//android.widget.TextView[@text='客服中心']") == null) {
-
-      return false;
-    }
-    return true;
+    return baseOpt.findElement("//android.widget.TextView[@text='个人主页']") != null
+        && baseOpt.findElement("//android.widget.TextView[@text='我的订单']") != null
+        && baseOpt.findElement("//android.widget.TextView[@text='客服中心']") != null;
   }
 }

@@ -155,7 +155,7 @@ public class AndroidBaseOpt extends BaseOpt {
 
     WebElement findElement;
     for (int i = 0; i < steps; i++) {
-      // 在父元素中查找。只xpath适用 parentElement.findElement(findBy);
+      // 在父元素中查找。只xpath适用 parentElement.findElement(findBy)
       findElement = waitForElementClickable(findBy, 3);
       if (findElement != null) {
         return findElement;

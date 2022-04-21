@@ -15,11 +15,8 @@ public class IphoneBasePage extends BasePage {
 
   protected static IphoneBaseOpt baseOpt = IphoneBaseOpt.getInstance();
 
-  // for debug
-  public static void main(String[] args) {}
-
   /**
-   * 页面向上滑动1/2屏幕高度，循环loop次<br>
+   * 页面向上滑动 1/2 屏幕高度，循环 loop 次<br>
    * 注意：swipe函数在模拟器上不可用！！
    *
    * @author 权芹乐
