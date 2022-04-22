@@ -127,7 +127,7 @@
 
 1. configure `config.properties`
     + driver.type=chrome, firefox, iOSSafari
-    + running.type=local (Standalone mode)、remote (hub-node mode)
+    + running.type=local (Standalone mode), remote (hub-node mode)
     + remote.address=the hub server url, only used as `running.type=remote`
 
 ## 2. iPhone UI
