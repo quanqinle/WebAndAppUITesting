@@ -177,11 +177,11 @@
 
 ## 3. Android UI
 
-Similar with **iPhone**.
+Similar to **iPhone**.
 
 ## 4. H5
 
-Similar with **web**. In configure `config.properties`, set `driver.type=H5` so as to run test cases on mobile emulation
+Similar to **web**. In configure `config.properties`, set `driver.type=H5` so as to run test cases on mobile emulation
 mode in Chrome.
 
 # Two ways to write test cases
